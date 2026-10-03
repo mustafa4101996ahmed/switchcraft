@@ -28,6 +28,7 @@ Requires macOS 14 or later, arm64.
 ## Build and run
 
 ```sh
+Scripts/setup-signing.sh  # once: local signing identity, keeps permissions across rebuilds
 Scripts/build.sh          # Release build → build/Switchcraft.app
 Scripts/test.sh           # unit tests
 Scripts/install.sh        # build + install to /Applications + launch
@@ -156,8 +157,9 @@ packs (Application Support).
 
 ## Troubleshooting
 
-See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md). The most common issue: after rebuilding,
-remove and re-add Switchcraft in Input Monitoring, because local builds are ad-hoc signed.
+See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md). Run `Scripts/setup-signing.sh` once: builds
+signed with that local identity keep their Input Monitoring permission. Ad-hoc builds lose it on
+every rebuild.
 
 ## Architecture
 

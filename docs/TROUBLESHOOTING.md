@@ -8,8 +8,9 @@ Start with the menu bar → **Diagnostics…**. Every value below is visible the
 1. **Input Monitoring.** The menu-bar icon is a ⚠️ triangle while permission is missing.
    System Settings › Privacy & Security › Input Monitoring → turn on Switchcraft. The app notices
    within 2 seconds. If Diagnostics still shows *Monitor: Stopped*, quit and reopen Switchcraft.
-2. **After rebuilding the app** the switch can look on but no longer apply. Local builds are
-   ad-hoc signed and macOS ties the permission to the exact binary. Select Switchcraft in the
+2. **After rebuilding the app** the switch can look on but no longer apply, when the build is
+   ad-hoc signed: macOS ties the permission to the exact binary. Run `Scripts/setup-signing.sh`
+   once and builds keep one identity (and the permission) from then on. Otherwise: Select Switchcraft in the
    Input Monitoring list, remove it with **−**, then add `/Applications/Switchcraft.app` again with
    **+** (or run `tccutil reset ListenEvent com.switchcraft.app` and re-grant).
 3. **Enabled?** The switch at the top of the menu-bar panel.
