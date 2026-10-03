@@ -6,9 +6,11 @@ cd "$(dirname "$0")/.."
 Scripts/build.sh Release
 
 DEST="/Applications/Switchcraft.app"
-cdhash() { codesign -dv --verbose=4 "$1" 2>&1 | awk -F= '/^CDHash=/{print $2}'; }
-OLD_HASH="$( [[ -d "$DEST" ]] && cdhash "$DEST" || true )"
-NEW_HASH="$(cdhash build/Switchcraft.app)"
+# macOS ties Input Monitoring to the app's designated requirement: the certificate for builds signed
+# with Scripts/setup-signing.sh (stable), or the exact binary hash for ad-hoc builds (new every build).
+requirement() { codesign -d -r- "$1" 2>&1 | sed -n 's/^#* *designated => //p'; }
+OLD_REQ="$( [[ -d "$DEST" ]] && requirement "$DEST" || true )"
+NEW_REQ="$(requirement build/Switchcraft.app)"
 # Retire the build installed under the app's previous name (ForceKeys).
 if [[ -d /Applications/ForceKeys.app ]]; then
   pgrep -xq ForceKeys && { osascript -e 'quit app "ForceKeys"' || pkill -x ForceKeys || true; sleep 1; }
@@ -24,9 +26,8 @@ rm -rf "$DEST"
 ditto build/Switchcraft.app "$DEST"
 xattr -dr com.apple.quarantine "$DEST" 2>/dev/null || true
 echo "Installed $DEST"
-# Local builds are ad-hoc signed, so macOS ties Input Monitoring to this exact binary. A changed
-# build would show the switch as on while it no longer applies: clear the stale entry instead.
-if [[ -n "$OLD_HASH" && "$OLD_HASH" != "$NEW_HASH" ]]; then
+# A changed identity would leave the switch looking on while it no longer applies: clear it instead.
+if [[ -n "$OLD_REQ" && "$OLD_REQ" != "$NEW_REQ" ]]; then
   tccutil reset ListenEvent com.switchcraft.app >/dev/null 2>&1 || true
   echo "New build: allow Input Monitoring again when Switchcraft asks (menu-bar icon › Allow…)."
 fi

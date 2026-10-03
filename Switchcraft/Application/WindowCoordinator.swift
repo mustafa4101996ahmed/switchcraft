@@ -50,6 +50,8 @@ final class WindowCoordinator: NSObject, NSWindowDelegate {
         window.delegate = self
         if !window.setFrameUsingName("Switchcraft." + kind.rawValue) { window.center() }
         window.setFrameAutosaveName("Switchcraft." + kind.rawValue)
+        // Settings panes have one fixed size; a remembered frame may only restore the position.
+        if kind == .settings { window.setContentSize(SettingsPane.size) }
         windows[kind] = window
         window.makeKeyAndOrderFront(nil)
         NSApp.activate()
@@ -60,12 +62,17 @@ final class WindowCoordinator: NSObject, NSWindowDelegate {
 
     /// Toolbar-style tabs, the standard macOS Settings layout; the window title follows the tab.
     private func settingsController(model: AppModel) -> NSViewController {
-        let tabs = SettingsTabController()
+        let tabs = NSTabViewController()
         tabs.tabStyle = .toolbar
         for pane in SettingsPane.allCases {
             let host = NSHostingController(rootView: pane.view
                 .frame(width: SettingsPane.size.width, height: SettingsPane.size.height)
                 .environment(model))
+            // The tab controller sizes the window from the selected pane's preferred size and
+            // titles it from the pane's title (otherwise: a 500 × 500 default and "Untitled").
+            host.sizingOptions = []
+            host.preferredContentSize = SettingsPane.size
+            host.title = pane.title
             let item = NSTabViewItem(viewController: host)
             item.label = pane.title
             item.image = NSImage(systemSymbolName: pane.symbol, accessibilityDescription: pane.title)
@@ -83,10 +90,3 @@ final class WindowCoordinator: NSObject, NSWindowDelegate {
     }
 }
 
-/// Keeps the Settings window titled after the selected pane, like System Settings-style panels.
-private final class SettingsTabController: NSTabViewController {
-    override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
-        super.tabView(tabView, didSelect: tabViewItem)
-        view.window?.title = tabViewItem?.label ?? "Settings"
-    }
-}
