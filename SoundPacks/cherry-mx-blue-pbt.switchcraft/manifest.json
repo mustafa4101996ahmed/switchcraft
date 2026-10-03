@@ -1,0 +1,249 @@
+{
+  "category" : "Clicky",
+  "credits" : "Recordings from hainguyents13\/mechvibes, MIT License, Copyright (c) 2021 Hai Nguyen.",
+  "deriveVelocityLayers" : true,
+  "description" : "Cherry MX Blue, tactile clicky, with PBT keycaps. Every key recorded individually.",
+  "formatVersion" : 1,
+  "gain" : 1,
+  "id" : "cherry-mx-blue-pbt",
+  "name" : "Cherry MX Blue · PBT",
+  "samples" : {
+    "alpha" : {
+      "hard" : [
+        "sounds\/alpha\/hard\/1.wav",
+        "sounds\/alpha\/hard\/2.wav",
+        "sounds\/alpha\/hard\/3.wav",
+        "sounds\/alpha\/hard\/4.wav",
+        "sounds\/alpha\/hard\/5.wav",
+        "sounds\/alpha\/hard\/6.wav",
+        "sounds\/alpha\/hard\/7.wav",
+        "sounds\/alpha\/hard\/8.wav",
+        "sounds\/alpha\/hard\/9.wav",
+        "sounds\/alpha\/hard\/10.wav",
+        "sounds\/alpha\/hard\/11.wav",
+        "sounds\/alpha\/hard\/12.wav",
+        "sounds\/alpha\/hard\/13.wav",
+        "sounds\/alpha\/hard\/14.wav",
+        "sounds\/alpha\/hard\/15.wav",
+        "sounds\/alpha\/hard\/16.wav",
+        "sounds\/alpha\/hard\/17.wav",
+        "sounds\/alpha\/hard\/18.wav",
+        "sounds\/alpha\/hard\/19.wav",
+        "sounds\/alpha\/hard\/20.wav",
+        "sounds\/alpha\/hard\/21.wav",
+        "sounds\/alpha\/hard\/22.wav",
+        "sounds\/alpha\/hard\/23.wav",
+        "sounds\/alpha\/hard\/24.wav",
+        "sounds\/alpha\/hard\/25.wav",
+        "sounds\/alpha\/hard\/26.wav"
+      ],
+      "release" : [
+        "sounds\/alpha\/release\/1.wav",
+        "sounds\/alpha\/release\/2.wav",
+        "sounds\/alpha\/release\/3.wav",
+        "sounds\/alpha\/release\/4.wav",
+        "sounds\/alpha\/release\/5.wav",
+        "sounds\/alpha\/release\/6.wav",
+        "sounds\/alpha\/release\/7.wav",
+        "sounds\/alpha\/release\/8.wav",
+        "sounds\/alpha\/release\/9.wav",
+        "sounds\/alpha\/release\/10.wav",
+        "sounds\/alpha\/release\/11.wav",
+        "sounds\/alpha\/release\/12.wav",
+        "sounds\/alpha\/release\/13.wav",
+        "sounds\/alpha\/release\/14.wav",
+        "sounds\/alpha\/release\/15.wav",
+        "sounds\/alpha\/release\/16.wav",
+        "sounds\/alpha\/release\/17.wav",
+        "sounds\/alpha\/release\/18.wav",
+        "sounds\/alpha\/release\/19.wav",
+        "sounds\/alpha\/release\/20.wav",
+        "sounds\/alpha\/release\/21.wav",
+        "sounds\/alpha\/release\/22.wav",
+        "sounds\/alpha\/release\/23.wav",
+        "sounds\/alpha\/release\/24.wav",
+        "sounds\/alpha\/release\/25.wav",
+        "sounds\/alpha\/release\/26.wav"
+      ]
+    },
+    "arrow" : {
+      "hard" : [
+        "sounds\/arrow\/hard\/1.wav",
+        "sounds\/arrow\/hard\/2.wav",
+        "sounds\/arrow\/hard\/3.wav",
+        "sounds\/arrow\/hard\/4.wav"
+      ],
+      "release" : [
+        "sounds\/arrow\/release\/1.wav",
+        "sounds\/arrow\/release\/2.wav",
+        "sounds\/arrow\/release\/3.wav",
+        "sounds\/arrow\/release\/4.wav"
+      ]
+    },
+    "backspace" : {
+      "hard" : [
+        "sounds\/backspace\/hard\/1.wav",
+        "sounds\/backspace\/hard\/2.wav"
+      ],
+      "release" : [
+        "sounds\/backspace\/release\/1.wav",
+        "sounds\/backspace\/release\/2.wav"
+      ]
+    },
+    "enter" : {
+      "hard" : [
+        "sounds\/enter\/hard\/1.wav",
+        "sounds\/enter\/hard\/2.wav"
+      ],
+      "release" : [
+        "sounds\/enter\/release\/1.wav",
+        "sounds\/enter\/release\/2.wav"
+      ]
+    },
+    "escape" : {
+      "hard" : [
+        "sounds\/escape\/hard\/1.wav"
+      ],
+      "release" : [
+        "sounds\/escape\/release\/1.wav"
+      ]
+    },
+    "function" : {
+      "hard" : [
+        "sounds\/function\/hard\/1.wav",
+        "sounds\/function\/hard\/2.wav",
+        "sounds\/function\/hard\/3.wav",
+        "sounds\/function\/hard\/4.wav",
+        "sounds\/function\/hard\/5.wav",
+        "sounds\/function\/hard\/6.wav",
+        "sounds\/function\/hard\/7.wav",
+        "sounds\/function\/hard\/8.wav",
+        "sounds\/function\/hard\/9.wav",
+        "sounds\/function\/hard\/10.wav",
+        "sounds\/function\/hard\/11.wav",
+        "sounds\/function\/hard\/12.wav"
+      ],
+      "release" : [
+        "sounds\/function\/release\/1.wav",
+        "sounds\/function\/release\/2.wav",
+        "sounds\/function\/release\/3.wav",
+        "sounds\/function\/release\/4.wav",
+        "sounds\/function\/release\/5.wav",
+        "sounds\/function\/release\/6.wav",
+        "sounds\/function\/release\/7.wav",
+        "sounds\/function\/release\/8.wav",
+        "sounds\/function\/release\/9.wav",
+        "sounds\/function\/release\/10.wav",
+        "sounds\/function\/release\/11.wav",
+        "sounds\/function\/release\/12.wav"
+      ]
+    },
+    "modifier" : {
+      "hard" : [
+        "sounds\/modifier\/hard\/1.wav",
+        "sounds\/modifier\/hard\/2.wav",
+        "sounds\/modifier\/hard\/3.wav",
+        "sounds\/modifier\/hard\/4.wav",
+        "sounds\/modifier\/hard\/5.wav",
+        "sounds\/modifier\/hard\/6.wav",
+        "sounds\/modifier\/hard\/7.wav",
+        "sounds\/modifier\/hard\/8.wav",
+        "sounds\/modifier\/hard\/9.wav"
+      ],
+      "release" : [
+        "sounds\/modifier\/release\/1.wav",
+        "sounds\/modifier\/release\/2.wav",
+        "sounds\/modifier\/release\/3.wav",
+        "sounds\/modifier\/release\/4.wav",
+        "sounds\/modifier\/release\/5.wav",
+        "sounds\/modifier\/release\/6.wav",
+        "sounds\/modifier\/release\/7.wav",
+        "sounds\/modifier\/release\/8.wav"
+      ]
+    },
+    "number" : {
+      "hard" : [
+        "sounds\/number\/hard\/1.wav",
+        "sounds\/number\/hard\/2.wav",
+        "sounds\/number\/hard\/3.wav",
+        "sounds\/number\/hard\/4.wav",
+        "sounds\/number\/hard\/5.wav",
+        "sounds\/number\/hard\/6.wav",
+        "sounds\/number\/hard\/7.wav",
+        "sounds\/number\/hard\/8.wav",
+        "sounds\/number\/hard\/9.wav",
+        "sounds\/number\/hard\/10.wav"
+      ],
+      "release" : [
+        "sounds\/number\/release\/1.wav",
+        "sounds\/number\/release\/2.wav",
+        "sounds\/number\/release\/3.wav",
+        "sounds\/number\/release\/4.wav",
+        "sounds\/number\/release\/5.wav",
+        "sounds\/number\/release\/6.wav",
+        "sounds\/number\/release\/7.wav",
+        "sounds\/number\/release\/8.wav",
+        "sounds\/number\/release\/9.wav"
+      ]
+    },
+    "other" : {
+      "hard" : [
+        "sounds\/other\/hard\/1.wav",
+        "sounds\/other\/hard\/2.wav",
+        "sounds\/other\/hard\/3.wav",
+        "sounds\/other\/hard\/4.wav",
+        "sounds\/other\/hard\/5.wav"
+      ],
+      "release" : [
+        "sounds\/other\/release\/1.wav",
+        "sounds\/other\/release\/2.wav",
+        "sounds\/other\/release\/3.wav",
+        "sounds\/other\/release\/4.wav",
+        "sounds\/other\/release\/5.wav"
+      ]
+    },
+    "punctuation" : {
+      "hard" : [
+        "sounds\/punctuation\/hard\/1.wav",
+        "sounds\/punctuation\/hard\/2.wav",
+        "sounds\/punctuation\/hard\/3.wav",
+        "sounds\/punctuation\/hard\/4.wav",
+        "sounds\/punctuation\/hard\/5.wav",
+        "sounds\/punctuation\/hard\/6.wav",
+        "sounds\/punctuation\/hard\/7.wav",
+        "sounds\/punctuation\/hard\/8.wav",
+        "sounds\/punctuation\/hard\/9.wav",
+        "sounds\/punctuation\/hard\/10.wav",
+        "sounds\/punctuation\/hard\/11.wav"
+      ],
+      "release" : [
+        "sounds\/punctuation\/release\/1.wav",
+        "sounds\/punctuation\/release\/2.wav",
+        "sounds\/punctuation\/release\/3.wav",
+        "sounds\/punctuation\/release\/4.wav",
+        "sounds\/punctuation\/release\/5.wav",
+        "sounds\/punctuation\/release\/6.wav",
+        "sounds\/punctuation\/release\/7.wav",
+        "sounds\/punctuation\/release\/8.wav",
+        "sounds\/punctuation\/release\/9.wav",
+        "sounds\/punctuation\/release\/10.wav"
+      ]
+    },
+    "space" : {
+      "hard" : [
+        "sounds\/space\/hard\/1.wav"
+      ],
+      "release" : [
+        "sounds\/space\/release\/1.wav"
+      ]
+    },
+    "tab" : {
+      "hard" : [
+        "sounds\/tab\/hard\/1.wav"
+      ],
+      "release" : [
+        "sounds\/tab\/release\/1.wav"
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "category" : "Vintage",
+  "credits" : "Recordings from tplai\/kbsim, MIT License, Copyright (c) Thomas Lai.",
+  "deriveVelocityLayers" : true,
+  "description" : "IBM Model M-style buckling springs, the classic terminal sound.",
+  "formatVersion" : 1,
+  "gain" : 1,
+  "id" : "buckling-spring",
+  "name" : "Buckling Spring",
+  "samples" : {
+    "alpha" : {
+      "hard" : [
+        "sounds\/alpha\/hard\/1.wav",
+        "sounds\/alpha\/hard\/2.wav",
+        "sounds\/alpha\/hard\/3.wav",
+        "sounds\/alpha\/hard\/4.wav",
+        "sounds\/alpha\/hard\/5.wav"
+      ],
+      "release" : [
+        "sounds\/alpha\/release\/1.wav"
+      ]
+    },
+    "backspace" : {
+      "hard" : [
+        "sounds\/backspace\/hard\/1.wav"
+      ],
+      "release" : [
+        "sounds\/backspace\/release\/1.wav"
+      ]
+    },
+    "enter" : {
+      "hard" : [
+        "sounds\/enter\/hard\/1.wav"
+      ],
+      "release" : [
+        "sounds\/enter\/release\/1.wav"
+      ]
+    },
+    "space" : {
+      "hard" : [
+        "sounds\/space\/hard\/1.wav"
+      ],
+      "release" : [
+        "sounds\/space\/release\/1.wav"
+      ]
+    }
+  }
+}

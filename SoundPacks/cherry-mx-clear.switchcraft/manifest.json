@@ -1,0 +1,56 @@
+{
+  "category" : "Tactile",
+  "credits" : "“Mechanical keyboard clicking. Different keys” by humi74, freesound.org\/s\/412926, CC0 1.0.",
+  "deriveVelocityLayers" : true,
+  "description" : "Cherry MX Clear, heavy tactile. Stereo recording of individual key presses.",
+  "formatVersion" : 1,
+  "gain" : 1,
+  "id" : "cherry-mx-clear",
+  "name" : "Cherry MX Clear",
+  "samples" : {
+    "alpha" : {
+      "hard" : [
+        "sounds\/alpha\/hard\/1.wav",
+        "sounds\/alpha\/hard\/2.wav",
+        "sounds\/alpha\/hard\/3.wav",
+        "sounds\/alpha\/hard\/4.wav",
+        "sounds\/alpha\/hard\/5.wav",
+        "sounds\/alpha\/hard\/6.wav",
+        "sounds\/alpha\/hard\/7.wav",
+        "sounds\/alpha\/hard\/8.wav",
+        "sounds\/alpha\/hard\/9.wav",
+        "sounds\/alpha\/hard\/10.wav",
+        "sounds\/alpha\/hard\/11.wav",
+        "sounds\/alpha\/hard\/12.wav",
+        "sounds\/alpha\/hard\/13.wav",
+        "sounds\/alpha\/hard\/14.wav",
+        "sounds\/alpha\/hard\/15.wav",
+        "sounds\/alpha\/hard\/16.wav",
+        "sounds\/alpha\/hard\/17.wav",
+        "sounds\/alpha\/hard\/18.wav",
+        "sounds\/alpha\/hard\/19.wav"
+      ],
+      "release" : [
+        "sounds\/alpha\/release\/1.wav",
+        "sounds\/alpha\/release\/2.wav",
+        "sounds\/alpha\/release\/3.wav",
+        "sounds\/alpha\/release\/4.wav",
+        "sounds\/alpha\/release\/5.wav",
+        "sounds\/alpha\/release\/6.wav",
+        "sounds\/alpha\/release\/7.wav",
+        "sounds\/alpha\/release\/8.wav",
+        "sounds\/alpha\/release\/9.wav",
+        "sounds\/alpha\/release\/10.wav",
+        "sounds\/alpha\/release\/11.wav",
+        "sounds\/alpha\/release\/12.wav",
+        "sounds\/alpha\/release\/13.wav",
+        "sounds\/alpha\/release\/14.wav",
+        "sounds\/alpha\/release\/15.wav",
+        "sounds\/alpha\/release\/16.wav",
+        "sounds\/alpha\/release\/17.wav",
+        "sounds\/alpha\/release\/18.wav",
+        "sounds\/alpha\/release\/19.wav"
+      ]
+    }
+  }
+}

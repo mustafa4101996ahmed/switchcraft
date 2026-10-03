@@ -1,0 +1,82 @@
+# XcodeGen spec. Regenerate the project with: xcodegen generate
+name: Switchcraft
+options:
+  bundleIdPrefix: com.switchcraft
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    ARCHS: arm64
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""
+    ENABLE_HARDENED_RUNTIME: NO
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    DEAD_CODE_STRIPPING: YES
+    GCC_TREAT_WARNINGS_AS_ERRORS: NO
+targets:
+  SwitchcraftCore:
+    type: framework
+    platform: macOS
+    sources:
+      - path: SwitchcraftCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.switchcraft.core
+        GENERATE_INFOPLIST_FILE: YES
+        SKIP_INSTALL: YES
+        DEFINES_MODULE: YES
+  Switchcraft:
+    type: application
+    platform: macOS
+    sources:
+      - path: Switchcraft
+      - path: SoundPacks
+        type: folder
+        buildPhase: resources
+      - path: Resources/AppIcon.icns
+        buildPhase: resources
+      - path: Resources/MenuBarIcon.png
+        buildPhase: resources
+      - path: Resources/MenuBarIcon@2x.png
+        buildPhase: resources
+    dependencies:
+      - target: SwitchcraftCore
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.switchcraft.app
+        PRODUCT_NAME: Switchcraft
+        INFOPLIST_FILE: Resources/Info.plist
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks"
+  SwitchcraftTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: SwitchcraftTests
+    dependencies:
+      - target: SwitchcraftCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.switchcraft.tests
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  Switchcraft:
+    build:
+      targets:
+        Switchcraft: all
+        SwitchcraftTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - SwitchcraftTests
+    archive:
+      config: Release

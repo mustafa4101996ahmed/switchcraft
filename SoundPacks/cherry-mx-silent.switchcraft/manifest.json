@@ -1,0 +1,36 @@
+{
+  "category" : "Silent",
+  "credits" : "“Typing Fast_A01” by bonesawmgraw, freesound.org\/s\/572978, CC0 1.0.",
+  "deriveVelocityLayers" : true,
+  "description" : "Cherry MX Silent switches (dampened). Cut from a fast-typing recording; no separate key-ups.",
+  "formatVersion" : 1,
+  "gain" : 1,
+  "id" : "cherry-mx-silent",
+  "name" : "Cherry MX Silent",
+  "samples" : {
+    "alpha" : {
+      "hard" : [
+        "sounds\/alpha\/hard\/1.wav",
+        "sounds\/alpha\/hard\/2.wav",
+        "sounds\/alpha\/hard\/3.wav",
+        "sounds\/alpha\/hard\/4.wav",
+        "sounds\/alpha\/hard\/5.wav",
+        "sounds\/alpha\/hard\/6.wav",
+        "sounds\/alpha\/hard\/7.wav",
+        "sounds\/alpha\/hard\/8.wav",
+        "sounds\/alpha\/hard\/9.wav",
+        "sounds\/alpha\/hard\/10.wav",
+        "sounds\/alpha\/hard\/11.wav",
+        "sounds\/alpha\/hard\/12.wav",
+        "sounds\/alpha\/hard\/13.wav",
+        "sounds\/alpha\/hard\/14.wav",
+        "sounds\/alpha\/hard\/15.wav",
+        "sounds\/alpha\/hard\/16.wav",
+        "sounds\/alpha\/hard\/17.wav",
+        "sounds\/alpha\/hard\/18.wav",
+        "sounds\/alpha\/hard\/19.wav",
+        "sounds\/alpha\/hard\/20.wav"
+      ]
+    }
+  }
+}

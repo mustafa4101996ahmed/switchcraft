@@ -1,0 +1,935 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0502B1E49ED0817A739DFA63 /* TypingForceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F8A7840D4A0A35AA5C7552 /* TypingForceSettingsView.swift */; };
+		13C092556AED992263DE29C8 /* SwitchcraftCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		155906A1BC47B06F59FE63A9 /* SoundSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5A7151C4AEAEDC79DE9AE8 /* SoundSettingsView.swift */; };
+		194243FBCA477EF82DABA4C0 /* UnfairLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C21BDF96C7E69DB341A1E1 /* UnfairLock.swift */; };
+		1D77542C2B2AF50865988E16 /* DiagnosticsReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE54D9448F9D83A98FE21911 /* DiagnosticsReport.swift */; };
+		22E79D2E246C5E083A6E0C75 /* MenuBarIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C494047F2012A11B5FD2E8C4 /* MenuBarIcon.png */; };
+		23F8E8F99304CA56AF450A7D /* ImpactDetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC7273B178B89601F6413C5 /* ImpactDetectionTests.swift */; };
+		2E05E2843E69BC45C28AE21B /* MenuBarIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1500116F22EC106545EA6410 /* MenuBarIcon@2x.png */; };
+		35243AAA455D0560715847C4 /* SwitchcraftCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */; };
+		35E437A7BA51CF2F9D6E21B4 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45A5B04B4CD4BA5C2FCB77 /* Models.swift */; };
+		3A05A9138ECA52147E5B98AB /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 6583A7D79C358D999DB190D1 /* AppIcon.icns */; };
+		3D5F77D160932819D4A252D4 /* SoundEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A6E932E433C668835041E0 /* SoundEngine.swift */; };
+		4019DB402AD05979130835F5 /* MonotonicClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D92BBC38344AC236B49A76 /* MonotonicClock.swift */; };
+		42AB0EA3E8B2B84A881FFCA2 /* SoundPackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DE0332A71C1A6864406F2B /* SoundPackTests.swift */; };
+		4512E86279DAE050A6EEDE75 /* LayerDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8BE1739C7018F34C1AEFEF /* LayerDerivation.swift */; };
+		45A73242CE583400083DABEF /* ImpactGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BB1A6E0B49BEBEB70C0197 /* ImpactGraphView.swift */; };
+		46B382E397FC808666D40556 /* PipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB7D82D6B2A83A18B8A174 /* PipelineTests.swift */; };
+		4B91BBFB4FCF563076DC0CE0 /* KeyLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B03D448614ED647B43D659 /* KeyLayout.swift */; };
+		4C9867C85DC078582112C887 /* DiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21E2FD214F9D813E7B71BA6 /* DiagnosticsView.swift */; };
+		53FF2FA41455F7D271EACFCE /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3834D7B0EE426DEA3E1ADAE /* KeyboardMonitor.swift */; };
+		5AAD227FFF86A44566761EE6 /* ImpactAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1687602EDEF86FFE1D67995 /* ImpactAnalyzer.swift */; };
+		5ABE440B7450998F1CE60CA3 /* SoundPacks in Resources */ = {isa = PBXBuildFile; fileRef = 1899AC24A3B108DF1DE992E8 /* SoundPacks */; };
+		6005F4033F474DC3CD5900B9 /* SettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF7D91F268CCA38E59F583D /* SettingsStoreTests.swift */; };
+		63019CBB04582DE9FFB050A4 /* AlertBeepSuppressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F96494B7E9424C327F35D0 /* AlertBeepSuppressor.swift */; };
+		6410FFD280AAD9A701668A3D /* KeyClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FFE02A0A9BBFCA447A5141 /* KeyClassifier.swift */; };
+		663801881B5101775739E6CB /* SampleBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7160680F8BB019637155AEFB /* SampleBank.swift */; };
+		66A7A33D5ECD3AE6BA2A045F /* SyntheticSignals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F37127069357BFED148822 /* SyntheticSignals.swift */; };
+		686882503F7E490CBF017648 /* ImpactFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F61707EA2517F848CF7D278 /* ImpactFilter.swift */; };
+		69DA528B5FE3A7CCFA747384 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B290D3564BD83CE6B9AC1F /* Log.swift */; };
+		6F9F8E08B5D5ABACB79CE3FF /* SwitchcraftCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7318C59F23BE9370E3CA1F75 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB1B1A9E7FDF7713BA86391 /* SettingsStore.swift */; };
+		7405FF52DC297EF6D0C7C262 /* SwitchcraftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9175A1493DE2007D75A0F85 /* SwitchcraftApp.swift */; };
+		77C599455EA2F920B430AF56 /* VelocityMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E4CA61BB8BC9A1755AFAFB /* VelocityMapper.swift */; };
+		8606043236675010AA9DF467 /* SystemMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A184038FF766ED8443A23A /* SystemMonitor.swift */; };
+		884A3FB7CE41FC92A979481B /* WindowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758882E1463377AF04F46DE8 /* WindowCoordinator.swift */; };
+		8D0E8BD49A50333D207CE611 /* SampleRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546C4EBE63CF967D37066519 /* SampleRing.swift */; };
+		8E612D34EB0D1D3B88AD1807 /* ExclusionsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB55322CAE9BBDFAA75C2828 /* ExclusionsSettingsView.swift */; };
+		94F3F4CED6EDBF687D5143CC /* PipelineConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F03CE9EB6AA7D66B5710342 /* PipelineConfig.swift */; };
+		954FEEF20A3FCD32BF1236AB /* EarlyReflections.swift in Sources */ = {isa = PBXBuildFile; fileRef = A136129693E7FDA922B96529 /* EarlyReflections.swift */; };
+		9CF5C8AE0443C3795920A1BF /* PipelineStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D147464C37666D7D9B9FDF6F /* PipelineStats.swift */; };
+		A6001EF8FEBA8F5153056D0A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3992C85F84C031026C01C638 /* OnboardingView.swift */; };
+		AADCBF8479D6A308A7181903 /* SoundPack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E0D18337DF0F0F6A4433D1 /* SoundPack.swift */; };
+		B7678BF47EC4EACA3ACD3B5A /* VoiceMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F2684F0EB734506EB699A6 /* VoiceMixer.swift */; };
+		BA6425077196077A165489FC /* SwitchcraftCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */; };
+		BDD5AB5A5A68DA0C56F07430 /* RealismTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DB51B781893EDC17A66543 /* RealismTests.swift */; };
+		C689E95975EE4AE183E3D39B /* SoundPackLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EC460D571F0DEBC1935CD /* SoundPackLibrary.swift */; };
+		C8DCA2147466C39F4D1C4086 /* Calibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48347C46A4E54873BFB6098 /* Calibration.swift */; };
+		CC9132D57037E2C3276EF58A /* KeyClassifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA27FF43E7C42D40721441BF /* KeyClassifierTests.swift */; };
+		DA9F3E2E872AED4E242AAA43 /* SnapshotRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8529E9853CEF3F1340F98E /* SnapshotRenderer.swift */; };
+		DC7040A42404F346BA183B5C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2286AF13EA7FF0FD9D9E9D5 /* SettingsView.swift */; };
+		DEF4E5C158BB4C022FA62021 /* TypingPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271C64E29D1929D97DA77864 /* TypingPipeline.swift */; };
+		E30EE832C1F0A3DC3F9C75FD /* HardwareInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C814D28372409B1FD5E4BD /* HardwareInfo.swift */; };
+		E4DC4952BF96C4C0FFD84ED0 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658B4CFEF9F265BBF79BDBE /* Services.swift */; };
+		E60749F1B9C4F3607AB7CE8B /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A80643DBE16301C447C8A62 /* MenuBarView.swift */; };
+		EEB11149E1645F12A7BB2105 /* PermissionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9181A5EB01127F51EABFD235 /* PermissionsService.swift */; };
+		F22BEE21179B6B43B094AD6E /* VelocityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6207EC6056CC92A3EE4691 /* VelocityMappingTests.swift */; };
+		F23C9BFE9CE36A6657D966BC /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160394AD871DD52D3A9A1D40 /* AppModel.swift */; };
+		F4E853B3302D9067F29700A3 /* HIDAccelerometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83592E1CE189A3D950446D7F /* HIDAccelerometer.swift */; };
+		F9A18B737ED1C365FAAB2CC7 /* CalibrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742B544002A48FD47A4D8706 /* CalibrationView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4F5C703DCB3C5AE8911DB8C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88834B6D82910F4AD1B2AEA5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 09CF4CBF317B09295094C24B;
+			remoteInfo = SwitchcraftCore;
+		};
+		66F457E5ED6046245456000B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88834B6D82910F4AD1B2AEA5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 09CF4CBF317B09295094C24B;
+			remoteInfo = SwitchcraftCore;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5339FB498E73512AE685A39C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				13C092556AED992263DE29C8 /* SwitchcraftCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7813D73213297DD092C95370 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6F9F8E08B5D5ABACB79CE3FF /* SwitchcraftCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		02F96494B7E9424C327F35D0 /* AlertBeepSuppressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertBeepSuppressor.swift; sourceTree = "<group>"; };
+		0C8529E9853CEF3F1340F98E /* SnapshotRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotRenderer.swift; sourceTree = "<group>"; };
+		11F37127069357BFED148822 /* SyntheticSignals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntheticSignals.swift; sourceTree = "<group>"; };
+		14E0D18337DF0F0F6A4433D1 /* SoundPack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPack.swift; sourceTree = "<group>"; };
+		1500116F22EC106545EA6410 /* MenuBarIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenuBarIcon@2x.png"; sourceTree = "<group>"; };
+		160394AD871DD52D3A9A1D40 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		1899AC24A3B108DF1DE992E8 /* SoundPacks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SoundPacks; sourceTree = SOURCE_ROOT; };
+		271C64E29D1929D97DA77864 /* TypingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingPipeline.swift; sourceTree = "<group>"; };
+		2BF7D91F268CCA38E59F583D /* SettingsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStoreTests.swift; sourceTree = "<group>"; };
+		2FC7273B178B89601F6413C5 /* ImpactDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImpactDetectionTests.swift; sourceTree = "<group>"; };
+		33C814D28372409B1FD5E4BD /* HardwareInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwareInfo.swift; sourceTree = "<group>"; };
+		35F2684F0EB734506EB699A6 /* VoiceMixer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMixer.swift; sourceTree = "<group>"; };
+		37BB1A6E0B49BEBEB70C0197 /* ImpactGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImpactGraphView.swift; sourceTree = "<group>"; };
+		3992C85F84C031026C01C638 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		3A80643DBE16301C447C8A62 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		3F03CE9EB6AA7D66B5710342 /* PipelineConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineConfig.swift; sourceTree = "<group>"; };
+		411968536B8984E353C1AC73 /* Switchcraft.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Switchcraft.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50D92BBC38344AC236B49A76 /* MonotonicClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonotonicClock.swift; sourceTree = "<group>"; };
+		546C4EBE63CF967D37066519 /* SampleRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleRing.swift; sourceTree = "<group>"; };
+		5B8BE1739C7018F34C1AEFEF /* LayerDerivation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerDerivation.swift; sourceTree = "<group>"; };
+		64FFE02A0A9BBFCA447A5141 /* KeyClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyClassifier.swift; sourceTree = "<group>"; };
+		6583A7D79C358D999DB190D1 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		69A6E932E433C668835041E0 /* SoundEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundEngine.swift; sourceTree = "<group>"; };
+		7160680F8BB019637155AEFB /* SampleBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBank.swift; sourceTree = "<group>"; };
+		742B544002A48FD47A4D8706 /* CalibrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationView.swift; sourceTree = "<group>"; };
+		758882E1463377AF04F46DE8 /* WindowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowCoordinator.swift; sourceTree = "<group>"; };
+		7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwitchcraftCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80F9EF419B72801FE546B77F /* SwitchcraftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwitchcraftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		81E4CA61BB8BC9A1755AFAFB /* VelocityMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VelocityMapper.swift; sourceTree = "<group>"; };
+		83592E1CE189A3D950446D7F /* HIDAccelerometer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDAccelerometer.swift; sourceTree = "<group>"; };
+		8B6207EC6056CC92A3EE4691 /* VelocityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VelocityMappingTests.swift; sourceTree = "<group>"; };
+		9181A5EB01127F51EABFD235 /* PermissionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsService.swift; sourceTree = "<group>"; };
+		9D45A5B04B4CD4BA5C2FCB77 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		9EDB7D82D6B2A83A18B8A174 /* PipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineTests.swift; sourceTree = "<group>"; };
+		9F61707EA2517F848CF7D278 /* ImpactFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImpactFilter.swift; sourceTree = "<group>"; };
+		A136129693E7FDA922B96529 /* EarlyReflections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarlyReflections.swift; sourceTree = "<group>"; };
+		A21E2FD214F9D813E7B71BA6 /* DiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsView.swift; sourceTree = "<group>"; };
+		A7B03D448614ED647B43D659 /* KeyLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyLayout.swift; sourceTree = "<group>"; };
+		A9175A1493DE2007D75A0F85 /* SwitchcraftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchcraftApp.swift; sourceTree = "<group>"; };
+		A9DE0332A71C1A6864406F2B /* SoundPackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPackTests.swift; sourceTree = "<group>"; };
+		B1687602EDEF86FFE1D67995 /* ImpactAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImpactAnalyzer.swift; sourceTree = "<group>"; };
+		B3834D7B0EE426DEA3E1ADAE /* KeyboardMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
+		B82EC460D571F0DEBC1935CD /* SoundPackLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPackLibrary.swift; sourceTree = "<group>"; };
+		C494047F2012A11B5FD2E8C4 /* MenuBarIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MenuBarIcon.png; sourceTree = "<group>"; };
+		D147464C37666D7D9B9FDF6F /* PipelineStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineStats.swift; sourceTree = "<group>"; };
+		D2286AF13EA7FF0FD9D9E9D5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D3F8A7840D4A0A35AA5C7552 /* TypingForceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingForceSettingsView.swift; sourceTree = "<group>"; };
+		D6B290D3564BD83CE6B9AC1F /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		DB55322CAE9BBDFAA75C2828 /* ExclusionsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExclusionsSettingsView.swift; sourceTree = "<group>"; };
+		DDB1B1A9E7FDF7713BA86391 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		DE54D9448F9D83A98FE21911 /* DiagnosticsReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsReport.swift; sourceTree = "<group>"; };
+		E658B4CFEF9F265BBF79BDBE /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		E6A184038FF766ED8443A23A /* SystemMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMonitor.swift; sourceTree = "<group>"; };
+		E6C21BDF96C7E69DB341A1E1 /* UnfairLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfairLock.swift; sourceTree = "<group>"; };
+		EA27FF43E7C42D40721441BF /* KeyClassifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyClassifierTests.swift; sourceTree = "<group>"; };
+		F2DB51B781893EDC17A66543 /* RealismTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealismTests.swift; sourceTree = "<group>"; };
+		F48347C46A4E54873BFB6098 /* Calibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calibration.swift; sourceTree = "<group>"; };
+		FA5A7151C4AEAEDC79DE9AE8 /* SoundSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A3DDB926145F558D0429E76D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35243AAA455D0560715847C4 /* SwitchcraftCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B80537335D805842D416BF59 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA6425077196077A165489FC /* SwitchcraftCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0295FFAB04F10A9FEA383D8D /* SoundPacks */ = {
+			isa = PBXGroup;
+			children = (
+				A136129693E7FDA922B96529 /* EarlyReflections.swift */,
+				5B8BE1739C7018F34C1AEFEF /* LayerDerivation.swift */,
+				14E0D18337DF0F0F6A4433D1 /* SoundPack.swift */,
+			);
+			path = SoundPacks;
+			sourceTree = "<group>";
+		};
+		04C1F74711184A54A6E10404 /* SwitchcraftTests */ = {
+			isa = PBXGroup;
+			children = (
+				2FC7273B178B89601F6413C5 /* ImpactDetectionTests.swift */,
+				EA27FF43E7C42D40721441BF /* KeyClassifierTests.swift */,
+				9EDB7D82D6B2A83A18B8A174 /* PipelineTests.swift */,
+				F2DB51B781893EDC17A66543 /* RealismTests.swift */,
+				2BF7D91F268CCA38E59F583D /* SettingsStoreTests.swift */,
+				A9DE0332A71C1A6864406F2B /* SoundPackTests.swift */,
+				8B6207EC6056CC92A3EE4691 /* VelocityMappingTests.swift */,
+			);
+			path = SwitchcraftTests;
+			sourceTree = "<group>";
+		};
+		1362C666D249BB4AD8133029 /* SwitchcraftCore */ = {
+			isa = PBXGroup;
+			children = (
+				14AD0EBFBC1AE8B44C5A8535 /* ImpactDetection */,
+				BFD75A8AEC8EAC7C6EB72ED4 /* Keyboard */,
+				A14C0AD497B5A8FC793E03F6 /* Models */,
+				6883B085287FEB147B660A85 /* Pipeline */,
+				B8AFFD293702D85B3DDA5B20 /* Sensors */,
+				C4E1E546F5903D996BA80AE7 /* Settings */,
+				0295FFAB04F10A9FEA383D8D /* SoundPacks */,
+				683F68346361665ED4719667 /* Utilities */,
+			);
+			path = SwitchcraftCore;
+			sourceTree = "<group>";
+		};
+		14AD0EBFBC1AE8B44C5A8535 /* ImpactDetection */ = {
+			isa = PBXGroup;
+			children = (
+				F48347C46A4E54873BFB6098 /* Calibration.swift */,
+				B1687602EDEF86FFE1D67995 /* ImpactAnalyzer.swift */,
+				9F61707EA2517F848CF7D278 /* ImpactFilter.swift */,
+				11F37127069357BFED148822 /* SyntheticSignals.swift */,
+				81E4CA61BB8BC9A1755AFAFB /* VelocityMapper.swift */,
+			);
+			path = ImpactDetection;
+			sourceTree = "<group>";
+		};
+		19034343222B8BCADC1AABBE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				411968536B8984E353C1AC73 /* Switchcraft.app */,
+				7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */,
+				80F9EF419B72801FE546B77F /* SwitchcraftTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3FD9032FC0E7F64B4E8891F3 = {
+			isa = PBXGroup;
+			children = (
+				1899AC24A3B108DF1DE992E8 /* SoundPacks */,
+				DDF93DFAB9F2C94B0C32FE07 /* Resources */,
+				45F7A7F64F562A79A189535D /* Switchcraft */,
+				1362C666D249BB4AD8133029 /* SwitchcraftCore */,
+				04C1F74711184A54A6E10404 /* SwitchcraftTests */,
+				19034343222B8BCADC1AABBE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		45F7A7F64F562A79A189535D /* Switchcraft */ = {
+			isa = PBXGroup;
+			children = (
+				930BDCCE82B94970DE40761C /* Application */,
+				FD43F724B7BCB5019AB5427B /* Audio */,
+				A5D0D97DF371F02DA86317E6 /* Diagnostics */,
+				56B4BE03F62EA055D757C469 /* Keyboard */,
+				CDDD1C75943790B015C9AD6D /* MenuBar */,
+				4CE673745096C33FBE02DDA8 /* Onboarding */,
+				6DC86FB4DE7216D081C6909B /* Permissions */,
+				CA9BFC040AAD5AA1CC3E1AB5 /* Preferences */,
+				92AF8E2BFBFEB569ED0FFC80 /* Sensors */,
+				D971A47E7AB52021E37CCACD /* SoundPacks */,
+			);
+			path = Switchcraft;
+			sourceTree = "<group>";
+		};
+		4CE673745096C33FBE02DDA8 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				742B544002A48FD47A4D8706 /* CalibrationView.swift */,
+				3992C85F84C031026C01C638 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		56B4BE03F62EA055D757C469 /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				B3834D7B0EE426DEA3E1ADAE /* KeyboardMonitor.swift */,
+			);
+			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		683F68346361665ED4719667 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D6B290D3564BD83CE6B9AC1F /* Log.swift */,
+				50D92BBC38344AC236B49A76 /* MonotonicClock.swift */,
+				E6C21BDF96C7E69DB341A1E1 /* UnfairLock.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		6883B085287FEB147B660A85 /* Pipeline */ = {
+			isa = PBXGroup;
+			children = (
+				3F03CE9EB6AA7D66B5710342 /* PipelineConfig.swift */,
+				D147464C37666D7D9B9FDF6F /* PipelineStats.swift */,
+				E658B4CFEF9F265BBF79BDBE /* Services.swift */,
+				271C64E29D1929D97DA77864 /* TypingPipeline.swift */,
+			);
+			path = Pipeline;
+			sourceTree = "<group>";
+		};
+		6DC86FB4DE7216D081C6909B /* Permissions */ = {
+			isa = PBXGroup;
+			children = (
+				9181A5EB01127F51EABFD235 /* PermissionsService.swift */,
+			);
+			path = Permissions;
+			sourceTree = "<group>";
+		};
+		92AF8E2BFBFEB569ED0FFC80 /* Sensors */ = {
+			isa = PBXGroup;
+			children = (
+				33C814D28372409B1FD5E4BD /* HardwareInfo.swift */,
+				83592E1CE189A3D950446D7F /* HIDAccelerometer.swift */,
+			);
+			path = Sensors;
+			sourceTree = "<group>";
+		};
+		930BDCCE82B94970DE40761C /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				02F96494B7E9424C327F35D0 /* AlertBeepSuppressor.swift */,
+				160394AD871DD52D3A9A1D40 /* AppModel.swift */,
+				A9175A1493DE2007D75A0F85 /* SwitchcraftApp.swift */,
+				E6A184038FF766ED8443A23A /* SystemMonitor.swift */,
+				758882E1463377AF04F46DE8 /* WindowCoordinator.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		A14C0AD497B5A8FC793E03F6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9D45A5B04B4CD4BA5C2FCB77 /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A5D0D97DF371F02DA86317E6 /* Diagnostics */ = {
+			isa = PBXGroup;
+			children = (
+				DE54D9448F9D83A98FE21911 /* DiagnosticsReport.swift */,
+				A21E2FD214F9D813E7B71BA6 /* DiagnosticsView.swift */,
+				37BB1A6E0B49BEBEB70C0197 /* ImpactGraphView.swift */,
+				0C8529E9853CEF3F1340F98E /* SnapshotRenderer.swift */,
+			);
+			path = Diagnostics;
+			sourceTree = "<group>";
+		};
+		B8AFFD293702D85B3DDA5B20 /* Sensors */ = {
+			isa = PBXGroup;
+			children = (
+				546C4EBE63CF967D37066519 /* SampleRing.swift */,
+			);
+			path = Sensors;
+			sourceTree = "<group>";
+		};
+		BFD75A8AEC8EAC7C6EB72ED4 /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				64FFE02A0A9BBFCA447A5141 /* KeyClassifier.swift */,
+				A7B03D448614ED647B43D659 /* KeyLayout.swift */,
+			);
+			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		C4E1E546F5903D996BA80AE7 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DDB1B1A9E7FDF7713BA86391 /* SettingsStore.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		CA9BFC040AAD5AA1CC3E1AB5 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				DB55322CAE9BBDFAA75C2828 /* ExclusionsSettingsView.swift */,
+				D2286AF13EA7FF0FD9D9E9D5 /* SettingsView.swift */,
+				FA5A7151C4AEAEDC79DE9AE8 /* SoundSettingsView.swift */,
+				D3F8A7840D4A0A35AA5C7552 /* TypingForceSettingsView.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		CDDD1C75943790B015C9AD6D /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				3A80643DBE16301C447C8A62 /* MenuBarView.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		D971A47E7AB52021E37CCACD /* SoundPacks */ = {
+			isa = PBXGroup;
+			children = (
+				B82EC460D571F0DEBC1935CD /* SoundPackLibrary.swift */,
+			);
+			path = SoundPacks;
+			sourceTree = "<group>";
+		};
+		DDF93DFAB9F2C94B0C32FE07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6583A7D79C358D999DB190D1 /* AppIcon.icns */,
+				C494047F2012A11B5FD2E8C4 /* MenuBarIcon.png */,
+				1500116F22EC106545EA6410 /* MenuBarIcon@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FD43F724B7BCB5019AB5427B /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				7160680F8BB019637155AEFB /* SampleBank.swift */,
+				69A6E932E433C668835041E0 /* SoundEngine.swift */,
+				35F2684F0EB734506EB699A6 /* VoiceMixer.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		09CF4CBF317B09295094C24B /* SwitchcraftCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4C02EAE4647780DB67A2B31 /* Build configuration list for PBXNativeTarget "SwitchcraftCore" */;
+			buildPhases = (
+				D2A9ED24BA2B4E22972BB55E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwitchcraftCore;
+			packageProductDependencies = (
+			);
+			productName = SwitchcraftCore;
+			productReference = 7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		0CDC684053E8353E9EEB8BAF /* Switchcraft */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C1793AAA2727C8833AF95F7 /* Build configuration list for PBXNativeTarget "Switchcraft" */;
+			buildPhases = (
+				200D1075D5FEC07F46FE0624 /* Sources */,
+				703C2F24DA34BD0C7B3CCD26 /* Resources */,
+				B80537335D805842D416BF59 /* Frameworks */,
+				7813D73213297DD092C95370 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				34445A2B7A9E268450BDD3D7 /* PBXTargetDependency */,
+			);
+			name = Switchcraft;
+			packageProductDependencies = (
+			);
+			productName = Switchcraft;
+			productReference = 411968536B8984E353C1AC73 /* Switchcraft.app */;
+			productType = "com.apple.product-type.application";
+		};
+		96A5CFF94A10C824C5A68114 /* SwitchcraftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 704B73B25071744F1B7E377C /* Build configuration list for PBXNativeTarget "SwitchcraftTests" */;
+			buildPhases = (
+				D86A52F22B59892BC3187411 /* Sources */,
+				A3DDB926145F558D0429E76D /* Frameworks */,
+				5339FB498E73512AE685A39C /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6FC6FB3FAE5FB34BFD407959 /* PBXTargetDependency */,
+			);
+			name = SwitchcraftTests;
+			packageProductDependencies = (
+			);
+			productName = SwitchcraftTests;
+			productReference = 80F9EF419B72801FE546B77F /* SwitchcraftTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		88834B6D82910F4AD1B2AEA5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					09CF4CBF317B09295094C24B = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					0CDC684053E8353E9EEB8BAF = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					96A5CFF94A10C824C5A68114 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = D5627FE62C20A5F9D2522004 /* Build configuration list for PBXProject "Switchcraft" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 3FD9032FC0E7F64B4E8891F3;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 19034343222B8BCADC1AABBE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				09CF4CBF317B09295094C24B /* SwitchcraftCore */,
+				0CDC684053E8353E9EEB8BAF /* Switchcraft */,
+				96A5CFF94A10C824C5A68114 /* SwitchcraftTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		703C2F24DA34BD0C7B3CCD26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A05A9138ECA52147E5B98AB /* AppIcon.icns in Resources */,
+				22E79D2E246C5E083A6E0C75 /* MenuBarIcon.png in Resources */,
+				2E05E2843E69BC45C28AE21B /* MenuBarIcon@2x.png in Resources */,
+				5ABE440B7450998F1CE60CA3 /* SoundPacks in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		200D1075D5FEC07F46FE0624 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63019CBB04582DE9FFB050A4 /* AlertBeepSuppressor.swift in Sources */,
+				F23C9BFE9CE36A6657D966BC /* AppModel.swift in Sources */,
+				F9A18B737ED1C365FAAB2CC7 /* CalibrationView.swift in Sources */,
+				1D77542C2B2AF50865988E16 /* DiagnosticsReport.swift in Sources */,
+				4C9867C85DC078582112C887 /* DiagnosticsView.swift in Sources */,
+				8E612D34EB0D1D3B88AD1807 /* ExclusionsSettingsView.swift in Sources */,
+				F4E853B3302D9067F29700A3 /* HIDAccelerometer.swift in Sources */,
+				E30EE832C1F0A3DC3F9C75FD /* HardwareInfo.swift in Sources */,
+				45A73242CE583400083DABEF /* ImpactGraphView.swift in Sources */,
+				53FF2FA41455F7D271EACFCE /* KeyboardMonitor.swift in Sources */,
+				E60749F1B9C4F3607AB7CE8B /* MenuBarView.swift in Sources */,
+				A6001EF8FEBA8F5153056D0A /* OnboardingView.swift in Sources */,
+				EEB11149E1645F12A7BB2105 /* PermissionsService.swift in Sources */,
+				663801881B5101775739E6CB /* SampleBank.swift in Sources */,
+				DC7040A42404F346BA183B5C /* SettingsView.swift in Sources */,
+				DA9F3E2E872AED4E242AAA43 /* SnapshotRenderer.swift in Sources */,
+				3D5F77D160932819D4A252D4 /* SoundEngine.swift in Sources */,
+				C689E95975EE4AE183E3D39B /* SoundPackLibrary.swift in Sources */,
+				155906A1BC47B06F59FE63A9 /* SoundSettingsView.swift in Sources */,
+				7405FF52DC297EF6D0C7C262 /* SwitchcraftApp.swift in Sources */,
+				8606043236675010AA9DF467 /* SystemMonitor.swift in Sources */,
+				0502B1E49ED0817A739DFA63 /* TypingForceSettingsView.swift in Sources */,
+				B7678BF47EC4EACA3ACD3B5A /* VoiceMixer.swift in Sources */,
+				884A3FB7CE41FC92A979481B /* WindowCoordinator.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2A9ED24BA2B4E22972BB55E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8DCA2147466C39F4D1C4086 /* Calibration.swift in Sources */,
+				954FEEF20A3FCD32BF1236AB /* EarlyReflections.swift in Sources */,
+				5AAD227FFF86A44566761EE6 /* ImpactAnalyzer.swift in Sources */,
+				686882503F7E490CBF017648 /* ImpactFilter.swift in Sources */,
+				6410FFD280AAD9A701668A3D /* KeyClassifier.swift in Sources */,
+				4B91BBFB4FCF563076DC0CE0 /* KeyLayout.swift in Sources */,
+				4512E86279DAE050A6EEDE75 /* LayerDerivation.swift in Sources */,
+				69DA528B5FE3A7CCFA747384 /* Log.swift in Sources */,
+				35E437A7BA51CF2F9D6E21B4 /* Models.swift in Sources */,
+				4019DB402AD05979130835F5 /* MonotonicClock.swift in Sources */,
+				94F3F4CED6EDBF687D5143CC /* PipelineConfig.swift in Sources */,
+				9CF5C8AE0443C3795920A1BF /* PipelineStats.swift in Sources */,
+				8D0E8BD49A50333D207CE611 /* SampleRing.swift in Sources */,
+				E4DC4952BF96C4C0FFD84ED0 /* Services.swift in Sources */,
+				7318C59F23BE9370E3CA1F75 /* SettingsStore.swift in Sources */,
+				AADCBF8479D6A308A7181903 /* SoundPack.swift in Sources */,
+				66A7A33D5ECD3AE6BA2A045F /* SyntheticSignals.swift in Sources */,
+				DEF4E5C158BB4C022FA62021 /* TypingPipeline.swift in Sources */,
+				194243FBCA477EF82DABA4C0 /* UnfairLock.swift in Sources */,
+				77C599455EA2F920B430AF56 /* VelocityMapper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D86A52F22B59892BC3187411 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23F8E8F99304CA56AF450A7D /* ImpactDetectionTests.swift in Sources */,
+				CC9132D57037E2C3276EF58A /* KeyClassifierTests.swift in Sources */,
+				46B382E397FC808666D40556 /* PipelineTests.swift in Sources */,
+				BDD5AB5A5A68DA0C56F07430 /* RealismTests.swift in Sources */,
+				6005F4033F474DC3CD5900B9 /* SettingsStoreTests.swift in Sources */,
+				42AB0EA3E8B2B84A881FFCA2 /* SoundPackTests.swift in Sources */,
+				F22BEE21179B6B43B094AD6E /* VelocityMappingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		34445A2B7A9E268450BDD3D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 09CF4CBF317B09295094C24B /* SwitchcraftCore */;
+			targetProxy = 4F5C703DCB3C5AE8911DB8C3 /* PBXContainerItemProxy */;
+		};
+		6FC6FB3FAE5FB34BFD407959 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 09CF4CBF317B09295094C24B /* SwitchcraftCore */;
+			targetProxy = 66F457E5ED6046245456000B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		02F56EC7F8CB6E8558D813BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.switchcraft.core;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		31F536D62EC1496772819F65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		46A2CA25C61E3C76114CF639 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.switchcraft.app;
+				PRODUCT_NAME = Switchcraft;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4C8D97099603A71D50BAD120 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.switchcraft.tests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		87D4EDC1B69E325C073BEACD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.switchcraft.core;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		8E0B5A87839A4691655AAB07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		ADA5EE22AA25245AEA8CD51D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.switchcraft.tests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		BB206C5B6F37CB54C7A100C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.switchcraft.app;
+				PRODUCT_NAME = Switchcraft;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2C1793AAA2727C8833AF95F7 /* Build configuration list for PBXNativeTarget "Switchcraft" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB206C5B6F37CB54C7A100C3 /* Debug */,
+				46A2CA25C61E3C76114CF639 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		704B73B25071744F1B7E377C /* Build configuration list for PBXNativeTarget "SwitchcraftTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADA5EE22AA25245AEA8CD51D /* Debug */,
+				4C8D97099603A71D50BAD120 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C4C02EAE4647780DB67A2B31 /* Build configuration list for PBXNativeTarget "SwitchcraftCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02F56EC7F8CB6E8558D813BF /* Debug */,
+				87D4EDC1B69E325C073BEACD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D5627FE62C20A5F9D2522004 /* Build configuration list for PBXProject "Switchcraft" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E0B5A87839A4691655AAB07 /* Debug */,
+				31F536D62EC1496772819F65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 88834B6D82910F4AD1B2AEA5 /* Project object */;
+}
