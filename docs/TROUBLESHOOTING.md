@@ -62,6 +62,14 @@ If alerts ever stay silent, System Settings › Sound › *Alert volume* resets 
   accurate velocity. 0 ms uses only the finger-strike impulse.
 - Bluetooth headphones add 100–250 ms of their own. Use built-in speakers or wired headphones.
 
+## An echo after every key
+
+Fixed in the current build. Three things used to stack up: a room reverb whose reflections arrived
+30–55 ms after the click, key-ups played as loud as the press, and source recordings with a
+second blip ~50 ms after the hit. Room ambience now uses reflections within 15 ms, key-ups sit at
+least 9 dB under the press, and every recording ends at its first silence. If you still hear a
+repeat, turn off Settings › General › *Play key-up sounds* and tell us which switch.
+
 ## Clicks, crackles, distortion
 
 - Lower the volume. The limiter (Diagnostics › Audio › *Limiter*) prevents clipping but

@@ -1,5 +1,6 @@
 {
   "category" : "Clicky",
+  "color" : "#4F7FC0",
   "credits" : "Recordings from tplai\/kbsim, MIT License, Copyright (c) Thomas Lai.",
   "deriveVelocityLayers" : true,
   "description" : "Vintage Alps clicky switches.",

@@ -1,81 +1,101 @@
 import SwiftUI
 import SwitchcraftCore
 
-/// The menu-bar panel. Compact, system controls only.
+/// The menu-bar panel: what you change every day, and a live view of how hard you're typing.
 struct MenuBarView: View {
     @Environment(AppModel.self) private var model
 
     var body: some View {
         @Bindable var settings = model.settings
-        VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Text("Switchcraft").font(.headline)
-                Spacer()
-                Circle()
-                    .fill(statusColor)
-                    .frame(width: 7, height: 7)
-                Text(settings.isEnabled ? "On" : "Off")
-                    .foregroundStyle(.secondary)
-                Toggle("Enabled", isOn: $settings.isEnabled)
-                    .toggleStyle(.switch)
-                    .controlSize(.small)
-                    .labelsHidden()
-            }
+        VStack(alignment: .leading, spacing: 12) {
+            header(settings: $settings.isEnabled)
 
-            if !model.permissions.inputMonitoringGranted {
+            if model.listeningStatus == .needsPermission {
                 PermissionBanner()
+            } else if case let .notListening(reason) = model.listeningStatus {
+                Text(reason).font(.callout).foregroundStyle(.secondary)
             }
 
-            Picker(selection: $settings.selectedPackID) {
-                ForEach(model.library.packs) { pack in
-                    Text(pack.name).tag(pack.id)
-                }
-            } label: {
-                Label("Sound", systemImage: "speaker.wave.2")
-            }
-
-            labeledSlider("Volume", systemImage: "speaker.wave.3", value: $settings.volume)
-            labeledSlider("Sensitivity", systemImage: "hand.tap", value: $settings.curve.sensitivity,
-                          minLabel: "Soft", maxLabel: "Aggressive")
-
-            VStack(alignment: .leading, spacing: 4) {
-                Label("Velocity Detection", systemImage: "waveform.path")
-                Picker("Velocity Detection", selection: $settings.velocityMode) {
-                    ForEach(VelocityMode.allCases, id: \.self) { mode in
-                        Text(mode.displayName).tag(mode)
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("Typing force")
+                    Spacer()
+                    if settings.velocityMode == .fixed {
+                        Text("Fixed").foregroundStyle(.secondary)
+                    } else if settings.velocityMode == .accelerometer && !model.displayedSensorState.isReadable {
+                        Text("Sensor off · fixed").foregroundStyle(.secondary)
                     }
                 }
-                .pickerStyle(.segmented)
-                .labelsHidden()
-                if settings.velocityMode == .accelerometer && !model.displayedSensorState.isReadable {
-                    Text("Sensor unavailable — using fixed velocity.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                .font(.callout)
+                TypingForceMeter()
+            }
+
+            Divider()
+
+            HStack(spacing: 8) {
+                StemSwatch(hex: model.activePack?.manifest.color, size: 12)
+                Picker("Switch", selection: $settings.selectedPackID) {
+                    ForEach(model.library.packs) { pack in
+                        Text(pack.name).tag(pack.id)
+                    }
                 }
+                .labelsHidden()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .help("Which switch you hear")
             }
+
+            slider("Volume", systemImage: "speaker.wave.2", value: $settings.volume)
+            slider("Sensitivity", systemImage: "hand.tap", value: $settings.curve.sensitivity,
+                   range: ("Soft", "Aggressive"),
+                   help: "How hard you need to press to reach the loud end. Aggressive makes light typing sound harder.")
 
             Divider()
 
-            menuButton("Calibrate Typing Force…", systemImage: "dial.medium") { open(.calibration) }
-            menuButton("Settings…", systemImage: "gearshape") { open(.settings) }
-            menuButton("Diagnostics…", systemImage: "stethoscope") { open(.diagnostics) }
+            // Rows keep their hover highlight inside the panel edge while their icons line up
+            // with the labels above.
+            VStack(alignment: .leading, spacing: 0) {
+                row("Calibrate Typing Force…", systemImage: "dial.medium") { open(.calibration) }
+                row("Settings…", systemImage: "gearshape") { open(.settings) }
+                    .keyboardShortcut(",", modifiers: .command)
+                row("Diagnostics…", systemImage: "stethoscope") { open(.diagnostics) }
+            }
+            .padding(.horizontal, -6)
 
             Divider()
 
-            Toggle(isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) })) {
-                Label("Launch at Login", systemImage: "power")
+            VStack(alignment: .leading, spacing: 0) {
+                HStack {
+                    Label("Launch at Login", systemImage: "power").labelStyle(FixedIconLabelStyle())
+                    Spacer()
+                    Toggle("Launch at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
+                        .toggleStyle(.checkbox)
+                        .labelsHidden()
+                }
+                .padding(.horizontal, 6)
+                .padding(.vertical, 4)
+                row("Quit Switchcraft", systemImage: "xmark.circle") { NSApp.terminate(nil) }
+                    .keyboardShortcut("q", modifiers: .command)
             }
-            .toggleStyle(.checkbox)
-
-            menuButton("Quit Switchcraft", systemImage: "xmark.circle") { NSApp.terminate(nil) }
+            .padding(.horizontal, -6)
         }
         .padding(14)
-        .frame(width: 290)
+        .frame(width: 300)
     }
 
-    private var statusColor: Color {
-        guard model.settings.isEnabled else { return .secondary }
-        return model.keyboardRunning ? .green : .orange
+    private func header(settings isEnabled: Binding<Bool>) -> some View {
+        HStack(alignment: .center) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Switchcraft").font(.headline)
+                StatusLabel(kind: model.listeningStatus.kind, text: model.listeningStatus.text)
+                    .font(.callout)
+            }
+            .accessibilityElement(children: .combine)
+            Spacer()
+            Toggle("Enabled", isOn: isEnabled)
+                .toggleStyle(.switch)
+                .labelsHidden()
+                .help("Turn key sounds on or off (\(GlobalHotKey.display) from any app)")
+        }
     }
 
     private func open(_ kind: WindowCoordinator.Kind) {
@@ -84,29 +104,34 @@ struct MenuBarView: View {
         model.windows.show(kind, model: model)
     }
 
-    private func labeledSlider(_ title: String, systemImage: String, value: Binding<Double>,
-                               minLabel: String? = nil, maxLabel: String? = nil) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+    private func slider(_ title: String, systemImage: String, value: Binding<Double>,
+                        range: (String, String)? = nil, help: String? = nil) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
             Label(title, systemImage: systemImage)
-            Slider(value: value, in: 0...1) {
-                Text(title)
-            } minimumValueLabel: {
-                Text(minLabel ?? "").font(.caption2).foregroundStyle(.secondary)
-            } maximumValueLabel: {
-                Text(maxLabel ?? "").font(.caption2).foregroundStyle(.secondary)
+                .labelStyle(FixedIconLabelStyle())
+                .accessibilityHidden(true)
+            Slider(value: value, in: 0...1) { Text(title) }
+                .labelsHidden()
+                .controlSize(.small)
+                .help(help ?? title)
+            if let range {
+                HStack {
+                    Text(range.0)
+                    Spacer()
+                    Text(range.1)
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .accessibilityHidden(true)
             }
-            .labelsHidden()
-            .controlSize(.small)
         }
     }
 
-    private func menuButton(_ title: String, systemImage: String, action: @escaping () -> Void) -> some View {
+    private func row(_ title: String, systemImage: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Label(title, systemImage: systemImage)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(MenuRowButtonStyle())
     }
 }
 
@@ -116,18 +141,18 @@ struct PermissionBanner: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Label("Input Monitoring is off", systemImage: "exclamationmark.triangle.fill")
-                .foregroundStyle(.orange)
-            Text("Switchcraft can't hear key presses until you allow Input Monitoring.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            StatusLabel(kind: .warning, text: "Switchcraft can't hear key presses yet")
+                .font(.callout.weight(.semibold))
+            Text("Allow Input Monitoring. Switchcraft reads which key was pressed, never what you type.")
+                .font(.callout)
+                .fixedSize(horizontal: false, vertical: true)
             HStack {
                 Button("Allow…") { model.permissions.requestInputMonitoring() }
                 Button("Open System Settings") { model.permissions.openInputMonitoringSettings() }
             }
             .controlSize(.small)
         }
-        .padding(8)
-        .background(.orange.opacity(0.1), in: RoundedRectangle(cornerRadius: 6))
+        .padding(10)
+        .background(.orange.opacity(0.12), in: RoundedRectangle(cornerRadius: 8))
     }
 }

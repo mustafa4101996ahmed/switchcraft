@@ -16,19 +16,14 @@ enum SnapshotRenderer {
         try? await Task.sleep(for: .seconds(2))
         model.sensorChanged(model.sensor.state, model.sensor.message) // start() normally wires this callback
 
+        let pane = { (p: SettingsPane) in AnyView(p.view.frame(width: SettingsPane.size.width, height: SettingsPane.size.height)) }
         let surfaces: [(String, AnyView, CGSize?)] = [
             ("menubar", AnyView(MenuBarView()), nil),
-            ("settings-general", AnyView(GeneralSettingsView().frame(width: 600, height: 520)), nil),
-            ("settings-sound", AnyView(SoundSettingsView().frame(width: 600, height: 520)), nil),
-            ("settings-typingforce", AnyView(TypingForceSettingsView().frame(width: 600, height: 520)), nil),
-            ("settings-exclusions", AnyView(ExclusionsSettingsView().frame(width: 600, height: 520)), nil),
-            ("settings-diagnostics", AnyView(DiagnosticsSummaryView().frame(width: 600, height: 520)), nil),
-            ("settings-about", AnyView(AboutView().frame(width: 600, height: 520)), nil),
-            ("settings-tabview", AnyView(SettingsView()), nil),
-            ("diagnostics", AnyView(DiagnosticsView()), CGSize(width: 680, height: 900)),
+            ("diagnostics", AnyView(DiagnosticsView()), CGSize(width: 680, height: 640)),
             ("calibration", AnyView(CalibrationView()), nil),
-        ] + OnboardingView.Step.allCases.map { step in
-            ("onboarding-\(step.rawValue)-\(step.title.replacingOccurrences(of: " ", with: "-").lowercased())", AnyView(OnboardingView(step: step)), nil)
+        ] + SettingsPane.allCases.map { ("settings-\($0.rawValue)", pane($0), nil) }
+          + OnboardingView.Step.allCases.enumerated().map { index, step in
+            ("onboarding-\(index)-\(step.rawValue)", AnyView(OnboardingView(step: step)), nil)
         }
         for (name, appearance) in [("light", NSAppearance.Name.aqua), ("dark", NSAppearance.Name.darkAqua)] {
             for (surface, view, size) in surfaces {

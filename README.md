@@ -78,19 +78,24 @@ xcrun swiftc -O Scripts/sensor-probe.swift -o build/sensor-probe && build/sensor
 
 - **Realism:** every key keeps its own recording and sits at its place on the keyboard in the
   stereo field (on a MacBook the speakers flank the keyboard, so the click comes from under your
-  finger). A short small-room reflection adds depth. Settings › Sound › *Stereo width* and
+  finger). *Room ambience* adds a few short desk-and-room reflections, all within 15 ms so they
+  fuse with the click instead of sounding like an echo. Settings › Sound › *Stereo width* and
   *Room ambience*. Each press is paired with its key-up recording at the press's force
   (Settings › General › *Play key-up sounds*).
 - **No "invalid key" beep:** apps beep when they get a key they can't use. Switchcraft mutes
   the macOS alert sound only while you type and restores your alert volume a second after you
   stop, so every other alert still plays (Settings › General). Your previous level is saved
   until restored, even across a crash.
-- **Menu bar:** on/off, sound pack, volume, sensitivity (Soft ↔ Aggressive), velocity detection
-  (Accelerometer / Fixed / Simulated), Calibrate, Settings, Diagnostics, Launch at Login, Quit.
+- **Menu bar:** a live typing-force meter (soft → slam, from your last key press), on/off with a
+  status line ("Listening", "Muted in Zoom"…), switch (with its stem colour), volume, sensitivity,
+  Calibrate, Settings (⌘,), Diagnostics, Launch at Login, Quit (⌘Q).
+- **⌃⌥⌘K** turns the sounds on or off from any app (can be switched off in General).
 - **Settings:** General, Sound (packs, preview, import, folder), Typing Force (mode,
   sensitivity, response curve, calibration, Advanced: noise floor, threshold, gain, gamma,
   min/max velocity, correlation window, impact decay), Exclusions (per-app mute, microphone
   mute), Diagnostics, About.
+- **Setup guide:** welcome → keyboard access → *Hear it* (type and watch your force) → calibrate
+  → done. Hardware checks run silently and only get a step when something is wrong.
 - **Calibration:** two quiet seconds for the noise floor, then 8 soft, 8 normal and 8 hard
   presses. Medians become the soft/normal/hard references. Reset anytime.
 - **Diagnostics:** live graph (raw and filtered signal, threshold, key events, correlation

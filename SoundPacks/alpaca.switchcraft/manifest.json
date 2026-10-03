@@ -1,5 +1,6 @@
 {
   "category" : "Linear",
+  "color" : "#F2A3C1",
   "credits" : "Recordings from tplai\/kbsim, MIT License, Copyright (c) Thomas Lai.",
   "deriveVelocityLayers" : true,
   "description" : "Alpaca linear switches.",

@@ -1,5 +1,6 @@
 {
   "category" : "Clicky",
+  "color" : "#24365F",
   "credits" : "Recordings from tplai\/kbsim, MIT License, Copyright (c) Thomas Lai.",
   "deriveVelocityLayers" : true,
   "description" : "Heavy click-bar switches with a loud click.",

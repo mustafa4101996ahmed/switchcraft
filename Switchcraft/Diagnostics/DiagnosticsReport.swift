@@ -34,7 +34,7 @@ struct DiagnosticsReport {
         let fresh = latest.map { now - $0.time < 0.5 } ?? false
 
         var keyboardRows: [(String, String)] = [
-            ("Monitor", model.keyboardRunning ? "Running (listen-only event tap)" : "Stopped"),
+            ("Listener", model.keyboardRunning ? "Running (listen-only event tap)" : "Stopped"),
             ("Permission", model.permissions.inputMonitoringGranted ? "Input Monitoring allowed" : "Input Monitoring not allowed"),
             ("Secure input", IsSecureEventInputEnabled() ? "Active (a password field hides keys from all apps)" : "Off"),
             ("Events/sec", "\(stats.eventsPerSecond)"),
@@ -52,7 +52,7 @@ struct DiagnosticsReport {
         let helperConnection: String
         switch model.displayedSensorState {
         case .supported: helperConnection = "Direct IOKit HID access, no privileges"
-        case .permissionRequired: helperConnection = "Direct access failed — see docs/TROUBLESHOOTING.md"
+        case .permissionRequired: helperConnection = "Direct access failed: try Restart Sensor, then Run Sensor Test"
         default: helperConnection = "—"
         }
 
@@ -69,7 +69,7 @@ struct DiagnosticsReport {
             Section(title: "Accelerometer", rows: [
                 ("Device", hw.accelerometerPresent ? "AppleSPUHIDDevice (page 0xFF00, usage 3)" : "Not found"),
                 ("Available", hw.accelerometerPresent ? "Yes" : "No"),
-                ("Readable", model.displayedSensorState.rawValue + (model.sensorMessage.map { " — \($0)" } ?? "")),
+                ("Readable", "\(model.displayedSensorState.displayName) (\(model.displayedSensorState.rawValue))" + (model.sensorMessage.map { ": \($0)" } ?? "")),
                 ("Sample rate", model.sensor.measuredSampleRate > 0 ? String(format: "%.1f Hz (measured)", model.sensor.measuredSampleRate) : "—"),
                 ("Raw X", fresh ? g(latest?.x) : "—"),
                 ("Raw Y", fresh ? g(latest?.y) : "—"),
@@ -81,9 +81,9 @@ struct DiagnosticsReport {
                 ("Last outcome", m?.outcome.rawValue ?? "—"),
                 ("Impact offset vs key", stats.offsetMedianMs.map { String(format: "median %+.1f ms, p90 %+.1f ms", $0, stats.offsetP90Ms ?? 0) } ?? "—"),
             ]),
-            Section(title: "Velocity", rows: [
+            Section(title: "Typing force", rows: [
                 ("Mode", settings.velocityMode.displayName),
-                ("Detected intensity", mg(m?.magnitude)),
+                ("Impact", mg(m?.magnitude)),
                 ("Mapped velocity", stats.lastVelocity.map { String(format: "%.3f", $0) } ?? "—"),
                 ("Current tier", stats.lastVelocity.map { VelocityMapper.layer(for: $0).displayName } ?? "—"),
                 ("Source", stats.lastVelocitySource),

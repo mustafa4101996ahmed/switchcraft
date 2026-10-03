@@ -1,5 +1,6 @@
 {
   "category" : "Linear",
+  "color" : "#2AB3A6",
   "credits" : "Recordings from tplai\/kbsim, MIT License, Copyright (c) Thomas Lai.",
   "deriveVelocityLayers" : true,
   "description" : "Turquoise Tealios linear switches.",

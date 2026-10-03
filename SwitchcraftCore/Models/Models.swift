@@ -98,6 +98,17 @@ public enum SensorState: String, Sendable {
     case stopped = "STOPPED"
 
     public var isReadable: Bool { self == .supported }
+
+    /// Plain-language name for the interface; the raw codes stay in the Diagnostics report.
+    public var displayName: String {
+        switch self {
+        case .supported: return "Working"
+        case .permissionRequired: return "Blocked by macOS"
+        case .unsupported: return "Not on this Mac"
+        case .simulation: return "Simulated"
+        case .stopped: return "Off"
+        }
+    }
 }
 
 /// One accelerometer reading in g, timestamped on the `MonotonicClock` base.

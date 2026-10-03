@@ -33,6 +33,10 @@ final class SoundEngine: SoundOutput, @unchecked Sendable {
 
     private(set) var isRunning = false
     private(set) var lastError: String?
+    /// Refreshed on start and on every configuration change, so Diagnostics never queries CoreAudio.
+    private(set) var outputSampleRate = 0.0
+    private(set) var ioBufferFrames: UInt32 = 0
+    private(set) var presentationLatency = 0.0
 
     deinit {
         if let configObserver { NotificationCenter.default.removeObserver(configObserver) }
@@ -60,6 +64,7 @@ final class SoundEngine: SoundOutput, @unchecked Sendable {
             try engine.start()
             isRunning = true
             lastError = nil
+            refreshDeviceInfo()
             Log.audio.info("Audio engine started: \(self.outputSampleRate, format: .fixed(precision: 0)) Hz, \(self.ioBufferFrames) frames")
         } catch {
             isRunning = false
@@ -147,18 +152,16 @@ final class SoundEngine: SoundOutput, @unchecked Sendable {
 
     // MARK: Diagnostics
 
-    var outputSampleRate: Double { engine.outputNode.outputFormat(forBus: 0).sampleRate }
-
-    var ioBufferFrames: UInt32 {
-        guard let unit = engine.outputNode.audioUnit else { return 0 }
+    private func refreshDeviceInfo() {
+        outputSampleRate = engine.outputNode.outputFormat(forBus: 0).sampleRate
+        presentationLatency = engine.outputNode.presentationLatency
         var frames: UInt32 = 0
         var size = UInt32(MemoryLayout<UInt32>.size)
-        let status = AudioUnitGetProperty(unit, kAudioDevicePropertyBufferFrameSize, kAudioUnitScope_Global, 0, &frames, &size)
-        return status == noErr ? frames : 0
+        if let unit = engine.outputNode.audioUnit,
+           AudioUnitGetProperty(unit, kAudioDevicePropertyBufferFrameSize, kAudioUnitScope_Global, 0, &frames, &size) == noErr {
+            ioBufferFrames = frames
+        }
     }
-
-    /// Device + stream latency reported by CoreAudio for the output path.
-    var presentationLatency: Double { engine.outputNode.presentationLatency }
 
     // MARK: SoundOutput (any thread)
 

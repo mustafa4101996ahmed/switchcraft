@@ -18,6 +18,16 @@ import AVFoundation
 
 typealias Clip = [[Double]] // channels × frames
 
+/// Stem colours shown as swatches in the app.
+let stemColors: [String: String] = [
+    "cherry-mx-red-abs": "#D9343A", "cherry-mx-red-pbt": "#D9343A", "cherry-mx-black-abs": "#2B2B2E",
+    "cherry-mx-black-pbt": "#2B2B2E", "cherry-mx-brown-abs": "#8A5A35", "cherry-mx-brown-pbt": "#8A5A35",
+    "cherry-mx-blue-abs": "#2F6FD6", "cherry-mx-blue-pbt": "#2F6FD6", "cherry-mx-clear": "#E6E6E6",
+    "cherry-mx-silent": "#7A7F87", "holy-panda": "#F1E9DA", "topre": "#9AA0A6", "box-navy": "#24365F",
+    "blue-alps": "#4F7FC0", "alpaca": "#F2A3C1", "nk-cream": "#EFE2C4", "turquoise": "#2AB3A6",
+    "red-ink": "#C23B32", "black-ink": "#26262A", "buckling-spring": "#A7A9AC",
+]
+
 struct Pack {
     let id: String, name: String, category: String, description: String, credits: String
     var presses: [String: [Clip]] = [:] // group → hits
@@ -367,7 +377,7 @@ for pack in packs {
     let manifest: [String: Any] = [
         "formatVersion": 1, "id": pack.id, "name": pack.name, "category": pack.category,
         "description": pack.description, "credits": pack.credits, "gain": 1.0,
-        "deriveVelocityLayers": true, "samples": listing,
+        "deriveVelocityLayers": true, "samples": listing, "color": stemColors[pack.id] ?? "#8E8E93",
     ]
     try JSONSerialization.data(withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys])
         .write(to: url.appendingPathComponent("manifest.json"))

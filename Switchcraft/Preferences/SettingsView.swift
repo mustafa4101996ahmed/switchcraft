@@ -1,65 +1,108 @@
 import SwiftUI
 import SwitchcraftCore
 
-struct SettingsView: View {
-    var body: some View {
-        TabView {
-            GeneralSettingsView()
-                .tabItem { Label("General", systemImage: "gearshape") }
-            SoundSettingsView()
-                .tabItem { Label("Sound", systemImage: "speaker.wave.2") }
-            TypingForceSettingsView()
-                .tabItem { Label("Typing Force", systemImage: "hand.tap") }
-            ExclusionsSettingsView()
-                .tabItem { Label("Exclusions", systemImage: "nosign") }
-            DiagnosticsSummaryView()
-                .tabItem { Label("Diagnostics", systemImage: "stethoscope") }
-            AboutView()
-                .tabItem { Label("About", systemImage: "info.circle") }
+/// Settings panes, shown as macOS toolbar tabs by `WindowCoordinator`.
+enum SettingsPane: String, CaseIterable {
+    case general, sound, typingForce, exclusions, diagnostics, about
+
+    static let size = CGSize(width: 620, height: 500)
+
+    var title: String {
+        switch self {
+        case .general: return "General"
+        case .sound: return "Sound"
+        case .typingForce: return "Typing Force"
+        case .exclusions: return "Exclusions"
+        case .diagnostics: return "Diagnostics"
+        case .about: return "About"
         }
-        .frame(width: 600, height: 560)
+    }
+
+    var symbol: String {
+        switch self {
+        case .general: return "gearshape"
+        case .sound: return "speaker.wave.2"
+        case .typingForce: return "hand.tap"
+        case .exclusions: return "nosign"
+        case .diagnostics: return "stethoscope"
+        case .about: return "info.circle"
+        }
+    }
+
+    @MainActor @ViewBuilder
+    var view: some View {
+        switch self {
+        case .general: GeneralSettingsView()
+        case .sound: SoundSettingsView()
+        case .typingForce: TypingForceSettingsView()
+        case .exclusions: ExclusionsSettingsView()
+        case .diagnostics: DiagnosticsSummaryView()
+        case .about: AboutView()
+        }
     }
 }
 
 struct GeneralSettingsView: View {
     @Environment(AppModel.self) private var model
-    private let symbols = [SettingsStore.brandSymbol, "keyboard", "keyboard.fill", "waveform", "hand.tap"]
+    private let symbols: [(String, String)] = [
+        (SettingsStore.brandSymbol, "Switchcraft switch"), ("keyboard", "Keyboard outline"),
+        ("keyboard.fill", "Keyboard filled"), ("waveform", "Waveform"), ("hand.tap", "Tapping finger"),
+    ]
 
     var body: some View {
         @Bindable var settings = model.settings
         Form {
             Section {
-                Toggle("Enable Switchcraft", isOn: $settings.isEnabled)
-                Toggle("Launch at Login", isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) }))
-                if let message = model.launchAtLoginMessage {
-                    HStack {
-                        Text(message).font(.caption).foregroundStyle(.secondary)
-                        Button("Open Login Items") { model.permissions.openLoginItemsSettings() }
-                            .controlSize(.small)
-                    }
+                Toggle(isOn: $settings.isEnabled) {
+                    Text("Enable Switchcraft")
+                    Text("From any app: \(GlobalHotKey.display)")
+                }
+                Toggle(isOn: Binding(get: { model.launchAtLoginEnabled }, set: { model.setLaunchAtLogin($0) })) {
+                    Text("Launch at Login")
+                    if let message = model.launchAtLoginMessage { Text(message) }
+                }
+                if model.launchAtLoginMessage != nil {
+                    Button("Open Login Items Settings") { model.permissions.openLoginItemsSettings() }
                 }
                 Picker("Menu-bar icon", selection: $settings.menuBarSymbol) {
-                    ForEach(symbols, id: \.self) { symbol in
-                        BrandIcon.menuBarImage(symbol).tag(symbol)
+                    ForEach(symbols, id: \.0) { symbol, name in
+                        BrandIcon.menuBarImage(symbol).accessibilityLabel(name).help(name).tag(symbol)
                     }
                 }
                 .pickerStyle(.segmented)
-                Toggle("Play key-up (release) sounds", isOn: $settings.playReleases)
-                Toggle("Play key-repeat sounds", isOn: $settings.playRepeats)
-                Toggle("Silence the “invalid key” beep while typing", isOn: $settings.silenceTypingBeep)
-            } footer: {
-                Text("Holding a key down doesn't hit the chassis again, so repeats are silent by default. The beep option mutes the macOS alert sound only during a typing burst and restores your alert volume a second after you stop, so other alerts still play.")
-                    .font(.caption).foregroundStyle(.secondary)
             }
 
-            Section("Keyboard monitoring") {
-                LabeledContent("Input Monitoring") {
-                    Text(model.permissions.inputMonitoringGranted ? "Allowed" : "Not allowed")
-                        .foregroundStyle(model.permissions.inputMonitoringGranted ? .green : .orange)
+            Section("Sounds") {
+                Toggle(isOn: $settings.playReleases) {
+                    Text("Play key-up sounds")
+                    Text("The switch's upstroke as you lift each key, like a real board.")
                 }
-                LabeledContent("Listener") { Text(model.keyboardRunning ? "Running" : "Stopped") }
-                if let message = model.keyboardMessage {
-                    Text(message).font(.caption).foregroundStyle(.secondary)
+                Toggle(isOn: $settings.playRepeats) {
+                    Text("Play key-repeat sounds")
+                    Text("Holding a key doesn't strike the switch again, so repeats are silent by default.")
+                }
+            }
+
+            Section("System") {
+                Toggle(isOn: $settings.silenceTypingBeep) {
+                    Text("Silence the “invalid key” beep while typing")
+                    Text("Lowers the macOS alert volume only while you type and restores it a second after you stop. Other alerts play normally, and your level comes back even if Switchcraft quits.")
+                }
+                Toggle(isOn: $settings.hotKeyEnabled) {
+                    Text("Turn Switchcraft on and off with \(GlobalHotKey.display)")
+                }
+            }
+
+            Section("Keyboard access") {
+                LabeledContent("Input Monitoring") {
+                    StatusLabel(kind: model.permissions.inputMonitoringGranted ? .good : .warning,
+                                text: model.permissions.inputMonitoringGranted ? "Allowed" : "Not allowed")
+                }
+                LabeledContent("Status") {
+                    StatusLabel(kind: model.listeningStatus.kind, text: model.listeningStatus.text)
+                }
+                if case let .notListening(reason) = model.listeningStatus {
+                    Text(reason).foregroundStyle(.secondary)
                 }
                 HStack {
                     Button("Open Input Monitoring Settings") { model.permissions.openInputMonitoringSettings() }
@@ -78,14 +121,29 @@ struct DiagnosticsSummaryView: View {
         @Bindable var settings = model.settings
         Form {
             Section("Status") {
-                LabeledContent("Accelerometer") { Text(model.displayedSensorState.rawValue) }
-                LabeledContent("Keyboard listener") { Text(model.keyboardRunning ? "Running" : "Stopped") }
-                LabeledContent("Audio engine") { Text(model.audio.isRunning ? "Running" : "Stopped") }
-                LabeledContent("Sound pack") { Text(model.activePackName ?? "—") }
+                LabeledContent("Keyboard") {
+                    StatusLabel(kind: model.listeningStatus.kind, text: model.listeningStatus.text)
+                }
+                LabeledContent("Typing-force sensor") {
+                    StatusLabel(kind: model.displayedSensorState.isReadable ? .good : .neutral,
+                                text: model.displayedSensorState.displayName)
+                }
+                LabeledContent("Audio") {
+                    StatusLabel(kind: model.audio.isRunning ? .good : .warning, text: model.audio.isRunning ? "Playing" : "Stopped")
+                }
+                LabeledContent("Switch") {
+                    HStack(spacing: 6) {
+                        StemSwatch(hex: model.activePack?.manifest.color)
+                        Text(model.activePackName ?? "—")
+                    }
+                }
             }
             Section {
-                Toggle("Show live sensor graph in Diagnostics", isOn: $settings.showDebugGraph)
+                Toggle("Show the live sensor graph in Diagnostics", isOn: $settings.showDebugGraph)
                 Button("Open Diagnostics…") { model.windows.show(.diagnostics, model: model) }
+            } footer: {
+                Text("Diagnostics shows every sensor, timing and audio value, runs a sensor test and exports a report without any typed text.")
+                    .foregroundStyle(.secondary)
             }
         }
         .formStyle(.grouped)
@@ -95,27 +153,50 @@ struct DiagnosticsSummaryView: View {
 struct AboutView: View {
     @Environment(AppModel.self) private var model
 
+    private var version: String {
+        let info = Bundle.main.infoDictionary
+        return "Version \(info?["CFBundleShortVersionString"] as? String ?? "—") (\(info?["CFBundleVersion"] as? String ?? "—"))"
+    }
+
     var body: some View {
-        VStack(spacing: 12) {
-            BrandIcon.appIcon
-                .resizable()
-                .frame(width: 96, height: 96)
-            Text("Switchcraft").font(.title2.weight(.semibold))
-            Text("Version \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—") (\(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "—"))")
-                .foregroundStyle(.secondary)
-            Text("\(model.hardware.architecture) · \(model.hardware.modelIdentifier)")
-                .font(.caption).foregroundStyle(.secondary)
-            Text("Velocity-sensitive keyboard sounds driven by your MacBook's built-in accelerometer. Everything stays on this Mac: no network, no analytics, no typed text is ever recorded.")
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: 420)
-            GroupBox("Open-source acknowledgements") {
-                Text("Accelerometer access is based on olvvier/apple-silicon-accelerometer (MIT License, © 2026 olvvier). Switch recordings come from tplai/kbsim (MIT License, © Thomas Lai); Switchcraft derives the velocity layers. Full license texts are in LICENSES/ in the source repository.")
-                    .font(.caption)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+        VStack(alignment: .leading, spacing: 18) {
+            HStack(spacing: 16) {
+                BrandIcon.appIcon.resizable().frame(width: 72, height: 72).accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Switchcraft").font(.title2.weight(.semibold))
+                    Text(version).foregroundStyle(.secondary)
+                    Text("\(model.hardware.cpuBrand) · \(model.hardware.modelIdentifier)").foregroundStyle(.secondary)
+                }
             }
-            .frame(maxWidth: 460)
+            Text("Velocity-sensitive mechanical keyboard sounds, driven by your MacBook's built-in accelerometer. Everything stays on this Mac: no network access, no analytics, and the text you type is never recorded.")
+                .fixedSize(horizontal: false, vertical: true)
+            GroupBox {
+                VStack(alignment: .leading, spacing: 8) {
+                    credit("Accelerometer access", "olvvier/apple-silicon-accelerometer", "MIT", "https://github.com/olvvier/apple-silicon-accelerometer")
+                    credit("Cherry MX Red, Black, Brown, Blue", "hainguyents13/mechvibes", "MIT", "https://github.com/hainguyents13/mechvibes")
+                    credit("Other switches", "tplai/kbsim", "MIT", "https://github.com/tplai/kbsim")
+                    credit("Cherry MX Clear", "humi74 on Freesound", "CC0", "https://freesound.org/s/412926/")
+                    credit("Cherry MX Silent", "bonesawmgraw on Freesound", "CC0", "https://freesound.org/s/572978/")
+                }
+                .padding(6)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            } label: {
+                Text("Acknowledgements")
+            }
+            Spacer(minLength: 0)
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+
+    private func credit(_ what: String, _ source: String, _ license: String, _ url: String) -> some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text(what).frame(width: 220, alignment: .leading)
+            if let link = URL(string: url) {
+                Link(source, destination: link)
+            }
+            Spacer()
+            Text(license).foregroundStyle(.secondary)
+        }
     }
 }

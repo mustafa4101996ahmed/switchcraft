@@ -6,6 +6,8 @@ struct DiagnosticsView: View {
     @Environment(AppModel.self) private var model
     @State private var sensorTestResult: String?
     @State private var testRunning = false
+    @State private var copied = false
+    @State private var showingTips = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -13,7 +15,7 @@ struct DiagnosticsView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     if model.settings.showDebugGraph {
                         GroupBox("Live signal (last 2 s)") {
-                            ImpactGraphView(model: model).frame(height: 180)
+                            ImpactGraphView(model: model).frame(height: 200).padding(4)
                         }
                     }
                     // Text refreshes at 10 Hz, independent of the ~800 Hz sensor.
@@ -32,27 +34,38 @@ struct DiagnosticsView: View {
             }
             Divider()
             HStack {
-                Button("Copy Diagnostics") { copy() }
+                Button(copied ? "Copied" : "Copy Diagnostics", systemImage: copied ? "checkmark" : "doc.on.doc") { copy() }
+                    .help("Copies the report. It contains no typed text and no key codes.")
                 Button("Export Diagnostics…") { export() }
+                Button("Troubleshooting", systemImage: "questionmark.circle") { showingTips.toggle() }
+                    .labelStyle(.iconOnly)
+                    .help("Troubleshooting tips")
+                    .popover(isPresented: $showingTips, arrowEdge: .top) { TroubleshootingTips() }
                 Spacer()
                 Button(testRunning ? "Testing…" : "Run Sensor Test") { Task { await runSensorTest() } }
                     .disabled(testRunning)
+                    .help("Three hands-off seconds: measures the sensor's rate and background vibration.")
                 Menu("Actions") {
                     Button("Restart Audio Engine") { model.restartAudio() }
                     Button("Restart Sensor") { model.restartSensor() }
-                    Button("Reset Calibration") { model.settings.resetCalibration() }
                     Button("Reset Counters") { model.pipeline.stats.reset() }
                 }
                 .fixedSize()
             }
             .padding(12)
         }
-        .frame(minWidth: 620, minHeight: 640)
+        .frame(minWidth: 620, idealWidth: 680, minHeight: 420, idealHeight: 640)
     }
 
     private func copy() {
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(DiagnosticsReport(model: model, forExport: true).text, forType: .string)
+        copied = true
+        AccessibilityNotification.Announcement("Diagnostics copied").post()
+        Task {
+            try? await Task.sleep(for: .seconds(1.5))
+            copied = false
+        }
     }
 
     private func export() {
@@ -87,7 +100,7 @@ struct DiagnosticsView: View {
         var samples: [FilteredSample] = []
         model.sensor.ring.copy(from: start, to: .infinity, into: &samples)
         guard count > 0, !samples.isEmpty else {
-            sensorTestResult = "FAILED: no samples in \(String(format: "%.1f", elapsed)) s. State: \(model.displayedSensorState.rawValue). \(model.sensorMessage ?? "")"
+            sensorTestResult = "FAILED: no samples in \(String(format: "%.1f", elapsed)) s. State: \(model.displayedSensorState.displayName) (\(model.displayedSensorState.rawValue)). \(model.sensorMessage ?? "")"
             return
         }
         let dynamics = samples.map { Double($0.dynamic) }.sorted()
@@ -112,18 +125,44 @@ private struct ReportGrid: View {
         LazyVGrid(columns: [GridItem(.flexible(), alignment: .top), GridItem(.flexible(), alignment: .top)], spacing: 16) {
             ForEach(report.sections) { section in
                 GroupBox(section.title) {
-                    Grid(alignment: .leading, horizontalSpacing: 10, verticalSpacing: 3) {
+                    Grid(alignment: .topLeading, horizontalSpacing: 10, verticalSpacing: 4) {
                         ForEach(Array(section.rows.enumerated()), id: \.offset) { _, row in
-                            GridRow {
-                                Text(row.0).foregroundStyle(.secondary)
+                            GridRow(alignment: .firstTextBaseline) {
+                                Text(row.0).foregroundStyle(.secondary).frame(width: 128, alignment: .leading)
                                 Text(row.1).monospacedDigit().textSelection(.enabled)
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
-                            .font(.caption)
+                            .font(.callout)
                         }
                     }
+                    .padding(6)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
         }
+    }
+}
+
+/// The essentials of docs/TROUBLESHOOTING.md, inside the app.
+private struct TroubleshootingTips: View {
+    private let tips: [(String, String)] = [
+        ("No sound when typing", "Check Input Monitoring in System Settings › Privacy & Security. After installing a new build, remove Switchcraft from that list and add it again."),
+        ("Silent in one app", "Password fields hide keystrokes from every app, and apps on the Exclusions list are muted on purpose."),
+        ("Every key sounds the same", "Measure with the accelerometer (Settings › Typing Force), then calibrate. A soft surface like a lap absorbs the impact; a desk works best."),
+        ("Sounds feel late", "Lower “Listen after the key” in Typing Force › Advanced. Bluetooth headphones add their own delay."),
+        ("Apps still beep", "Turn on “Silence the invalid key beep” in General. The first key of a burst can occasionally beat it."),
+    ]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            ForEach(tips, id: \.0) { title, detail in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title).fontWeight(.semibold)
+                    Text(detail).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+        .padding(16)
+        .frame(width: 360)
     }
 }

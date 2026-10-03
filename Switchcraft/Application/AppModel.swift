@@ -17,6 +17,7 @@ final class AppModel {
     @ObservationIgnored let pipeline: TypingPipeline
     @ObservationIgnored let windows = WindowCoordinator()
     @ObservationIgnored let beepSuppressor = AlertBeepSuppressor()
+    @ObservationIgnored private let hotKey = GlobalHotKey()
     @ObservationIgnored private let system = SystemMonitor()
 
     private(set) var sensorState: SensorState = .stopped
@@ -61,6 +62,8 @@ final class AppModel {
         }
         windows.onVisibilityChange = { [weak self] kind, visible in
             if kind == .diagnostics { self?.requireSensor("diagnostics", visible) }
+            // Closing the guide counts as finishing it; it never comes back on its own.
+            if kind == .onboarding && !visible { self?.settings.hasCompletedOnboarding = true }
         }
         configureSystemMonitor()
         settingsChanged()
@@ -85,6 +88,7 @@ final class AppModel {
         audio.setStereoWidth(settings.stereoWidth)
         audio.setRoomAmbience(settings.roomAmbience)
         updateBeepSuppression()
+        hotKey.setEnabled(settings.hotKeyEnabled) { [weak self] in self?.settings.isEnabled.toggle() }
         sensor.setMinimumNoiseFloor(settings.minimumNoiseFloor)
         if settings.muteWhenMicActive != micMonitoring {
             micMonitoring = settings.muteWhenMicActive
@@ -93,6 +97,48 @@ final class AppModel {
         if settings.selectedPackID != requestedPackID { loadSelectedPack() }
         updateSensor()
     }
+
+    /// What the user should know right now, in one line.
+    enum ListeningStatus: Equatable {
+        case listening
+        case paused
+        case mutedInApp(String)
+        case mutedByMicrophone
+        case needsPermission
+        case notListening(String)
+
+        var text: String {
+            switch self {
+            case .listening: return "Listening"
+            case .paused: return "Paused"
+            case let .mutedInApp(name): return "Muted in \(name)"
+            case .mutedByMicrophone: return "Muted while the microphone is in use"
+            case .needsPermission: return "Keyboard access needed"
+            case .notListening: return "Not listening"
+            }
+        }
+
+        var kind: StatusLabel.Kind {
+            switch self {
+            case .listening: return .good
+            case .paused, .mutedInApp, .mutedByMicrophone: return .neutral
+            case .needsPermission, .notListening: return .warning
+            }
+        }
+    }
+
+    var listeningStatus: ListeningStatus {
+        if !permissions.inputMonitoringGranted { return .needsPermission }
+        if !settings.isEnabled { return .paused }
+        if !keyboardRunning { return .notListening(keyboardMessage ?? "The keyboard listener isn't running.") }
+        if let id = frontmostBundleID, let app = settings.exclusions.first(where: { $0.bundleID == id }) {
+            return .mutedInApp(app.name)
+        }
+        if settings.muteWhenMicActive && microphoneInUse { return .mutedByMicrophone }
+        return .listening
+    }
+
+    var activePack: SoundPack? { library.pack(id: settings.selectedPackID) }
 
     var menuBarSymbolName: String {
         if !permissions.inputMonitoringGranted { return "exclamationmark.triangle" }

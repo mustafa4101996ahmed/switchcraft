@@ -10,6 +10,8 @@ public struct SoundPackManifest: Codable, Equatable, Sendable {
     public var category: String?
     /// Attribution for the recordings (shown in Settings).
     public var credits: String?
+    /// The switch's stem colour as "#RRGGBB" (shown as a swatch next to the pack).
+    public var color: String?
     /// Linear gain applied to every sample in the pack (default 1).
     public var gain: Double?
     /// When true, every press recording is a full-force hit and Switchcraft generates the

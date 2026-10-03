@@ -9,30 +9,36 @@ struct ImpactGraphView: View {
     @State private var buffer = GraphBuffer()
 
     var body: some View {
-        TimelineView(.animation(minimumInterval: 1 / 30)) { timeline in
-            Canvas { context, size in
-                draw(in: &context, size: size)
-            }
-            .id(timeline.date)
+        // Legend and plot refresh together (the scale label follows the data).
+        TimelineView(.animation(minimumInterval: 1 / 30)) { _ in
+            content
         }
-        .background(.black.opacity(0.04), in: RoundedRectangle(cornerRadius: 6))
-        .overlay(alignment: .topLeading) { legend.padding(6) }
     }
 
-    private var legend: some View {
-        HStack(spacing: 10) {
-            legendItem(.gray, "raw |a| − 1 g")
-            legendItem(.accentColor, "filtered")
-            legendItem(.orange, "threshold")
-            legendItem(.green, "key event")
-            legendItem(.red, "impact")
+    private var content: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 12) {
+                legendItem(.gray, "raw |a| − 1 g")
+                legendItem(.accentColor, "filtered")
+                legendItem(.orange, "threshold")
+                legendItem(.green, "key event")
+                legendItem(.red, "impact")
+                Spacer()
+                Text(buffer.scaleLabel).foregroundStyle(.secondary)
+            }
+            .font(.caption)
+            .accessibilityHidden(true)
+            Canvas { context, size in draw(in: &context, size: size) }
+            .background(.quaternary.opacity(0.35), in: RoundedRectangle(cornerRadius: 6))
+            .accessibilityElement()
+            .accessibilityLabel("Live accelerometer graph")
+            .accessibilityValue(buffer.summary)
         }
-        .font(.caption2)
     }
 
     private func legendItem(_ color: Color, _ title: String) -> some View {
-        HStack(spacing: 3) {
-            RoundedRectangle(cornerRadius: 1).fill(color).frame(width: 10, height: 3)
+        HStack(spacing: 4) {
+            RoundedRectangle(cornerRadius: 1).fill(color).frame(width: 12, height: 3)
             Text(title).foregroundStyle(.secondary)
         }
     }
@@ -41,7 +47,8 @@ struct ImpactGraphView: View {
         model.sensor.ring.copyLatest(1800, into: &buffer.samples)
         let samples = buffer.samples
         guard let last = samples.last, MonotonicClock.now() - last.time < 1 else {
-            context.draw(Text("No sensor data (\(model.displayedSensorState.rawValue))").foregroundStyle(.secondary),
+            buffer.summary = "No sensor data"
+            context.draw(Text("No sensor data (\(model.displayedSensorState.displayName))").foregroundStyle(.secondary),
                          at: CGPoint(x: size.width / 2, y: size.height / 2))
             return
         }
@@ -50,15 +57,18 @@ struct ImpactGraphView: View {
         let settings = model.settings
         let peak = samples.reduce(Float(0)) { max($0, $1.dynamic, abs($1.rawMagnitude - 1)) }
         let scale = max(Double(peak) * 1.15, 0.01)
+        buffer.scaleLabel = String(format: "%.0f mg full scale (√)", scale * 1000)
+        buffer.summary = "\(stats.recentImpacts.filter { $0.time > start }.count) impacts and \(stats.recentKeyTimes.filter { $0 > start }.count) key presses in the last 2 seconds"
 
+        let top: CGFloat = 4
         func x(_ t: Double) -> CGFloat { CGFloat((t - start) / span) * size.width }
         // Square-root axis keeps soft keystrokes visible next to desk bumps.
-        func y(_ v: Double) -> CGFloat { size.height * (1 - CGFloat((max(v, 0) / scale).squareRoot())) }
+        func y(_ v: Double) -> CGFloat { top + (size.height - top) * (1 - CGFloat((max(v, 0) / scale).squareRoot())) }
 
         for keyTime in stats.recentKeyTimes where keyTime > start {
             let window = CGRect(x: x(keyTime - settings.window.pre), y: 0,
                                 width: x(keyTime + settings.window.post) - x(keyTime - settings.window.pre), height: size.height)
-            context.fill(Path(window), with: .color(.green.opacity(0.08)))
+            context.fill(Path(window), with: .color(.green.opacity(0.1)))
             var marker = Path()
             marker.move(to: CGPoint(x: x(keyTime), y: 0))
             marker.addLine(to: CGPoint(x: x(keyTime), y: size.height))
@@ -66,12 +76,12 @@ struct ImpactGraphView: View {
         }
 
         var raw = Path(), filtered = Path(), threshold = Path()
-        for (index, s) in samples.enumerated() where s.time >= start {
+        for s in samples where s.time >= start {
             let px = x(s.time)
             let points = (CGPoint(x: px, y: y(Double(abs(s.rawMagnitude - 1)))),
                           CGPoint(x: px, y: y(Double(s.dynamic))),
                           CGPoint(x: px, y: y(Double(s.floor) * settings.detectionSNR)))
-            if index == 0 || raw.isEmpty {
+            if raw.isEmpty {
                 raw.move(to: points.0)
                 filtered.move(to: points.1)
                 threshold.move(to: points.2)
@@ -81,7 +91,7 @@ struct ImpactGraphView: View {
                 threshold.addLine(to: points.2)
             }
         }
-        context.stroke(raw, with: .color(.gray.opacity(0.6)), lineWidth: 1)
+        context.stroke(raw, with: .color(.secondary), lineWidth: 1)
         context.stroke(filtered, with: .color(.accentColor), lineWidth: 1.5)
         context.stroke(threshold, with: .color(.orange), style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
 
@@ -89,14 +99,14 @@ struct ImpactGraphView: View {
             let center = CGPoint(x: x(impact.time), y: y(impact.peak))
             context.stroke(Path(ellipseIn: CGRect(x: center.x - 4, y: center.y - 4, width: 8, height: 8)), with: .color(.red), lineWidth: 1.5)
         }
-        context.draw(Text(String(format: "%.0f mg full scale (√)", scale * 1000)).font(.caption2).foregroundStyle(.secondary),
-                     at: CGPoint(x: size.width - 60, y: size.height - 8))
     }
 }
 
 /// Reused across frames so drawing doesn't allocate a new array 30 times a second.
 private final class GraphBuffer {
     var samples: [FilteredSample]
+    var scaleLabel = ""
+    var summary = "No sensor data"
 
     init() {
         samples = []

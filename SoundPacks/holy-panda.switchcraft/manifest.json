@@ -1,5 +1,6 @@
 {
   "category" : "Tactile",
+  "color" : "#F1E9DA",
   "credits" : "Recordings from tplai\/kbsim, MIT License, Copyright (c) Thomas Lai.",
   "deriveVelocityLayers" : true,
   "description" : "Holy Panda tactile switches: sharp, pronounced bump.",

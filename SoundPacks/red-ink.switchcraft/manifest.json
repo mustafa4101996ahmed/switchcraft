@@ -1,5 +1,6 @@
 {
   "category" : "Linear",
+  "color" : "#C23B32",
   "credits" : "Recordings from tplai\/kbsim, MIT License, Copyright (c) Thomas Lai.",
   "deriveVelocityLayers" : true,
   "description" : "Gateron Red Ink linear switches.",

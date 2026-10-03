@@ -68,8 +68,8 @@ CGEventTap (listen-only)          HID callback (~800 Hz)
         key-up → SoundEngine.playRelease(group, velocity of that key's press)
                     ▼
             key code → the key's own recording + constant-power pan by keyboard position (KeyLayout)
-        VoiceMixer queue (tryLock) → 48 voices → master gain → peak limiter
-            → AVAudioUnitReverb (small room, 0–20 % wet, bypassed at 0) → output
+        VoiceMixer queue (tryLock) → 48 voices → EarlyReflections (≤ 15 ms taps, no echo)
+            → master gain → peak limiter → output
 ```
 
 ## Alert-beep suppression

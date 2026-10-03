@@ -1,41 +1,61 @@
 import SwiftUI
 import SwitchcraftCore
 
-/// First-launch guide: welcome → hardware → permission → sensor → helper → audio → calibration → finish.
+/// First run, built around the payoff: hearing your own soft and hard presses.
+/// Hardware checks run silently and only get a step when something is wrong.
 struct OnboardingView: View {
     @Environment(AppModel.self) private var model
     @State private var step: Step
+    @State private var calibrating = false
+    @State private var practice = ""
+    @FocusState private var practiceFocused: Bool
+
+    enum Step: String, CaseIterable {
+        case welcome, keyboard, sensor, hear, calibrate, done
+
+        var title: String {
+            switch self {
+            case .welcome: return "Welcome"
+            case .keyboard: return "Keyboard access"
+            case .sensor: return "Typing force"
+            case .hear: return "Hear it"
+            case .calibrate: return "Calibrate"
+            case .done: return "You're set"
+            }
+        }
+    }
 
     init(step: Step = .welcome) {
         _step = State(initialValue: step)
     }
 
-    enum Step: Int, CaseIterable {
-        case welcome, hardware, permission, sensor, helper, audio, calibration, finish
+    /// The sensor step only appears when typing force can't be measured.
+    private var sensorProblem: Bool {
+        !model.hardware.accelerometerPresent || [.permissionRequired, .unsupported].contains(model.displayedSensorState)
+    }
 
-        var title: String {
-            switch self {
-            case .welcome: return "Welcome"
-            case .hardware: return "Hardware check"
-            case .permission: return "Keyboard monitoring"
-            case .sensor: return "Sensor check"
-            case .helper: return "Sensor access"
-            case .audio: return "Audio test"
-            case .calibration: return "Typing-force calibration"
-            case .finish: return "All set"
+    private var steps: [Step] {
+        Step.allCases.filter { step in
+            switch step {
+            case .sensor: return sensorProblem
+            case .calibrate: return !sensorProblem
+            default: return true
             }
         }
     }
 
+    private var index: Int { steps.firstIndex(of: step) ?? 0 }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack {
+            HStack(alignment: .firstTextBaseline) {
                 Text(step.title).font(.title2.weight(.semibold))
                 Spacer()
-                Text("Step \(step.rawValue + 1) of \(Step.allCases.count)").foregroundStyle(.secondary)
+                Text("Step \(index + 1) of \(steps.count)").foregroundStyle(.secondary)
             }
-            .padding([.horizontal, .top], 24)
-            .padding(.bottom, 12)
+            .padding(.horizontal, 24)
+            .padding(.top, 22)
+            .padding(.bottom, 14)
             Divider()
             ScrollView {
                 content
@@ -43,118 +63,150 @@ struct OnboardingView: View {
                     .padding(24)
             }
             Divider()
-            HStack {
-                if step != .welcome {
-                    Button("Back") { move(-1) }
-                }
-                Spacer()
-                if step == .finish {
-                    Button("Done") {
-                        model.settings.hasCompletedOnboarding = true
-                        model.windows.close(.onboarding)
-                    }
-                    .keyboardShortcut(.defaultAction)
-                } else {
-                    Button(step == .calibration ? "Skip" : "Continue") { move(1) }
-                        .keyboardShortcut(.defaultAction)
-                }
-            }
-            .padding(16)
+            footer
+                .padding(.horizontal, 24)
+                .padding(.vertical, 14)
         }
-        .frame(width: 560, height: 500)
+        .frame(width: 560, height: 480)
+        .onAppear { model.requireSensor("onboarding", true) }
+        .onDisappear { model.requireSensor("onboarding", false) }
+    }
+
+    private var footer: some View {
+        HStack {
+            if step == .welcome {
+                Button("Skip Setup") { finish() }
+            } else {
+                Button("Back") { move(-1) }.disabled(calibrating)
+            }
+            Spacer()
+            switch step {
+            case .welcome:
+                Button("Get Started") { move(1) }.keyboardShortcut(.defaultAction)
+            case .calibrate:
+                // Never the default button: Return while typing must not skip calibration.
+                Button("Skip") { move(1) }.disabled(calibrating)
+            case .done:
+                Button("Done") { finish() }.keyboardShortcut(.defaultAction)
+            default:
+                Button("Continue") { move(1) }.keyboardShortcut(.defaultAction)
+            }
+        }
     }
 
     private func move(_ delta: Int) {
-        step = Step(rawValue: step.rawValue + delta) ?? step
+        let next = min(max(index + delta, 0), steps.count - 1)
+        step = steps[next]
+    }
+
+    private func finish() {
+        model.settings.hasCompletedOnboarding = true
+        model.windows.close(.onboarding)
     }
 
     @ViewBuilder
     private var content: some View {
         switch step {
         case .welcome:
-            VStack(alignment: .leading, spacing: 12) {
-                BrandIcon.appIcon.resizable().frame(width: 72, height: 72)
-                Text("Switchcraft turns your MacBook keyboard into a velocity-sensitive mechanical keyboard. Soft presses sound soft; hard presses sound hard.")
-                Text("It measures how hard you type with the MacBook's built-in accelerometer, entirely on this Mac. No network access, no analytics, and the text you type is never recorded.")
+            VStack(alignment: .leading, spacing: 14) {
+                BrandIcon.appIcon.resizable().frame(width: 80, height: 80).accessibilityHidden(true)
+                Text("Your MacBook keyboard, with the sound of a real mechanical switch.")
+                    .font(.title3)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("Switchcraft feels how hard each key lands through the MacBook's built-in motion sensor, so soft presses sound soft and hard presses sound hard.")
+                    .fixedSize(horizontal: false, vertical: true)
+                Label("Everything stays on this Mac. No network access, and the text you type is never recorded.", systemImage: "lock")
                     .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-        case .hardware:
-            let hw = model.hardware
-            VStack(alignment: .leading, spacing: 8) {
-                check("Apple Silicon", hw.isAppleSilicon, detail: hw.cpuBrand)
-                check("MacBook (portable)", hw.isLaptop, detail: hw.modelIdentifier)
-                check("Built-in keyboard", hw.hasBuiltInKeyboard)
-                check("Accelerometer (AppleSPUHIDDevice)", hw.accelerometerPresent)
-                if !hw.accelerometerPresent {
-                    Text("Without a compatible accelerometer, Switchcraft still plays sounds using Fixed or Simulated velocity.")
-                        .foregroundStyle(.secondary)
-                }
-            }
-        case .permission:
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Switchcraft needs Input Monitoring to detect when a key is pressed. It processes key codes locally and doesn't record the text you type.")
-                check("Input Monitoring", model.permissions.inputMonitoringGranted)
+        case .keyboard:
+            VStack(alignment: .leading, spacing: 14) {
+                Text("Switchcraft needs Input Monitoring to know when a key is pressed. It reads which key it was, never what you type, and nothing leaves your Mac.")
+                    .fixedSize(horizontal: false, vertical: true)
+                StatusLabel(kind: model.permissions.inputMonitoringGranted ? .good : .warning,
+                            text: model.permissions.inputMonitoringGranted ? "Input Monitoring is on" : "Input Monitoring is off")
                 if !model.permissions.inputMonitoringGranted {
                     HStack {
                         Button("Allow Input Monitoring…") { model.permissions.requestInputMonitoring() }
                         Button("Open System Settings") { model.permissions.openInputMonitoringSettings() }
                     }
-                    Text("Turn on Switchcraft in System Settings › Privacy & Security › Input Monitoring. This page updates by itself. If macOS asks you to quit and reopen Switchcraft, do so.")
-                        .font(.caption).foregroundStyle(.secondary)
-                } else if let message = model.keyboardMessage {
-                    Text(message).foregroundStyle(.orange)
+                    Text("Turn on Switchcraft in System Settings › Privacy & Security › Input Monitoring. This page updates by itself. If macOS asks you to quit and reopen Switchcraft, do that; setup picks up where you left off.")
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                } else if case let .notListening(reason) = model.listeningStatus {
+                    StatusLabel(kind: .warning, text: reason)
                 }
             }
         case .sensor:
-            TimelineView(.periodic(from: .now, by: 0.25)) { _ in
-                VStack(alignment: .leading, spacing: 8) {
-                    check("Sensor readable", model.displayedSensorState == .supported, detail: model.displayedSensorState.rawValue)
-                    if model.sensor.measuredSampleRate > 0 {
-                        Text(String(format: "Streaming at %.0f samples per second (measured).", model.sensor.measuredSampleRate))
-                    }
-                    if let message = model.sensorMessage { Text(message).foregroundStyle(.secondary) }
-                    Button("Retry") { model.restartSensor() }
+            VStack(alignment: .leading, spacing: 14) {
+                StatusLabel(kind: .warning, text: model.hardware.accelerometerPresent
+                            ? "macOS isn't letting Switchcraft read the motion sensor"
+                            : "This Mac doesn't have the motion sensor Switchcraft uses")
+                Text("Switchcraft still plays every key, at one fixed strength. On a supported MacBook, Diagnostics can show what's wrong.")
+                    .fixedSize(horizontal: false, vertical: true)
+                Button("Use Fixed Strength") {
+                    model.settings.velocityMode = .fixed
+                    move(1)
                 }
             }
-            .onAppear { model.requireSensor("onboarding", true) }
-            .onDisappear { model.requireSensor("onboarding", false) }
-        case .helper:
-            VStack(alignment: .leading, spacing: 10) {
-                if model.displayedSensorState == .supported {
-                    check("No helper needed", true)
-                    Text("Switchcraft reads the accelerometer directly as your user account. Nothing runs as root and no administrator password is needed.")
-                } else {
-                    check("Sensor not readable", false, detail: model.displayedSensorState.rawValue)
-                    Text("On this Mac the accelerometer couldn't be read directly. Switchcraft will use Fixed velocity. See docs/TROUBLESHOOTING.md for what to check.")
-                        .foregroundStyle(.secondary)
+        case .hear:
+            hear
+        case .calibrate:
+            CalibrationView(embedded: true, onRunningChange: { calibrating = $0 }, onFinish: { move(1) })
+        case .done:
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(spacing: 12) {
+                    Image(nsImage: BrandIcon.glyph)
+                        .resizable()
+                        .frame(width: 26, height: 26)
+                        .padding(8)
+                        .background(.quaternary, in: RoundedRectangle(cornerRadius: 8))
+                        .accessibilityHidden(true)
+                    Text("Switchcraft lives in your menu bar, behind this icon.")
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-            }
-        case .audio:
-            @Bindable var settings = model.settings
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Play a soft-to-hard sequence from the current sound pack.")
-                Button("Play Test Sound", systemImage: "play.fill") { model.previewSound() }
-                Slider(value: $settings.volume, in: 0...1) { Text("Volume") }
-                if let message = model.audioMessage ?? model.packMessage {
-                    Text(message).foregroundStyle(.orange)
-                }
-            }
-        case .calibration:
-            CalibrationView(onFinish: { move(1) })
-        case .finish:
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Switchcraft lives in the menu bar. Click its icon to change sounds, volume and sensitivity, or to open Settings and Diagnostics.")
-                Text("Start typing anywhere to hear it.").foregroundStyle(.secondary)
+                Text("Click it to change the switch, volume or sensitivity. \(GlobalHotKey.display) turns the sounds on or off from any app.")
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("Keep typing: the bar shows how hard each key landed.").foregroundStyle(.secondary)
+                TypingForceMeter()
             }
         }
     }
 
-    private func check(_ title: String, _ ok: Bool, detail: String? = nil) -> some View {
-        HStack(alignment: .firstTextBaseline) {
-            Image(systemName: ok ? "checkmark.circle.fill" : "xmark.circle.fill")
-                .foregroundStyle(ok ? .green : .orange)
-            Text(title)
-            if let detail { Text(detail).foregroundStyle(.secondary) }
+    private var hear: some View {
+        @Bindable var settings = model.settings
+        return VStack(alignment: .leading, spacing: 14) {
+            Text("Type a few keys: a soft press, then a hard one.")
+            TextField("Type here", text: $practice)
+                .textFieldStyle(.roundedBorder)
+                .focused($practiceFocused)
+                .onSubmit {}
+                .onAppear { practiceFocused = true }
+            TypingForceMeter()
+            if model.listeningStatus != .listening {
+                HStack {
+                    StatusLabel(kind: .warning, text: "Allow keyboard access to hear your own typing.")
+                    Spacer()
+                    Button("Play a Sample") { model.previewSound() }
+                }
+            }
+            Divider()
+            LabeledContent("Switch") {
+                HStack(spacing: 8) {
+                    StemSwatch(hex: model.activePack?.manifest.color, size: 12)
+                    Picker("Switch", selection: $settings.selectedPackID) {
+                        ForEach(model.library.packs) { Text($0.name).tag($0.id) }
+                    }
+                    .labelsHidden()
+                    .frame(width: 220)
+                }
+            }
+            LabeledContent("Volume") {
+                Slider(value: $settings.volume, in: 0...1) { Text("Volume") }.labelsHidden().frame(width: 220)
+            }
+            if let message = model.audioMessage ?? model.packMessage {
+                StatusLabel(kind: .warning, text: message)
+            }
         }
     }
 }

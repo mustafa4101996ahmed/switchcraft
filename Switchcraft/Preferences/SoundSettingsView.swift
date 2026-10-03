@@ -6,17 +6,63 @@ struct SoundSettingsView: View {
     @Environment(AppModel.self) private var model
     @State private var importError: String?
     @State private var isDropTargeted = false
+    @State private var confirmingDelete: SoundPack?
+
+    /// Switch families in a sensible browsing order; imported packs last.
+    private static let categoryOrder = ["Linear", "Tactile", "Clicky", "Silent", "Electro-capacitive", "Vintage"]
+
+    private var groups: [(title: String, packs: [SoundPack])] {
+        let builtIn = model.library.packs.filter(\.isBuiltIn)
+        var result = Self.categoryOrder.compactMap { category -> (String, [SoundPack])? in
+            let packs = builtIn.filter { $0.manifest.category == category }
+            return packs.isEmpty ? nil : (category, packs)
+        }
+        let others = builtIn.filter { !Self.categoryOrder.contains($0.manifest.category ?? "") }
+        if !others.isEmpty { result.append(("Other", others)) }
+        let imported = model.library.packs.filter { !$0.isBuiltIn }
+        if !imported.isEmpty { result.append(("Imported", imported)) }
+        return result
+    }
 
     var body: some View {
         @Bindable var settings = model.settings
         Form {
+            Section("Playback") {
+                Slider(value: $settings.volume, in: 0...1) { Text("Volume") }
+                Slider(value: $settings.stereoWidth, in: 0...1) {
+                    Text("Stereo width")
+                } minimumValueLabel: {
+                    Text("Mono")
+                } maximumValueLabel: {
+                    Text("Wide")
+                }
+                .help("Places each key where it sits on the keyboard, so the sound comes from under your finger.")
+                Slider(value: $settings.roomAmbience, in: 0...1) {
+                    Text("Room ambience")
+                } minimumValueLabel: {
+                    Text("Dry")
+                } maximumValueLabel: {
+                    Text("Roomy")
+                }
+                .help("Short desk-and-room reflections that blend into each click. Never an echo.")
+                Toggle(isOn: $settings.randomVariation) {
+                    Text("Natural variation")
+                    Text("A barely audible ±0.5 % speed and ±0.5 dB change per press. Each key keeps its own recording.")
+                }
+            }
+
             Section {
                 List(selection: Binding(get: { settings.selectedPackID }, set: { if let id = $0 { settings.selectedPackID = id } })) {
-                    ForEach(model.library.packs) { pack in
-                        PackRow(pack: pack).tag(pack.id)
+                    ForEach(groups, id: \.title) { group in
+                        Section(group.title) {
+                            ForEach(group.packs) { pack in
+                                PackRow(pack: pack, isSelected: pack.id == settings.selectedPackID) { model.previewSound() }
+                                    .tag(pack.id)
+                            }
+                        }
                     }
                 }
-                .frame(minHeight: 150)
+                .frame(height: 230)
                 .overlay {
                     if isDropTargeted {
                         RoundedRectangle(cornerRadius: 6).strokeBorder(.tint, lineWidth: 2)
@@ -24,75 +70,54 @@ struct SoundSettingsView: View {
                 }
                 .onDrop(of: [.fileURL], isTargeted: $isDropTargeted, perform: handleDrop)
                 HStack {
-                    Button("Preview", systemImage: "play.fill") { model.previewSound() }
-                    Spacer()
                     Button("Import Sound Pack…", action: chooseImport)
                     Button("Open Sound Pack Folder") { model.library.revealUserFolder() }
+                    Spacer()
                     Menu("More") {
                         Button("Reload Packs") { model.reloadPacks() }
-                        if let pack = model.library.pack(id: settings.selectedPackID), !pack.isBuiltIn {
-                            Button("Move “\(pack.name)” to Trash", role: .destructive) { delete(pack) }
+                        if let pack = model.activePack, !pack.isBuiltIn {
+                            Button("Move “\(pack.name)” to Trash…", role: .destructive) { confirmingDelete = pack }
                         }
                     }
                     .fixedSize()
                 }
             } header: {
-                Text("Sound pack")
+                Text("Switch")
             } footer: {
-                Text("Drop a .switchcraft folder onto the list to import it. Imported packs are stored in ~/Library/Application Support/Switchcraft/SoundPacks.")
-                    .font(.caption).foregroundStyle(.secondary)
+                Text("Drop a .switchcraft folder on the list to import it. Imported packs live in ~/Library/Application Support/Switchcraft/SoundPacks.")
+                    .foregroundStyle(.secondary)
             }
 
             if let message = importError ?? model.packMessage {
-                Label(message, systemImage: "exclamationmark.triangle").foregroundStyle(.orange)
+                StatusLabel(kind: .warning, text: message)
             }
-            if let pack = model.library.pack(id: settings.selectedPackID) {
-                Section("About this pack") {
+            if let pack = model.activePack {
+                Section("About this switch") {
                     if let description = pack.manifest.description { Text(description) }
-                    if let credits = pack.manifest.credits {
-                        Text(credits).font(.caption).foregroundStyle(.secondary)
+                    LabeledContent("Recordings") {
+                        Text("\(pack.sampleCount) key presses" + (pack.releaseFiles.contains { !$0.isEmpty } ? " + key-ups" : ""))
                     }
-                    LabeledContent("Key-up sounds") { Text(pack.releaseFiles.contains { !$0.isEmpty } ? "Included" : "None") }
-                }
-            }
-            if let pack = model.library.pack(id: settings.selectedPackID), !pack.warnings.isEmpty {
-                Section("Pack warnings") {
-                    ForEach(pack.warnings, id: \.self) { Text($0).font(.caption) }
+                    if let credits = pack.manifest.credits {
+                        Text(credits).foregroundStyle(.secondary)
+                    }
+                    ForEach(pack.warnings, id: \.self) { StatusLabel(kind: .warning, text: $0) }
                 }
             }
             if !model.library.invalidPacks.isEmpty {
                 Section("Packs that couldn't be loaded") {
-                    ForEach(model.library.invalidPacks, id: \.self) { Text($0).font(.caption) }
+                    ForEach(model.library.invalidPacks, id: \.self) { StatusLabel(kind: .warning, text: $0) }
                 }
-            }
-
-            Section {
-                Slider(value: $settings.volume, in: 0...1) { Text("Master volume") }
-                Slider(value: $settings.stereoWidth, in: 0...1) {
-                    Text("Stereo width")
-                } minimumValueLabel: {
-                    Text("Mono").font(.caption)
-                } maximumValueLabel: {
-                    Text("Wide").font(.caption)
-                }
-                Slider(value: $settings.roomAmbience, in: 0...1) {
-                    Text("Room ambience")
-                } minimumValueLabel: {
-                    Text("Dry").font(.caption)
-                } maximumValueLabel: {
-                    Text("Roomy").font(.caption)
-                }
-                Toggle("Random sample variation", isOn: $settings.randomVariation)
-                Text("Each key keeps its own recording, like a real board. Variation adds a barely audible ±0.5 % speed and ±0.5 dB level change per press.")
-                    .font(.caption).foregroundStyle(.secondary)
-            } header: {
-                Text("Playback")
-            } footer: {
-                Text("Stereo width places every key where it sits on the keyboard, so the sound comes from under your finger. Room ambience adds the short reflections of a desk and room. Headphones show both best.")
-                    .font(.caption).foregroundStyle(.secondary)
             }
         }
         .formStyle(.grouped)
+        .confirmationDialog("Move “\(confirmingDelete?.name ?? "")” to the Trash?", isPresented: Binding(
+            get: { confirmingDelete != nil }, set: { if !$0 { confirmingDelete = nil } })) {
+            Button("Move to Trash", role: .destructive) {
+                if let pack = confirmingDelete { delete(pack) }
+            }
+        } message: {
+            Text("You can restore it from the Trash and import it again.")
+        }
     }
 
     private func chooseImport() {
@@ -100,7 +125,6 @@ struct SoundSettingsView: View {
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
         panel.allowsMultipleSelection = false
-        panel.treatsFilePackagesAsDirectories = false
         panel.message = "Choose a .switchcraft sound pack folder"
         guard panel.runModal() == .OK, let url = panel.url else { return }
         importPack(url)
@@ -136,18 +160,23 @@ struct SoundSettingsView: View {
 
 private struct PackRow: View {
     let pack: SoundPack
+    let isSelected: Bool
+    let preview: () -> Void
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(pack.name)
-                Text([pack.manifest.category, pack.manifest.author, "\(pack.sampleCount) samples"].compactMap { $0 }.joined(separator: " · "))
-                    .font(.caption).foregroundStyle(.secondary)
-            }
+        HStack(spacing: 10) {
+            StemSwatch(hex: pack.manifest.color, size: 12)
+            Text(pack.name)
             Spacer()
-            if !pack.isBuiltIn {
-                Text("Imported").font(.caption).foregroundStyle(.secondary)
+            if isSelected {
+                Button(action: preview) {
+                    Image(systemName: "play.circle.fill").imageScale(.large)
+                }
+                .buttonStyle(.borderless)
+                .help("Play soft to slam")
+                .accessibilityLabel("Preview \(pack.name)")
             }
         }
+        .padding(.vertical, 1)
     }
 }

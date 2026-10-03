@@ -40,6 +40,7 @@
 		7318C59F23BE9370E3CA1F75 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB1B1A9E7FDF7713BA86391 /* SettingsStore.swift */; };
 		7405FF52DC297EF6D0C7C262 /* SwitchcraftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9175A1493DE2007D75A0F85 /* SwitchcraftApp.swift */; };
 		77C599455EA2F920B430AF56 /* VelocityMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E4CA61BB8BC9A1755AFAFB /* VelocityMapper.swift */; };
+		79DA2D5DA9647941588EB8E4 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DCEBF777C3C2C4AFC3C3DB /* Components.swift */; };
 		8606043236675010AA9DF467 /* SystemMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A184038FF766ED8443A23A /* SystemMonitor.swift */; };
 		884A3FB7CE41FC92A979481B /* WindowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758882E1463377AF04F46DE8 /* WindowCoordinator.swift */; };
 		8D0E8BD49A50333D207CE611 /* SampleRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546C4EBE63CF967D37066519 /* SampleRing.swift */; };
@@ -65,6 +66,7 @@
 		F22BEE21179B6B43B094AD6E /* VelocityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6207EC6056CC92A3EE4691 /* VelocityMappingTests.swift */; };
 		F23C9BFE9CE36A6657D966BC /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160394AD871DD52D3A9A1D40 /* AppModel.swift */; };
 		F4E853B3302D9067F29700A3 /* HIDAccelerometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83592E1CE189A3D950446D7F /* HIDAccelerometer.swift */; };
+		F7E81CD051B6CD5D22C28EF9 /* GlobalHotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322C6FFD8F8C5666A72BB12E /* GlobalHotKey.swift */; };
 		F9A18B737ED1C365FAAB2CC7 /* CalibrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742B544002A48FD47A4D8706 /* CalibrationView.swift */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +123,7 @@
 		271C64E29D1929D97DA77864 /* TypingPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingPipeline.swift; sourceTree = "<group>"; };
 		2BF7D91F268CCA38E59F583D /* SettingsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStoreTests.swift; sourceTree = "<group>"; };
 		2FC7273B178B89601F6413C5 /* ImpactDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImpactDetectionTests.swift; sourceTree = "<group>"; };
+		322C6FFD8F8C5666A72BB12E /* GlobalHotKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotKey.swift; sourceTree = "<group>"; };
 		33C814D28372409B1FD5E4BD /* HardwareInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwareInfo.swift; sourceTree = "<group>"; };
 		35F2684F0EB734506EB699A6 /* VoiceMixer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMixer.swift; sourceTree = "<group>"; };
 		37BB1A6E0B49BEBEB70C0197 /* ImpactGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImpactGraphView.swift; sourceTree = "<group>"; };
@@ -135,6 +138,7 @@
 		6583A7D79C358D999DB190D1 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		69A6E932E433C668835041E0 /* SoundEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundEngine.swift; sourceTree = "<group>"; };
 		7160680F8BB019637155AEFB /* SampleBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleBank.swift; sourceTree = "<group>"; };
+		72DCEBF777C3C2C4AFC3C3DB /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		742B544002A48FD47A4D8706 /* CalibrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationView.swift; sourceTree = "<group>"; };
 		758882E1463377AF04F46DE8 /* WindowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowCoordinator.swift; sourceTree = "<group>"; };
 		7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwitchcraftCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,6 +195,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00AAD0054EA34B06119F860D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				72DCEBF777C3C2C4AFC3C3DB /* Components.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		0295FFAB04F10A9FEA383D8D /* SoundPacks */ = {
 			isa = PBXGroup;
 			children = (
@@ -269,6 +281,7 @@
 			children = (
 				930BDCCE82B94970DE40761C /* Application */,
 				FD43F724B7BCB5019AB5427B /* Audio */,
+				00AAD0054EA34B06119F860D /* Components */,
 				A5D0D97DF371F02DA86317E6 /* Diagnostics */,
 				56B4BE03F62EA055D757C469 /* Keyboard */,
 				CDDD1C75943790B015C9AD6D /* MenuBar */,
@@ -341,6 +354,7 @@
 			children = (
 				02F96494B7E9424C327F35D0 /* AlertBeepSuppressor.swift */,
 				160394AD871DD52D3A9A1D40 /* AppModel.swift */,
+				322C6FFD8F8C5666A72BB12E /* GlobalHotKey.swift */,
 				A9175A1493DE2007D75A0F85 /* SwitchcraftApp.swift */,
 				E6A184038FF766ED8443A23A /* SystemMonitor.swift */,
 				758882E1463377AF04F46DE8 /* WindowCoordinator.swift */,
@@ -566,9 +580,11 @@
 				63019CBB04582DE9FFB050A4 /* AlertBeepSuppressor.swift in Sources */,
 				F23C9BFE9CE36A6657D966BC /* AppModel.swift in Sources */,
 				F9A18B737ED1C365FAAB2CC7 /* CalibrationView.swift in Sources */,
+				79DA2D5DA9647941588EB8E4 /* Components.swift in Sources */,
 				1D77542C2B2AF50865988E16 /* DiagnosticsReport.swift in Sources */,
 				4C9867C85DC078582112C887 /* DiagnosticsView.swift in Sources */,
 				8E612D34EB0D1D3B88AD1807 /* ExclusionsSettingsView.swift in Sources */,
+				F7E81CD051B6CD5D22C28EF9 /* GlobalHotKey.swift in Sources */,
 				F4E853B3302D9067F29700A3 /* HIDAccelerometer.swift in Sources */,
 				E30EE832C1F0A3DC3F9C75FD /* HardwareInfo.swift in Sources */,
 				45A73242CE583400083DABEF /* ImpactGraphView.swift in Sources */,

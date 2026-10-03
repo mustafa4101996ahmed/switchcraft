@@ -9,16 +9,19 @@ final class CalibrationSession {
 
     static let pressesPerPhase = 8
 
-    private(set) var phase: Phase = .ready
+    private(set) var phase: Phase = .ready {
+        didSet { if phase != oldValue { announce() } }
+    }
     private(set) var soft: [Double] = []
     private(set) var normal: [Double] = []
     private(set) var hard: [Double] = []
     private(set) var noiseFloor = Calibration.factoryDefault.noiseFloor
-    private(set) var lastMagnitude: Double?
     private(set) var result: Calibration?
     private(set) var errorMessage: String?
     @ObservationIgnored private weak var model: AppModel?
     @ObservationIgnored private var active = false
+
+    var isRunning: Bool { [.quiet, .soft, .normal, .hard].contains(phase) }
 
     var count: Int {
         switch phase {
@@ -36,7 +39,6 @@ final class CalibrationSession {
         hard = []
         result = nil
         errorMessage = nil
-        lastMagnitude = nil
         active = true
         model.beginCalibration(self)
         phase = .quiet
@@ -53,7 +55,7 @@ final class CalibrationSession {
         }
         guard active else { return }
         guard !floors.isEmpty else {
-            errorMessage = "The accelerometer isn't delivering data (\(model.displayedSensorState.rawValue)). Calibration needs a readable sensor."
+            errorMessage = "The typing-force sensor isn't sending data (\(model.displayedSensorState.displayName)). Diagnostics can test it."
             phase = .review
             return
         }
@@ -63,7 +65,6 @@ final class CalibrationSession {
 
     func record(_ measurement: ImpactMeasurement) {
         guard active, measurement.outcome == .detected else { return }
-        lastMagnitude = measurement.magnitude
         switch phase {
         case .soft:
             soft.append(measurement.magnitude)
@@ -86,6 +87,7 @@ final class CalibrationSession {
             errorMessage = error.localizedDescription
         }
         phase = .review
+        stop()
     }
 
     func save() {
@@ -93,15 +95,37 @@ final class CalibrationSession {
         stop()
     }
 
+    /// Back to the start, nothing saved.
+    func cancel() {
+        stop()
+        phase = .ready
+    }
+
     func stop() {
         guard active else { return }
         active = false
         model?.endCalibration()
     }
+
+    private func announce() {
+        let text: String
+        switch phase {
+        case .quiet: text = "Keep your hands still"
+        case .soft: text = "Now type softly"
+        case .normal: text = "Now type normally"
+        case .hard: text = "Now type hard"
+        case .review: text = result != nil ? "Calibration complete" : "Calibration didn't finish"
+        case .ready: return
+        }
+        AccessibilityNotification.Announcement(text).post()
+    }
 }
 
 struct CalibrationView: View {
     @Environment(AppModel.self) private var model
+    /// Inside onboarding the step header already names the task.
+    var embedded = false
+    var onRunningChange: (Bool) -> Void = { _ in }
     var onFinish: () -> Void = {}
     @State private var session = CalibrationSession()
     @State private var practice = ""
@@ -110,29 +134,33 @@ struct CalibrationView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             switch session.phase {
-            case .ready:
-                Text("Teach Switchcraft how hard you type").font(.title3.weight(.semibold))
-                Text("You'll type a few keys softly, normally and hard. Switchcraft measures the vibration each press makes in the MacBook's chassis. Nothing you type is kept.")
-                    .foregroundStyle(.secondary)
-                if !model.hardware.accelerometerPresent {
-                    Label("This Mac has no compatible accelerometer, so calibration isn't available. Use Fixed velocity instead.", systemImage: "exclamationmark.triangle")
-                        .foregroundStyle(.orange)
-                }
-                Button("Start Calibration") { session.start(model: model) }
-                    .keyboardShortcut(.defaultAction)
-                    .disabled(!model.hardware.accelerometerPresent)
+            case .ready: ready
             case .quiet:
-                Label("Keep your hands off the Mac for two seconds…", systemImage: "hand.raised")
+                Label("Hands off the keyboard for two seconds…", systemImage: "hand.raised")
                 ProgressView().controlSize(.small)
-            case .soft, .normal, .hard:
-                pressStep
-            case .review:
-                review
+            case .soft, .normal, .hard: pressStep
+            case .review: review
             }
         }
-        .padding(20)
-        .frame(width: 460, alignment: .leading)
+        .padding(embedded ? 0 : 24)
+        .frame(width: embedded ? nil : 480, alignment: .leading)
+        .onChange(of: session.isRunning) { onRunningChange(session.isRunning) }
         .onDisappear { session.stop() }
+    }
+
+    @ViewBuilder
+    private var ready: some View {
+        if !embedded {
+            Text("Teach Switchcraft how hard you type").font(.title3.weight(.semibold))
+        }
+        Text("Type a few keys softly, then normally, then hard. Switchcraft learns your range so soft presses sound soft and hard presses sound hard. Nothing you type is kept.")
+            .fixedSize(horizontal: false, vertical: true)
+        if model.hardware.accelerometerPresent {
+            Button("Start Calibration") { session.start(model: model) }
+                .keyboardShortcut(.defaultAction)
+        } else {
+            StatusLabel(kind: .warning, text: "This Mac has no typing-force sensor, so every key plays at one strength.")
+        }
     }
 
     private var pressStep: some View {
@@ -142,64 +170,73 @@ struct CalibrationView: View {
         case .normal: instruction = "Now type normally"
         default: instruction = "Now type hard"
         }
-        return VStack(alignment: .leading, spacing: 10) {
+        return VStack(alignment: .leading, spacing: 12) {
             Text(instruction).font(.title3.weight(.semibold))
             ProgressView(value: Double(session.count), total: Double(CalibrationSession.pressesPerPhase)) {
-                Text("\(session.count) of \(CalibrationSession.pressesPerPhase) presses detected")
+                Text("\(session.count) of \(CalibrationSession.pressesPerPhase) presses")
             }
             TextField("Type here", text: $practice)
                 .textFieldStyle(.roundedBorder)
                 .focused($practiceFocused)
+                .onSubmit {} // Return is just another key press here, never a button.
                 .onAppear { practiceFocused = true }
                 .onChange(of: session.phase) { practice = "" }
-            if let last = session.lastMagnitude {
-                Text(String(format: "Last impact: %.1f mg", last * 1000)).font(.caption).monospacedDigit().foregroundStyle(.secondary)
-            }
-            Text("Presses below the noise floor aren't counted — press a little firmer if the count doesn't move.")
-                .font(.caption).foregroundStyle(.secondary)
-            Button("Cancel") {
-                session.stop()
-                onFinish()
-            }
+            TypingForceMeter()
+            Text("A press too light to feel isn't counted. If the number doesn't move, press a little firmer.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+            Button("Cancel") { session.cancel() }
+                .keyboardShortcut(.cancelAction)
         }
     }
 
+    @ViewBuilder
     private var review: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            if let result = session.result {
-                Text("Calibration complete").font(.title3.weight(.semibold))
-                Grid(alignment: .leading, horizontalSpacing: 12, verticalSpacing: 4) {
-                    row("Noise floor", result.noiseFloor)
-                    row("Soft", result.soft)
-                    row("Normal", result.normal)
-                    row("Hard", result.hard)
+        if let result = session.result {
+            StatusLabel(kind: .good, text: "Calibrated").font(.title3.weight(.semibold))
+            Text("Your soft, normal and hard presses now land in their own parts of the range. Type a few keys to hear it.")
+                .fixedSize(horizontal: false, vertical: true)
+            ResponseCurveView(mapper: VelocityMapper(calibration: result, curve: model.settings.curve))
+                .frame(height: 110)
+            TypingForceMeter()
+            DisclosureGroup("Measured impacts") {
+                Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 3) {
+                    detail("Background vibration", result.noiseFloor)
+                    detail("Soft", result.soft)
+                    detail("Normal", result.normal)
+                    detail("Hard", result.hard)
                 }
-                HStack {
-                    Button("Save") {
-                        session.save()
-                        onFinish()
-                    }
-                    .keyboardShortcut(.defaultAction)
-                    Button("Redo") { session.start(model: model) }
+                .padding(.top, 4)
+            }
+            HStack {
+                Button("Redo") { session.start(model: model) }
+                Spacer()
+                Button("Save") {
+                    session.save()
+                    onFinish()
                 }
-            } else {
-                Text("Calibration didn't finish").font(.title3.weight(.semibold))
-                Text(session.errorMessage ?? "Unknown error").foregroundStyle(.secondary)
-                HStack {
-                    Button("Try Again") { session.start(model: model) }
-                    Button("Close") {
-                        session.stop()
-                        onFinish()
-                    }
+                .keyboardShortcut(.defaultAction)
+            }
+        } else {
+            StatusLabel(kind: .warning, text: "Calibration didn't finish").font(.title3.weight(.semibold))
+            Text(session.errorMessage ?? "Something interrupted it.").fixedSize(horizontal: false, vertical: true)
+            HStack {
+                Button("Try Again") { session.start(model: model) }
+                Button("Open Diagnostics…") { model.windows.show(.diagnostics, model: model) }
+                Spacer()
+                Button(embedded ? "Skip" : "Close") {
+                    session.cancel()
+                    onFinish()
                 }
+                .keyboardShortcut(.cancelAction)
             }
         }
     }
 
-    private func row(_ title: String, _ value: Double) -> some View {
+    private func detail(_ title: String, _ value: Double) -> some View {
         GridRow {
             Text(title).foregroundStyle(.secondary)
-            Text(String(format: "%.2f mg", value * 1000)).monospacedDigit()
+            Text(String(format: "%.1f mg", value * 1000)).monospacedDigit()
         }
     }
 }

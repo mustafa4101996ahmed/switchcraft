@@ -14,6 +14,8 @@ public final class SettingsStore {
     public var playRepeats: Bool { didSet { save(playRepeats, .playRepeats) } }
     public var playReleases: Bool { didSet { save(playReleases, .playReleases) } }
     public var hasCompletedOnboarding: Bool { didSet { save(hasCompletedOnboarding, .hasCompletedOnboarding) } }
+    /// ⌃⌥⌘K toggles Switchcraft from anywhere.
+    public var hotKeyEnabled: Bool { didSet { save(hotKeyEnabled, .hotKeyEnabled) } }
 
     // Sound
     public var selectedPackID: String { didSet { save(selectedPackID, .selectedPackID) } }
@@ -51,7 +53,7 @@ public final class SettingsStore {
     public nonisolated static let brandSymbol = "switchcraft"
 
     enum Key: String {
-        case isEnabled, menuBarSymbol, playRepeats, playReleases, hasCompletedOnboarding
+        case isEnabled, menuBarSymbol, playRepeats, playReleases, hasCompletedOnboarding, hotKeyEnabled
         case selectedPackID, volume, randomVariation, stereoWidth, roomAmbience, silenceTypingBeep
         case velocityMode, fixedVelocity, simulationSource, randomMin, randomMax
         case curve, calibration, window, detectionSNR, minimumNoiseFloor, impactDecayMs
@@ -71,6 +73,7 @@ public final class SettingsStore {
         playRepeats = Self.load(.playRepeats, defaults, false)
         playReleases = Self.load(.playReleases, defaults, true)
         hasCompletedOnboarding = Self.load(.hasCompletedOnboarding, defaults, false)
+        hotKeyEnabled = Self.load(.hotKeyEnabled, defaults, true)
         selectedPackID = Self.load(.selectedPackID, defaults, Self.defaultPackID)
         volume = Self.load(.volume, defaults, 0.7)
         randomVariation = Self.load(.randomVariation, defaults, true)

@@ -1,5 +1,6 @@
 {
   "category" : "Vintage",
+  "color" : "#A7A9AC",
   "credits" : "Recordings from tplai\/kbsim, MIT License, Copyright (c) Thomas Lai.",
   "deriveVelocityLayers" : true,
   "description" : "IBM Model M-style buckling springs, the classic terminal sound.",

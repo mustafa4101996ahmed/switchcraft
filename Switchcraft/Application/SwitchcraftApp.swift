@@ -14,6 +14,12 @@ struct SwitchcraftApp: App {
             MenuBarLabel(model: delegate.model)
         }
         .menuBarExtraStyle(.window)
+        .commands {
+            CommandGroup(replacing: .appSettings) {
+                Button("Settings…") { delegate.model.windows.show(.settings, model: delegate.model) }
+                    .keyboardShortcut(",", modifiers: .command)
+            }
+        }
     }
 }
 
@@ -23,6 +29,7 @@ private struct MenuBarLabel: View {
     var body: some View {
         BrandIcon.menuBarImage(model.menuBarSymbolName)
             .accessibilityLabel("Switchcraft")
+            .accessibilityValue(model.listeningStatus.text)
     }
 }
 
@@ -32,6 +39,7 @@ enum BrandIcon {
     static let glyph: NSImage = {
         let image = NSImage(named: "MenuBarIcon") ?? NSImage()
         image.isTemplate = true
+        image.accessibilityDescription = "Switchcraft switch"
         return image
     }()
 
@@ -39,7 +47,8 @@ enum BrandIcon {
         symbol == SettingsStore.brandSymbol ? Image(nsImage: glyph) : Image(systemName: symbol)
     }
 
-    static var appIcon: Image { Image(nsImage: NSApp.applicationIconImage) }
+    /// Straight from the bundle: `NSApp.applicationIconImage` can come from a stale icon cache.
+    static var appIcon: Image { Image(nsImage: NSImage(named: "AppIcon") ?? NSApp.applicationIconImage) }
 }
 
 @MainActor

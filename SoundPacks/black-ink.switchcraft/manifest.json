@@ -1,5 +1,6 @@
 {
   "category" : "Linear",
+  "color" : "#26262A",
   "credits" : "Recordings from tplai\/kbsim, MIT License, Copyright (c) Thomas Lai.",
   "deriveVelocityLayers" : true,
   "description" : "Black Ink linears: deep, heavy bottom-out.",

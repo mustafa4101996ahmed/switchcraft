@@ -58,64 +58,69 @@ func drawIcon(_ ctx: CGContext) {
     let body = CGPath(roundedRect: CGRect(x: 100, y: 100, width: 824, height: 824), cornerWidth: 186, cornerHeight: 186, transform: nil)
     ctx.saveGState()
     ctx.setShadow(offset: CGSize(width: 0, height: -12), blur: 28, color: color(0x000000, 0.35))
-    ctx.addPath(body); ctx.setFillColor(color(0x3A1C86)); ctx.fillPath()
+    ctx.addPath(body); ctx.setFillColor(color(0x34197A)); ctx.fillPath()
     ctx.restoreGState()
     ctx.saveGState()
     ctx.addPath(body); ctx.clip()
-    ctx.drawLinearGradient(gradient([color(0x7B4BE8), color(0x4A22A8), color(0x24104F)]),
+    ctx.drawLinearGradient(gradient([color(0x6D44D6), color(0x40209A), color(0x1F0E47)]),
                            start: CGPoint(x: 300, y: 100), end: CGPoint(x: 724, y: 924),
                            options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
-    ctx.drawRadialGradient(gradient([color(0xFFFFFF, 0.18), color(0xFFFFFF, 0)]), startCenter: CGPoint(x: 330, y: 220), startRadius: 0,
-                           endCenter: CGPoint(x: 330, y: 220), endRadius: 520, options: [])
+    ctx.drawRadialGradient(gradient([color(0xFFFFFF, 0.14), color(0xFFFFFF, 0)]), startCenter: CGPoint(x: 340, y: 230), startRadius: 0,
+                           endCenter: CGPoint(x: 340, y: 230), endRadius: 520, options: [])
 
-    // Gold contact legs.
-    ctx.setFillColor(color(0xE7B24A))
-    for x: CGFloat in [432, 578] { ctx.fill(CGRect(x: x, y: 690, width: 16, height: 70)) }
+    // Gold contact pins.
+    ctx.setFillColor(color(0xE2B04F))
+    for x: CGFloat in [430, 578] { ctx.fill(CGRect(x: x, y: 694, width: 16, height: 72)) }
 
     // Bottom housing, lip, top housing.
     ctx.saveGState()
     ctx.setShadow(offset: CGSize(width: 0, height: -10), blur: 24, color: color(0x0B0420, 0.55))
-    ctx.addPath(CGPath(roundedRect: CGRect(x: 300, y: 560, width: 424, height: 136), cornerWidth: 30, cornerHeight: 30, transform: nil))
-    ctx.setFillColor(color(0x24173F)); ctx.fillPath()
+    ctx.addPath(CGPath(roundedRect: CGRect(x: 300, y: 562, width: 424, height: 136), cornerWidth: 30, cornerHeight: 30, transform: nil))
+    ctx.setFillColor(color(0x221539)); ctx.fillPath()
     ctx.restoreGState()
-    ctx.addPath(CGPath(roundedRect: CGRect(x: 284, y: 540, width: 456, height: 36), cornerWidth: 16, cornerHeight: 16, transform: nil))
+    ctx.addPath(CGPath(roundedRect: CGRect(x: 284, y: 542, width: 456, height: 36), cornerWidth: 16, cornerHeight: 16, transform: nil))
     ctx.setFillColor(color(0x5A43A0)); ctx.fillPath()
-    let top = roundedPolygon([CGPoint(x: 322, y: 548), CGPoint(x: 702, y: 548), CGPoint(x: 652, y: 402), CGPoint(x: 372, y: 402)], radius: 26)
+    let top = roundedPolygon([CGPoint(x: 322, y: 550), CGPoint(x: 702, y: 550), CGPoint(x: 652, y: 412), CGPoint(x: 372, y: 412)], radius: 26)
     ctx.saveGState()
     ctx.addPath(top); ctx.clip()
-    ctx.drawLinearGradient(gradient([color(0xE4D8FF), color(0xA98CF2)]), start: CGPoint(x: 512, y: 402), end: CGPoint(x: 512, y: 548), options: [])
+    ctx.drawLinearGradient(gradient([color(0xE4D8FF), color(0xA98CF2)]), start: CGPoint(x: 512, y: 412), end: CGPoint(x: 512, y: 550), options: [])
     ctx.restoreGState()
 
-    // Stem: the MX cross rising out of the housing, cream, with a highlight and a contact shadow.
+    // Stem: a red Cherry-style stem rising out of the housing (the switch's side profile), lit from the left.
+    let stem = CGPath(roundedRect: CGRect(x: 462, y: 246, width: 100, height: 184), cornerWidth: 10, cornerHeight: 10, transform: nil)
     ctx.saveGState()
-    ctx.setShadow(offset: CGSize(width: 0, height: 6), blur: 12, color: color(0x2A1366, 0.55))
-    ctx.addPath(cross(512, 372, length: 164, thickness: 52, radius: 14))
-    ctx.setFillColor(color(0xFFF3D6)); ctx.fillPath()
+    ctx.setShadow(offset: CGSize(width: 0, height: 8), blur: 14, color: color(0x1A0B45, 0.55))
+    ctx.addPath(stem); ctx.setFillColor(color(0xD9443B)); ctx.fillPath()
     ctx.restoreGState()
-    ctx.addPath(CGPath(roundedRect: CGRect(x: 498, y: 296, width: 10, height: 120), cornerWidth: 5, cornerHeight: 5, transform: nil))
-    ctx.setFillColor(color(0xFFFFFF, 0.55)); ctx.fillPath()
-    // Rim light along the top housing's upper edge.
-    ctx.addPath(CGPath(roundedRect: CGRect(x: 392, y: 408, width: 240, height: 6), cornerWidth: 3, cornerHeight: 3, transform: nil))
-    ctx.setFillColor(color(0xFFFFFF, 0.6)); ctx.fillPath()
+    ctx.saveGState()
+    ctx.addPath(stem); ctx.clip()
+    ctx.drawLinearGradient(gradient([color(0xF36A5A), color(0xD9443B), color(0xA92C28)]), start: CGPoint(x: 462, y: 0), end: CGPoint(x: 562, y: 0), options: [])
+    // Shoulder where the stem's cross arms meet: a slightly darker band, the detail that says "MX stem".
+    ctx.setFillColor(color(0x000000, 0.14)); ctx.fill(CGRect(x: 462, y: 300, width: 100, height: 14))
+    ctx.setFillColor(color(0xFFFFFF, 0.28)); ctx.fill(CGRect(x: 472, y: 252, width: 10, height: 170))
+    ctx.restoreGState()
 
-    // Sparkles with a warm glow.
-    for (x, y, r) in [(CGFloat(742), CGFloat(246), CGFloat(104)), (292, 300, 44), (790, 420, 26)] {
+    // One soft sparkle, plus a small accent: the craft, not the headline.
+    for (x, y, r, alpha) in [(CGFloat(724), CGFloat(282), CGFloat(62), CGFloat(0.95)), (CGFloat(800), CGFloat(372), CGFloat(20), CGFloat(0.75))] {
         ctx.saveGState()
-        ctx.setShadow(offset: .zero, blur: r * 0.6, color: color(0xFFC94D, 0.8))
+        ctx.setShadow(offset: .zero, blur: r * 0.35, color: color(0xFFD27A, 0.45))
+        ctx.setAlpha(alpha)
         ctx.addPath(sparkle(x, y, r)); ctx.clip()
-        ctx.drawLinearGradient(gradient([color(0xFFF1A8), color(0xF6B73C)]), start: CGPoint(x: x, y: y - r), end: CGPoint(x: x, y: y + r), options: [])
+        ctx.drawLinearGradient(gradient([color(0xFFF3C4), color(0xF0C35E)]), start: CGPoint(x: x, y: y - r), end: CGPoint(x: x, y: y + r), options: [])
         ctx.restoreGState()
     }
     ctx.restoreGState()
 }
 
-/// Template glyph for the menu bar: switch silhouette and a sparkle, black on transparent.
+/// Template glyph for the menu bar: stem column, housing and pins (a switch in profile) and a
+/// small sparkle; black on transparent.
 func drawGlyph(_ ctx: CGContext) {
     ctx.setFillColor(color(0x000000))
-    ctx.addPath(cross(400, 250, length: 300, thickness: 110, radius: 30)); ctx.fillPath()
-    ctx.addPath(roundedPolygon([CGPoint(x: 170, y: 560), CGPoint(x: 630, y: 560), CGPoint(x: 560, y: 420), CGPoint(x: 240, y: 420)], radius: 30)); ctx.fillPath()
-    ctx.addPath(CGPath(roundedRect: CGRect(x: 120, y: 610, width: 560, height: 230), cornerWidth: 50, cornerHeight: 50, transform: nil)); ctx.fillPath()
-    ctx.addPath(sparkle(820, 260, 170)); ctx.fillPath()
+    ctx.addPath(CGPath(roundedRect: CGRect(x: 395, y: 120, width: 130, height: 270), cornerWidth: 34, cornerHeight: 34, transform: nil)); ctx.fillPath()
+    ctx.addPath(roundedPolygon([CGPoint(x: 190, y: 590), CGPoint(x: 730, y: 590), CGPoint(x: 650, y: 425), CGPoint(x: 270, y: 425)], radius: 34)); ctx.fillPath()
+    ctx.addPath(CGPath(roundedRect: CGRect(x: 130, y: 630, width: 660, height: 180), cornerWidth: 48, cornerHeight: 48, transform: nil)); ctx.fillPath()
+    for x: CGFloat in [300, 580] { ctx.fill(CGRect(x: x, y: 800, width: 48, height: 110)) }
+    ctx.addPath(sparkle(840, 230, 125)); ctx.fillPath()
 }
 
 func png(_ ctx: CGContext, to url: URL) throws {

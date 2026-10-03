@@ -1,5 +1,6 @@
 {
   "category" : "Linear",
+  "color" : "#EFE2C4",
   "credits" : "Recordings from tplai\/kbsim, MIT License, Copyright (c) Thomas Lai.",
   "deriveVelocityLayers" : true,
   "description" : "Self-lubricating POM linear switches.",
