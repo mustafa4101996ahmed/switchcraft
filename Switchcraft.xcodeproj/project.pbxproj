@@ -41,9 +41,11 @@
 		7405FF52DC297EF6D0C7C262 /* SwitchcraftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9175A1493DE2007D75A0F85 /* SwitchcraftApp.swift */; };
 		77C599455EA2F920B430AF56 /* VelocityMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E4CA61BB8BC9A1755AFAFB /* VelocityMapper.swift */; };
 		79DA2D5DA9647941588EB8E4 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DCEBF777C3C2C4AFC3C3DB /* Components.swift */; };
+		85D02A9C11394CBCE5DA8794 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E5DFDD1111F1101C3C9E7224 /* LICENSE */; };
 		8606043236675010AA9DF467 /* SystemMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A184038FF766ED8443A23A /* SystemMonitor.swift */; };
 		884A3FB7CE41FC92A979481B /* WindowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758882E1463377AF04F46DE8 /* WindowCoordinator.swift */; };
 		8D0E8BD49A50333D207CE611 /* SampleRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546C4EBE63CF967D37066519 /* SampleRing.swift */; };
+		8E488EE592941BF8DE511D07 /* LICENSES in Resources */ = {isa = PBXBuildFile; fileRef = FE0A41B631296A502BC8A459 /* LICENSES */; };
 		8E612D34EB0D1D3B88AD1807 /* ExclusionsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB55322CAE9BBDFAA75C2828 /* ExclusionsSettingsView.swift */; };
 		94F3F4CED6EDBF687D5143CC /* PipelineConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F03CE9EB6AA7D66B5710342 /* PipelineConfig.swift */; };
 		954FEEF20A3FCD32BF1236AB /* EarlyReflections.swift in Sources */ = {isa = PBXBuildFile; fileRef = A136129693E7FDA922B96529 /* EarlyReflections.swift */; };
@@ -63,6 +65,7 @@
 		E4DC4952BF96C4C0FFD84ED0 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = E658B4CFEF9F265BBF79BDBE /* Services.swift */; };
 		E60749F1B9C4F3607AB7CE8B /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A80643DBE16301C447C8A62 /* MenuBarView.swift */; };
 		EEB11149E1645F12A7BB2105 /* PermissionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9181A5EB01127F51EABFD235 /* PermissionsService.swift */; };
+		F0B1FE16E3B2CFE4EB265402 /* ReadmeRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C077337CB68C6AF3C4352E7 /* ReadmeRenderer.swift */; };
 		F22BEE21179B6B43B094AD6E /* VelocityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6207EC6056CC92A3EE4691 /* VelocityMappingTests.swift */; };
 		F23C9BFE9CE36A6657D966BC /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160394AD871DD52D3A9A1D40 /* AppModel.swift */; };
 		F4E853B3302D9067F29700A3 /* HIDAccelerometer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83592E1CE189A3D950446D7F /* HIDAccelerometer.swift */; };
@@ -142,6 +145,7 @@
 		742B544002A48FD47A4D8706 /* CalibrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationView.swift; sourceTree = "<group>"; };
 		758882E1463377AF04F46DE8 /* WindowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowCoordinator.swift; sourceTree = "<group>"; };
 		7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwitchcraftCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C077337CB68C6AF3C4352E7 /* ReadmeRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeRenderer.swift; sourceTree = "<group>"; };
 		80F9EF419B72801FE546B77F /* SwitchcraftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwitchcraftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81E4CA61BB8BC9A1755AFAFB /* VelocityMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VelocityMapper.swift; sourceTree = "<group>"; };
 		83592E1CE189A3D950446D7F /* HIDAccelerometer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDAccelerometer.swift; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 		DB55322CAE9BBDFAA75C2828 /* ExclusionsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExclusionsSettingsView.swift; sourceTree = "<group>"; };
 		DDB1B1A9E7FDF7713BA86391 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		DE54D9448F9D83A98FE21911 /* DiagnosticsReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsReport.swift; sourceTree = "<group>"; };
+		E5DFDD1111F1101C3C9E7224 /* LICENSE */ = {isa = PBXFileReference; path = LICENSE; sourceTree = "<group>"; };
 		E658B4CFEF9F265BBF79BDBE /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		E6A184038FF766ED8443A23A /* SystemMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMonitor.swift; sourceTree = "<group>"; };
 		E6C21BDF96C7E69DB341A1E1 /* UnfairLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfairLock.swift; sourceTree = "<group>"; };
@@ -173,6 +178,7 @@
 		F2DB51B781893EDC17A66543 /* RealismTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealismTests.swift; sourceTree = "<group>"; };
 		F48347C46A4E54873BFB6098 /* Calibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calibration.swift; sourceTree = "<group>"; };
 		FA5A7151C4AEAEDC79DE9AE8 /* SoundSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsView.swift; sourceTree = "<group>"; };
+		FE0A41B631296A502BC8A459 /* LICENSES */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LICENSES; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +273,8 @@
 		3FD9032FC0E7F64B4E8891F3 = {
 			isa = PBXGroup;
 			children = (
+				E5DFDD1111F1101C3C9E7224 /* LICENSE */,
+				FE0A41B631296A502BC8A459 /* LICENSES */,
 				1899AC24A3B108DF1DE992E8 /* SoundPacks */,
 				DDF93DFAB9F2C94B0C32FE07 /* Resources */,
 				45F7A7F64F562A79A189535D /* Switchcraft */,
@@ -376,6 +384,7 @@
 				DE54D9448F9D83A98FE21911 /* DiagnosticsReport.swift */,
 				A21E2FD214F9D813E7B71BA6 /* DiagnosticsView.swift */,
 				37BB1A6E0B49BEBEB70C0197 /* ImpactGraphView.swift */,
+				7C077337CB68C6AF3C4352E7 /* ReadmeRenderer.swift */,
 				0C8529E9853CEF3F1340F98E /* SnapshotRenderer.swift */,
 			);
 			path = Diagnostics;
@@ -564,6 +573,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A05A9138ECA52147E5B98AB /* AppIcon.icns in Resources */,
+				85D02A9C11394CBCE5DA8794 /* LICENSE in Resources */,
+				8E488EE592941BF8DE511D07 /* LICENSES in Resources */,
 				22E79D2E246C5E083A6E0C75 /* MenuBarIcon.png in Resources */,
 				2E05E2843E69BC45C28AE21B /* MenuBarIcon@2x.png in Resources */,
 				5ABE440B7450998F1CE60CA3 /* SoundPacks in Resources */,
@@ -592,6 +603,7 @@
 				E60749F1B9C4F3607AB7CE8B /* MenuBarView.swift in Sources */,
 				A6001EF8FEBA8F5153056D0A /* OnboardingView.swift in Sources */,
 				EEB11149E1645F12A7BB2105 /* PermissionsService.swift in Sources */,
+				F0B1FE16E3B2CFE4EB265402 /* ReadmeRenderer.swift in Sources */,
 				663801881B5101775739E6CB /* SampleBank.swift in Sources */,
 				DC7040A42404F346BA183B5C /* SettingsView.swift in Sources */,
 				DA9F3E2E872AED4E242AAA43 /* SnapshotRenderer.swift in Sources */,
@@ -723,7 +735,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
@@ -841,7 +853,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";

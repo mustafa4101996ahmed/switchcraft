@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 330" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="820" height="330" rx="12" fill="#FBFAFF"/>
+<rect x="112.0" y="34.0" width="257.6" height="236.0" fill="#6D44D6" fill-opacity="0.08"/>
+<text x="112.0" y="26.0" font-size="11" fill="#5B4C8A">listening window −15 … +8 ms</text>
+<line x1="56.0" x2="616.0" y1="270.0" y2="270.0" stroke="#E4E0F2"/>
+<text x="48.0" y="274.0" font-size="11" fill="#6E6880" text-anchor="end">0</text>
+<line x1="56.0" x2="616.0" y1="211.0" y2="211.0" stroke="#E4E0F2"/>
+<text x="48.0" y="215.0" font-size="11" fill="#6E6880" text-anchor="end">15</text>
+<line x1="56.0" x2="616.0" y1="152.0" y2="152.0" stroke="#E4E0F2"/>
+<text x="48.0" y="156.0" font-size="11" fill="#6E6880" text-anchor="end">30</text>
+<line x1="56.0" x2="616.0" y1="93.0" y2="93.0" stroke="#E4E0F2"/>
+<text x="48.0" y="97.0" font-size="11" fill="#6E6880" text-anchor="end">45</text>
+<line x1="56.0" x2="616.0" y1="34.0" y2="34.0" stroke="#E4E0F2"/>
+<text x="48.0" y="38.0" font-size="11" fill="#6E6880" text-anchor="end">60</text>
+<text x="56.0" y="288.0" font-size="11" fill="#6E6880" text-anchor="middle">-20 ms</text>
+<text x="168.0" y="288.0" font-size="11" fill="#6E6880" text-anchor="middle">-10 ms</text>
+<text x="280.0" y="288.0" font-size="11" fill="#6E6880" text-anchor="middle">0 ms</text>
+<text x="392.0" y="288.0" font-size="11" fill="#6E6880" text-anchor="middle">+10 ms</text>
+<text x="504.0" y="288.0" font-size="11" fill="#6E6880" text-anchor="middle">+20 ms</text>
+<text x="616.0" y="288.0" font-size="11" fill="#6E6880" text-anchor="middle">+30 ms</text>
+<text x="16" y="152.0" font-size="11" fill="#6E6880" transform="rotate(-90 16 152.0)" text-anchor="middle">impact (mg)</text>
+<line x1="280.0" x2="280.0" y1="34.0" y2="270.0" stroke="#2EA44F" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="285.0" y="48.0" font-size="11" fill="#2EA44F">key event</text>
+<path d="M56.0 268.9 L70.0 266.8 L84.0 267.5 L98.0 267.7 L112.0 267.2 L126.0 267.1 L140.0 267.1 L154.0 267.9 L168.0 266.7 L182.0 267.0 L196.0 258.1 L210.0 267.0 L224.0 264.8 L238.0 263.6 L252.0 268.5 L266.0 268.3 L280.0 266.9 L294.0 268.4 L308.0 267.9 L322.0 266.6 L336.0 268.5 L350.0 262.9 L364.0 250.5 L378.0 246.2 L392.0 256.0 L406.0 259.7 L420.0 267.5 L434.0 257.9 L448.0 264.3 L462.0 267.5 L476.0 265.9 L490.0 265.9 L504.0 265.4 L518.0 269.1 L532.0 265.8 L546.0 265.5 L560.0 267.6 L574.0 267.4 L588.0 267.2 L602.0 267.6" fill="none" stroke="#A99BEA" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="364.0" cy="250.5" r="3.5" fill="#A99BEA"/>
+<path d="M56.0 268.9 L70.0 266.8 L84.0 267.5 L98.0 267.7 L112.0 267.2 L126.0 267.1 L140.0 267.1 L154.0 267.9 L168.0 266.7 L182.0 263.5 L196.0 247.9 L210.0 264.8 L224.0 260.3 L238.0 259.9 L252.0 268.4 L266.0 268.1 L280.0 266.7 L294.0 268.0 L308.0 268.3 L322.0 266.6 L336.0 268.4 L350.0 255.3 L364.0 229.5 L378.0 224.8 L392.0 243.7 L406.0 248.3 L420.0 267.0 L434.0 247.8 L448.0 262.5 L462.0 263.9 L476.0 262.7 L490.0 264.7 L504.0 263.3 L518.0 269.1 L532.0 265.5 L546.0 264.6 L560.0 266.9 L574.0 267.3 L588.0 267.0 L602.0 267.1" fill="none" stroke="#7C67DA" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="364.0" cy="229.5" r="3.5" fill="#7C67DA"/>
+<path d="M56.0 268.9 L70.0 266.8 L84.0 267.5 L98.0 267.7 L112.0 267.2 L126.0 267.1 L140.0 267.1 L154.0 267.9 L168.0 266.7 L182.0 255.1 L196.0 224.1 L210.0 258.7 L224.0 248.2 L238.0 250.5 L252.0 268.2 L266.0 266.6 L280.0 265.9 L294.0 266.1 L308.0 268.8 L322.0 266.5 L336.0 268.3 L350.0 237.2 L364.0 180.2 L378.0 174.7 L392.0 214.6 L406.0 221.5 L420.0 264.4 L434.0 224.1 L448.0 258.3 L462.0 255.5 L476.0 254.4 L490.0 261.4 L504.0 257.7 L518.0 269.1 L532.0 263.9 L546.0 262.6 L560.0 264.7 L574.0 266.8 L588.0 266.7 L602.0 265.5" fill="none" stroke="#4B2FB2" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="364.0" cy="180.2" r="3.5" fill="#4B2FB2"/>
+<path d="M56.0 268.9 L70.0 266.8 L84.0 267.5 L98.0 267.7 L112.0 267.2 L126.0 267.1 L140.0 267.1 L154.0 267.9 L168.0 266.7 L182.0 237.4 L196.0 174.7 L210.0 245.6 L224.0 222.8 L238.0 230.2 L252.0 267.6 L266.0 262.7 L280.0 264.3 L294.0 261.3 L308.0 267.2 L322.0 266.4 L336.0 268.0 L350.0 199.5 L364.0 78.1 L378.0 71.0 L392.0 154.2 L406.0 165.9 L420.0 257.9 L434.0 174.9 L448.0 249.6 L462.0 238.1 L476.0 237.0 L490.0 254.2 L504.0 245.7 L518.0 268.9 L532.0 258.9 L546.0 258.2 L560.0 259.6 L574.0 266.0 L588.0 265.9 L602.0 261.7" fill="none" stroke="#D9443B" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="364.0" cy="78.1" r="3.5" fill="#D9443B"/>
+<text x="640" y="40" font-size="12" font-weight="600" fill="#2A2140">press → velocity</text>
+<rect x="640" y="57.0" width="14" height="4" rx="2" fill="#A99BEA"/>
+<text x="662" y="63.0" font-size="12" fill="#2A2140">Soft</text>
+<text x="662" y="78.0" font-size="11" fill="#6E6880">0.17 · soft layer</text>
+<rect x="640" y="87.0" width="14" height="4" rx="2" fill="#7C67DA"/>
+<text x="662" y="93.0" font-size="12" fill="#2A2140">Medium</text>
+<text x="662" y="108.0" font-size="11" fill="#6E6880">0.37 · medium layer</text>
+<rect x="640" y="117.0" width="14" height="4" rx="2" fill="#4B2FB2"/>
+<text x="662" y="123.0" font-size="12" fill="#2A2140">Hard</text>
+<text x="662" y="138.0" font-size="11" fill="#6E6880">0.66 · hard layer</text>
+<rect x="640" y="147.0" width="14" height="4" rx="2" fill="#D9443B"/>
+<text x="662" y="153.0" font-size="12" fill="#2A2140">Slam</text>
+<text x="662" y="168.0" font-size="11" fill="#6E6880">0.91 · slam layer</text>
+<text x="640" y="200" font-size="11" fill="#6E6880">The finger strike starts before</text>
+<text x="640" y="215" font-size="11" fill="#6E6880">macOS reports the key; the</text>
+<text x="640" y="230" font-size="11" fill="#6E6880">bottom-out lands ~7 ms after.</text>
+</svg>

@@ -61,6 +61,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             Task { await SnapshotRenderer.run(model: model, to: URL(fileURLWithPath: CommandLine.arguments[index + 1])) }
             return
         }
+        if let index = CommandLine.arguments.firstIndex(of: "--render-readme"), index + 1 < CommandLine.arguments.count {
+            Task { await ReadmeRenderer.run(model: model, to: URL(fileURLWithPath: CommandLine.arguments[index + 1])) }
+            return
+        }
         // Opens one real window without starting the keyboard tap or audio (visual checks).
         if let index = CommandLine.arguments.firstIndex(of: "--show-window"), index + 1 < CommandLine.arguments.count,
            let kind = WindowCoordinator.Kind(rawValue: CommandLine.arguments[index + 1]) {

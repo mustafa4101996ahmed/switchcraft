@@ -35,7 +35,7 @@ enum SnapshotRenderer {
         exit(0)
     }
 
-    private static func render(_ view: some View, size: CGSize?, appearance: NSAppearance.Name, to url: URL) {
+    static func render(_ view: some View, size: CGSize?, appearance: NSAppearance.Name, to url: URL) {
         let host = NSHostingView(rootView: view)
         let frame = CGRect(origin: CGPoint(x: -20_000, y: -20_000), size: size ?? host.fittingSize)
         let window = NSWindow(contentRect: frame, styleMask: [.titled], backing: .buffered, defer: false)

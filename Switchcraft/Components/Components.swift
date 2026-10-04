@@ -103,13 +103,21 @@ struct TypingForceMeter: View {
 
     var body: some View {
         TimelineView(.animation(minimumInterval: 1 / 30)) { _ in
-            let now = MonotonicClock.now()
-            let snapshot = model.pipeline.stats.snapshot(now: now)
-            let age = snapshot.recentKeyTimes.last.map { now - $0 } ?? .infinity
-            let velocity = snapshot.lastVelocity ?? 0
-            let level = age.isFinite ? velocity * exp(-max(age - 0.12, 0) / 0.45) : 0
-            meter(level: level, velocity: velocity, recent: age < 3)
+            let reading = currentReading()
+            meter(level: reading.level, velocity: reading.velocity, recent: reading.recent)
         }
+    }
+
+    private func currentReading() -> (level: Double, velocity: Double, recent: Bool) {
+        #if DEBUG
+        if let demo = ReadmeRenderer.demoLevel { return (demo, demo, true) }
+        #endif
+        let now = MonotonicClock.now()
+        let snapshot = model.pipeline.stats.snapshot(now: now)
+        let age = snapshot.recentKeyTimes.last.map { now - $0 } ?? .infinity
+        let velocity = snapshot.lastVelocity ?? 0
+        let level = age.isFinite ? velocity * exp(-max(age - 0.12, 0) / 0.45) : 0
+        return (level, velocity, age < 3)
     }
 
     private func meter(level: Double, velocity: Double, recent: Bool) -> some View {
