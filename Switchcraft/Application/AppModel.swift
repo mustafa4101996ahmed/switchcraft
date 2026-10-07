@@ -126,7 +126,7 @@ final class AppModel {
             case let .notListening(reason):
                 return reason
             case let .secureInput(holder) where holder.isLockScreen:
-                return "The lock screen didn't let go of the keyboard, so macOS hides key presses from every app. Lock your Mac (⌃⌘Q) and unlock it with your password, not Touch ID."
+                return "The lock screen didn't let go of the keyboard, so macOS hides key presses from every app. Lock your Mac (⌃⌘Q) and unlock it with your password. If it stays, log out and back in."
             case let .secureInput(holder):
                 let terminal = ["Terminal", "iTerm2"].contains(holder.name) ? " If no password is being asked for, turn off Secure Keyboard Entry in its app menu." : ""
                 return "\(holder.name) turned on secure input, usually for a password. macOS hides key presses from every app until it's off." + terminal
