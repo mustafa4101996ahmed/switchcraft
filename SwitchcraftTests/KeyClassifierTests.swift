@@ -46,3 +46,23 @@ struct KeyClassifierTests {
         #expect(event.keyCode == 49)
     }
 }
+
+struct SecureInputTrackerTests {
+    @Test func passwordFieldIsReportedImmediately() {
+        var tracker = SecureInputTracker()
+        let safari = SecureInputHolder(pid: 42, name: "Safari")
+        #expect(tracker.update(safari, now: 10) == safari)
+        #expect(tracker.update(nil, now: 12) == nil)
+    }
+
+    @Test func lockScreenOnlyAfterItOutlastsAnUnlock() {
+        var tracker = SecureInputTracker()
+        let loginwindow = SecureInputHolder(pid: 606, name: "loginwindow")
+        #expect(loginwindow.isLockScreen)
+        #expect(tracker.update(loginwindow, now: 100) == nil) // normal unlock: stays quiet
+        #expect(tracker.update(loginwindow, now: 102) == nil)
+        #expect(tracker.update(loginwindow, now: 104.5) == loginwindow) // stuck
+        #expect(tracker.update(nil, now: 106) == nil) // released
+        #expect(tracker.update(loginwindow, now: 107) == nil) // a new unlock gets a fresh grace period
+    }
+}

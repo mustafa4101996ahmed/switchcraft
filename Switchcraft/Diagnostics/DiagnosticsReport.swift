@@ -36,7 +36,7 @@ struct DiagnosticsReport {
         var keyboardRows: [(String, String)] = [
             ("Listener", model.keyboardRunning ? "Running (listen-only event tap)" : "Stopped"),
             ("Permission", model.permissions.inputMonitoringGranted ? "Input Monitoring allowed" : "Input Monitoring not allowed"),
-            ("Secure input", IsSecureEventInputEnabled() ? "Active (a password field hides keys from all apps)" : "Off"),
+            ("Secure input", Self.secureInputRow(model.permissions.secureInput)),
             ("Events/sec", "\(stats.eventsPerSecond)"),
         ]
         if !forExport {
@@ -111,6 +111,13 @@ struct DiagnosticsReport {
                 ("Connection", helperConnection),
             ]),
         ]
+    }
+
+    private static func secureInputRow(_ holder: SecureInputHolder?) -> String {
+        guard IsSecureEventInputEnabled() else { return "Off" }
+        guard let holder else { return "Active (checking who holds it)" }
+        let suffix = holder.isLockScreen ? ": the lock screen is stuck; lock and unlock with your password" : ": key presses are hidden until it's released"
+        return "Active, held by \(holder.name) (PID \(holder.pid))" + suffix
     }
 
     var text: String {

@@ -147,6 +147,7 @@ private struct ReportGrid: View {
 private struct TroubleshootingTips: View {
     private let tips: [(String, String)] = [
         ("No sound when typing", "Check Input Monitoring in System Settings › Privacy & Security. After installing a new build, remove Switchcraft from that list and add it again."),
+        ("Only ⌃ ⌥ ⌘ make a sound", "Secure input is on: macOS hides key presses (but not modifiers) from every app. If the lock screen holds it, lock your Mac (⌃⌘Q) and unlock with your password. Logging out always clears it."),
         ("Silent in one app", "Password fields hide keystrokes from every app, and apps on the Exclusions list are muted on purpose."),
         ("Every key sounds the same", "Measure with the accelerometer (Settings › Typing Force), then calibrate. A soft surface like a lap absorbs the impact; a desk works best."),
         ("Sounds feel late", "Lower “Listen after the key” in Typing Force › Advanced. Bluetooth headphones add their own delay."),

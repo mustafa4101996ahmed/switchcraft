@@ -157,7 +157,7 @@ Scripts/release.sh 1.1.0     # build/Switchcraft.dmg; add --publish to tag and u
 ## Tests
 
 ```bash
-Scripts/test.sh              # 79 tests in 10 suites, under a second
+Scripts/test.sh              # 81 tests in 11 suites, under a second
 ```
 
 The suites cover key classification, velocity mapping and calibration, sound-pack parsing and
@@ -187,7 +187,7 @@ Switchcraft/           the app: SwiftUI + AppKit
   SoundPacks/          bundled and imported pack library
   Components/          shared views: status label, force meter, stem swatches
 SwitchcraftCore/       pure logic, all unit-tested: DSP, velocity, packs, settings, pipeline
-SwitchcraftTests/      79 tests in 10 suites
+SwitchcraftTests/      81 tests in 11 suites
 SoundPacks/            the 20 switches, built by Scripts/build-sound-packs.swift
 Scripts/               build, test, install, release, signing, pack and image generators
 docs/                  architecture, sensor research, pack format, troubleshooting
@@ -204,7 +204,7 @@ path runs on its own threads and never waits on the main thread or the disk.
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Threads, the press-to-sound path, concurrency rules, lifecycle and resilience |
 | [`docs/SENSOR.md`](docs/SENSOR.md) | How the motion sensor is read without root, and the measurements behind the timings |
 | [`docs/SOUNDPACK_FORMAT.md`](docs/SOUNDPACK_FORMAT.md) | Make your own switch pack: layout, manifest, generated layers, fallbacks |
-| [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md) | No sound, every key the same, late sounds, echo, the alert beep |
+| [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md) | No sound, every key the same, late sounds, echo, only modifier keys sounding, the alert beep |
 
 ## Licence
 

@@ -101,8 +101,8 @@ struct GeneralSettingsView: View {
                 LabeledContent("Status") {
                     StatusLabel(kind: model.listeningStatus.kind, text: model.listeningStatus.text)
                 }
-                if case let .notListening(reason) = model.listeningStatus {
-                    Text(reason).foregroundStyle(.secondary)
+                if let detail = model.listeningStatus.detail {
+                    Text(detail).foregroundStyle(.secondary)
                 }
                 HStack {
                     Button("Open Input Monitoring Settings") { model.permissions.openInputMonitoringSettings() }

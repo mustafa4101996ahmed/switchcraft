@@ -106,6 +106,7 @@ final class AppModel {
         case mutedByMicrophone
         case needsPermission
         case notListening(String)
+        case secureInput(SecureInputHolder)
 
         var text: String {
             switch self {
@@ -115,6 +116,22 @@ final class AppModel {
             case .mutedByMicrophone: return "Muted while the microphone is in use"
             case .needsPermission: return "Keyboard access needed"
             case .notListening: return "Not listening"
+            case let .secureInput(holder): return holder.isLockScreen ? "Blocked by macOS" : "Paused by \(holder.name)"
+            }
+        }
+
+        /// One or two sentences on why, and what fixes it.
+        var detail: String? {
+            switch self {
+            case let .notListening(reason):
+                return reason
+            case let .secureInput(holder) where holder.isLockScreen:
+                return "The lock screen didn't let go of the keyboard, so macOS hides key presses from every app. Lock your Mac (⌃⌘Q) and unlock it with your password, not Touch ID."
+            case let .secureInput(holder):
+                let terminal = ["Terminal", "iTerm2"].contains(holder.name) ? " If no password is being asked for, turn off Secure Keyboard Entry in its app menu." : ""
+                return "\(holder.name) turned on secure input, usually for a password. macOS hides key presses from every app until it's off." + terminal
+            default:
+                return nil
             }
         }
 
@@ -123,6 +140,7 @@ final class AppModel {
             case .listening: return .good
             case .paused, .mutedInApp, .mutedByMicrophone: return .neutral
             case .needsPermission, .notListening: return .warning
+            case let .secureInput(holder): return holder.isLockScreen ? .warning : .neutral
             }
         }
     }
@@ -131,6 +149,7 @@ final class AppModel {
         if !permissions.inputMonitoringGranted { return .needsPermission }
         if !settings.isEnabled { return .paused }
         if !keyboardRunning { return .notListening(keyboardMessage ?? "The keyboard listener isn't running.") }
+        if let holder = permissions.secureInput { return .secureInput(holder) }
         if let id = frontmostBundleID, let app = settings.exclusions.first(where: { $0.bundleID == id }) {
             return .mutedInApp(app.name)
         }
@@ -142,6 +161,7 @@ final class AppModel {
 
     var menuBarSymbolName: String {
         if !permissions.inputMonitoringGranted { return "exclamationmark.triangle" }
+        if permissions.secureInput?.isLockScreen == true { return "exclamationmark.triangle" }
         return settings.isEnabled ? settings.menuBarSymbol : "speaker.slash"
     }
 

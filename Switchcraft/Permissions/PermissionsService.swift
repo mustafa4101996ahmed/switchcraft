@@ -8,6 +8,9 @@ import SwitchcraftCore
 @MainActor @Observable
 final class PermissionsService {
     private(set) var inputMonitoringGranted = CGPreflightListenEventAccess()
+    /// Set while another app (or a stuck lock screen) hides keystrokes from keyboard listeners.
+    private(set) var secureInput: SecureInputHolder?
+    @ObservationIgnored private var secureInputTracker = SecureInputTracker()
     @ObservationIgnored var onChange: ((Bool) -> Void)?
     @ObservationIgnored private var timer: Timer?
 
@@ -18,6 +21,11 @@ final class PermissionsService {
     }
 
     func refresh() {
+        let holder = secureInputTracker.update(SecureInputProbe.holder(), now: MonotonicClock.now())
+        if holder != secureInput {
+            secureInput = holder
+            Log.permissions.info("Secure input: \(holder.map { "held by \($0.name) (\($0.pid))" } ?? "released", privacy: .public)")
+        }
         let granted = CGPreflightListenEventAccess()
         guard granted != inputMonitoringGranted else { return }
         inputMonitoringGranted = granted

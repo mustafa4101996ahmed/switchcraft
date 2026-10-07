@@ -21,6 +21,7 @@
 		3D5F77D160932819D4A252D4 /* SoundEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A6E932E433C668835041E0 /* SoundEngine.swift */; };
 		4019DB402AD05979130835F5 /* MonotonicClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D92BBC38344AC236B49A76 /* MonotonicClock.swift */; };
 		42AB0EA3E8B2B84A881FFCA2 /* SoundPackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DE0332A71C1A6864406F2B /* SoundPackTests.swift */; };
+		43E4071CADB9DBEB86027395 /* SecureInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = D165F48001FE33477892C9FF /* SecureInput.swift */; };
 		4512E86279DAE050A6EEDE75 /* LayerDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8BE1739C7018F34C1AEFEF /* LayerDerivation.swift */; };
 		45A73242CE583400083DABEF /* ImpactGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BB1A6E0B49BEBEB70C0197 /* ImpactGraphView.swift */; };
 		46B382E397FC808666D40556 /* PipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB7D82D6B2A83A18B8A174 /* PipelineTests.swift */; };
@@ -53,6 +54,7 @@
 		A6001EF8FEBA8F5153056D0A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3992C85F84C031026C01C638 /* OnboardingView.swift */; };
 		AADCBF8479D6A308A7181903 /* SoundPack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E0D18337DF0F0F6A4433D1 /* SoundPack.swift */; };
 		B7678BF47EC4EACA3ACD3B5A /* VoiceMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F2684F0EB734506EB699A6 /* VoiceMixer.swift */; };
+		B83C2E49A36B15CABAD0D35D /* SecureInputProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E69B17404D548CAE6D330D /* SecureInputProbe.swift */; };
 		BA6425077196077A165489FC /* SwitchcraftCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */; };
 		BDD5AB5A5A68DA0C56F07430 /* RealismTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DB51B781893EDC17A66543 /* RealismTests.swift */; };
 		C689E95975EE4AE183E3D39B /* SoundPackLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82EC460D571F0DEBC1935CD /* SoundPackLibrary.swift */; };
@@ -144,6 +146,7 @@
 		72DCEBF777C3C2C4AFC3C3DB /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		742B544002A48FD47A4D8706 /* CalibrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationView.swift; sourceTree = "<group>"; };
 		758882E1463377AF04F46DE8 /* WindowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowCoordinator.swift; sourceTree = "<group>"; };
+		77E69B17404D548CAE6D330D /* SecureInputProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInputProbe.swift; sourceTree = "<group>"; };
 		7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwitchcraftCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C077337CB68C6AF3C4352E7 /* ReadmeRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadmeRenderer.swift; sourceTree = "<group>"; };
 		80F9EF419B72801FE546B77F /* SwitchcraftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwitchcraftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,6 +167,7 @@
 		B82EC460D571F0DEBC1935CD /* SoundPackLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPackLibrary.swift; sourceTree = "<group>"; };
 		C494047F2012A11B5FD2E8C4 /* MenuBarIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MenuBarIcon.png; sourceTree = "<group>"; };
 		D147464C37666D7D9B9FDF6F /* PipelineStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineStats.swift; sourceTree = "<group>"; };
+		D165F48001FE33477892C9FF /* SecureInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInput.swift; sourceTree = "<group>"; };
 		D2286AF13EA7FF0FD9D9E9D5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D3F8A7840D4A0A35AA5C7552 /* TypingForceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingForceSettingsView.swift; sourceTree = "<group>"; };
 		D6B290D3564BD83CE6B9AC1F /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				9181A5EB01127F51EABFD235 /* PermissionsService.swift */,
+				77E69B17404D548CAE6D330D /* SecureInputProbe.swift */,
 			);
 			path = Permissions;
 			sourceTree = "<group>";
@@ -403,6 +408,7 @@
 			children = (
 				64FFE02A0A9BBFCA447A5141 /* KeyClassifier.swift */,
 				A7B03D448614ED647B43D659 /* KeyLayout.swift */,
+				D165F48001FE33477892C9FF /* SecureInput.swift */,
 			);
 			path = Keyboard;
 			sourceTree = "<group>";
@@ -605,6 +611,7 @@
 				EEB11149E1645F12A7BB2105 /* PermissionsService.swift in Sources */,
 				F0B1FE16E3B2CFE4EB265402 /* ReadmeRenderer.swift in Sources */,
 				663801881B5101775739E6CB /* SampleBank.swift in Sources */,
+				B83C2E49A36B15CABAD0D35D /* SecureInputProbe.swift in Sources */,
 				DC7040A42404F346BA183B5C /* SettingsView.swift in Sources */,
 				DA9F3E2E872AED4E242AAA43 /* SnapshotRenderer.swift in Sources */,
 				3D5F77D160932819D4A252D4 /* SoundEngine.swift in Sources */,
@@ -635,6 +642,7 @@
 				94F3F4CED6EDBF687D5143CC /* PipelineConfig.swift in Sources */,
 				9CF5C8AE0443C3795920A1BF /* PipelineStats.swift in Sources */,
 				8D0E8BD49A50333D207CE611 /* SampleRing.swift in Sources */,
+				43E4071CADB9DBEB86027395 /* SecureInput.swift in Sources */,
 				E4DC4952BF96C4C0FFD84ED0 /* Services.swift in Sources */,
 				7318C59F23BE9370E3CA1F75 /* SettingsStore.swift in Sources */,
 				AADCBF8479D6A308A7181903 /* SoundPack.swift in Sources */,
@@ -735,7 +743,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
@@ -853,7 +861,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";

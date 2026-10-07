@@ -22,6 +22,16 @@ Start with the menu bar → **Diagnostics…**. Every value below is visible the
 6. **Audio.** Diagnostics › Audio › *Engine*. Try **Actions › Restart Audio Engine**. Check
    the output device and volume.
 
+## Only ⌃ ⌥ ⌘ make a sound
+
+macOS *secure input* is on. While any app holds it, macOS hides key presses (but not modifier
+changes) from every keyboard listener. Switchcraft shows who holds it: *Paused by <app>* is
+usually a password field and clears when you leave it; if it's Terminal or iTerm2 and nothing is
+asking for a password, turn off *Secure Keyboard Entry* in its app menu. *Blocked by macOS* means the lock screen (`loginwindow`)
+didn't let go after an unlock, a macOS glitch: lock your Mac (⌃⌘Q) and unlock it with your
+password, not Touch ID. If it persists, log out and back in. Diagnostics › Keyboard › *Secure
+input* names the holder and its PID.
+
 ## Everything sounds the same strength
 
 - Velocity Detection must be **Accelerometer** (menu bar).

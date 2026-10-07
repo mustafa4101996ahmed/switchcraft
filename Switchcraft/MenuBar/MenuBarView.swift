@@ -12,8 +12,9 @@ struct MenuBarView: View {
 
             if model.listeningStatus == .needsPermission {
                 PermissionBanner()
-            } else if case let .notListening(reason) = model.listeningStatus {
-                Text(reason).font(.callout).foregroundStyle(.secondary)
+            } else if let detail = model.listeningStatus.detail {
+                Text(detail).font(.callout).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             VStack(alignment: .leading, spacing: 6) {
