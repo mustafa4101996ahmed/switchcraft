@@ -60,7 +60,12 @@ final class UpdateChecker {
         }
         let alert = NSAlert()
         alert.messageText = "Switchcraft \(release.version) is available"
-        alert.informativeText = "You have version \(current). Download the new version, quit Switchcraft, then drag the new one into Applications. Your settings stay as they are."
+        // Every downloaded copy gets Gatekeeper's warning until the app is notarized; say so up front.
+        alert.informativeText = """
+            You have version \(current). Download the new version, quit Switchcraft, and drag the new one into Applications.
+
+            macOS will say it can't verify the app, because Switchcraft isn't notarized by Apple yet. Click Done, then Open Anyway in System Settings › Privacy & Security. Your settings and keyboard permission carry over.
+            """
         alert.addButton(withTitle: "Download")
         alert.addButton(withTitle: "Later")
         NSApp.activate()
