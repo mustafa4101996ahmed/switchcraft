@@ -29,7 +29,7 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Switchcraft — a personal, local-only utility. No network access.</string>
+	<string>Switchcraft — a personal, local-only utility.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

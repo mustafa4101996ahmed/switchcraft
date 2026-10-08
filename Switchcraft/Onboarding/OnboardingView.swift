@@ -115,7 +115,7 @@ struct OnboardingView: View {
                     .fixedSize(horizontal: false, vertical: true)
                 Text("Switchcraft feels how hard each key lands through the MacBook's built-in motion sensor, so soft presses sound soft and hard presses sound hard.")
                     .fixedSize(horizontal: false, vertical: true)
-                Label("Everything stays on this Mac. No network access, and the text you type is never recorded.", systemImage: "lock")
+                Label("Everything stays on this Mac, and the text you type is never recorded.", systemImage: "lock")
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }

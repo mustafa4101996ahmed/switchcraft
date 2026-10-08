@@ -168,7 +168,7 @@ struct AboutView: View {
                     Text("\(model.hardware.cpuBrand) · \(model.hardware.modelIdentifier)").foregroundStyle(.secondary)
                 }
             }
-            Text("Velocity-sensitive mechanical keyboard sounds, driven by your MacBook's built-in accelerometer. Everything stays on this Mac: no network access, no analytics, and the text you type is never recorded.")
+            Text("Velocity-sensitive mechanical keyboard sounds, driven by your MacBook's built-in accelerometer. Everything stays on this Mac: no analytics, and the text you type is never recorded. Switchcraft only goes online to check GitHub for a newer version, once a day.")
                 .fixedSize(horizontal: false, vertical: true)
             GroupBox {
                 VStack(alignment: .leading, spacing: 8) {

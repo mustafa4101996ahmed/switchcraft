@@ -11,6 +11,7 @@ final class AppModel {
     let permissions = PermissionsService()
     let library = SoundPackLibrary()
     let hardware = HardwareInfo.detect()
+    let updates = UpdateChecker()
     @ObservationIgnored let audio = SoundEngine()
     @ObservationIgnored let sensor = HIDAccelerometer()
     @ObservationIgnored let keyboard = KeyboardMonitor()
@@ -69,6 +70,7 @@ final class AppModel {
         settingsChanged()
         startOrStopKeyboard()
         refreshLaunchAtLogin()
+        updates.start()
         if !settings.hasCompletedOnboarding { windows.show(.onboarding, model: self) }
     }
 
