@@ -9,8 +9,8 @@ import SwitchcraftCore
 
 /// Streams the Apple Silicon SPU accelerometer (AppleSPUHIDDevice, vendor page 0xFF00, usage 3).
 ///
-/// Verified on MacBook Air M5 (Mac17,3), macOS 27.0: a normal user can open the device and it
-/// streams ~800 Hz. No root, no helper. Reports are 22 bytes, X/Y/Z int32 little-endian at
+/// Verified on MacBook Air M5 (Mac17,3), macOS 27.0: a normal user can wake and open the device and
+/// it streams ~800 Hz. No root, no helper. Reports are 22 bytes, X/Y/Z int32 little-endian at
 /// offsets 6/10/14, divided by 65536 for g. The actual rate is measured, never assumed.
 final class HIDAccelerometer: AccelerometerService, @unchecked Sendable {
     static let vendorUsagePage = 0xFF00
@@ -53,21 +53,42 @@ final class HIDAccelerometer: AccelerometerService, @unchecked Sendable {
 
     /// IORegistry check; needs no permission and opens nothing.
     static func isPresent() -> Bool {
-        var iterator: io_iterator_t = 0
-        guard IOServiceGetMatchingServices(kIOMainPortDefault, IOServiceMatching("AppleSPUHIDDevice"), &iterator) == KERN_SUCCESS else {
-            return false
-        }
-        defer { IOObjectRelease(iterator) }
         var found = false
+        forEachAccelerometer("AppleSPUHIDDevice") { _ in found = true }
+        return found
+    }
+
+    /// Switches the sensor on. After a restart it delivers nothing until these are written to the
+    /// AppleSPUHIDDriver service, which works as a normal user on macOS 27. The same writes through
+    /// IOHIDDeviceSetProperty on the HID device are accepted but never reach the driver.
+    @discardableResult
+    static func wake() -> Bool {
+        var woke = false
+        forEachAccelerometer("AppleSPUHIDDriver") { service in
+            for (key, value) in [("SensorPropertyReportingState", 1), ("SensorPropertyPowerState", 1), ("ReportInterval", 1000)] {
+                let result = IORegistryEntrySetCFProperty(service, key as CFString, value as CFNumber)
+                if result == KERN_SUCCESS {
+                    woke = true
+                } else {
+                    Log.sensor.notice("Writing \(key, privacy: .public) to the accelerometer driver failed: \(hex(result), privacy: .public)")
+                }
+            }
+        }
+        return woke
+    }
+
+    private static func forEachAccelerometer(_ className: String, _ body: (io_service_t) -> Void) {
+        var iterator: io_iterator_t = 0
+        guard IOServiceGetMatchingServices(kIOMainPortDefault, IOServiceMatching(className), &iterator) == KERN_SUCCESS else { return }
+        defer { IOObjectRelease(iterator) }
         var service = IOIteratorNext(iterator)
         while service != 0 {
             let page = IORegistryEntryCreateCFProperty(service, kIOHIDPrimaryUsagePageKey as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? Int
             let usage = IORegistryEntryCreateCFProperty(service, kIOHIDPrimaryUsageKey as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? Int
-            if page == vendorUsagePage && usage == accelerometerUsage { found = true }
+            if page == vendorUsagePage && usage == accelerometerUsage { body(service) }
             IOObjectRelease(service)
             service = IOIteratorNext(iterator)
         }
-        return found
     }
 
     func start() {
@@ -110,6 +131,7 @@ final class HIDAccelerometer: AccelerometerService, @unchecked Sendable {
             setState(.unsupported, "No compatible accelerometer (AppleSPUHIDDevice, page 0xFF00 usage 3).")
             return
         }
+        Self.wake()
         let manager = IOHIDManagerCreate(kCFAllocatorDefault, IOOptionBits(kIOHIDOptionsTypeNone))
         let matching: [String: Any] = [kIOHIDPrimaryUsagePageKey: Self.vendorUsagePage,
                                        kIOHIDPrimaryUsageKey: Self.accelerometerUsage,
@@ -132,13 +154,6 @@ final class HIDAccelerometer: AccelerometerService, @unchecked Sendable {
         defer { buffer.deallocate() }
         resetThreadState()
         for device in devices {
-            // Wake the sensor. On the tested Mac these succeed without root when set on the HID
-            // device (setting them on the AppleSPUHIDDriver service needs root and is skipped).
-            for (key, value) in [("SensorPropertyReportingState", 1), ("SensorPropertyPowerState", 1), ("ReportInterval", 1000)] {
-                if !IOHIDDeviceSetProperty(device, key as CFString, value as CFNumber) {
-                    Log.sensor.notice("IOHIDDeviceSetProperty \(key, privacy: .public) was refused")
-                }
-            }
             IOHIDDeviceRegisterInputReportWithTimeStampCallback(device, buffer, 4096, hidReportCallback,
                                                                 Unmanaged.passUnretained(self).toOpaque())
             IOHIDDeviceScheduleWithRunLoop(device, loop, CFRunLoopMode.defaultMode.rawValue)
@@ -147,7 +162,7 @@ final class HIDAccelerometer: AccelerometerService, @unchecked Sendable {
         Log.helper.info("Privileged helper not required: direct IOKit HID access to the accelerometer succeeded")
 
         let watchdog = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, CFAbsoluteTimeGetCurrent() + 1.5, 1.0, 0, 0) { [weak self] _ in
-            self?.checkHealth(devices: devices)
+            self?.checkHealth()
         }
         CFRunLoopAddTimer(loop, watchdog, .defaultMode)
 
@@ -176,7 +191,7 @@ final class HIDAccelerometer: AccelerometerService, @unchecked Sendable {
     }
 
     /// Runs on the sensor thread once a second.
-    private func checkHealth(devices: Set<IOHIDDevice>) {
+    private func checkHealth() {
         let total = totalReports
         defer { reportsAtLastCheck = total }
         guard total == reportsAtLastCheck else { return }
@@ -187,10 +202,7 @@ final class HIDAccelerometer: AccelerometerService, @unchecked Sendable {
             setState(.permissionRequired, "The accelerometer stopped delivering data; re-waking it.")
             lock.withLock { rate = 0 }
         }
-        for device in devices {
-            IOHIDDeviceSetProperty(device, "SensorPropertyReportingState" as CFString, 1 as CFNumber)
-            IOHIDDeviceSetProperty(device, "SensorPropertyPowerState" as CFString, 1 as CFNumber)
-        }
+        Self.wake()
     }
 
     /// Runs on the sensor thread for every HID report.

@@ -26,7 +26,7 @@ MacBook Air M5 (`Mac17,3`), macOS 27.0 (26A428), 16 GB:
 | Device present | yes, alongside gyro, ALS, lid angle, `devmotion6`, `cma`, `wakehint` |
 | `IOHIDManagerOpen` as a normal user | `kIOReturnSuccess` |
 | Root required | **no** |
-| Wake properties | `SensorPropertyReportingState`, `SensorPropertyPowerState`, `ReportInterval` accepted by `IOHIDDeviceSetProperty` on the HID device |
+| Wake properties | `SensorPropertyReportingState`, `SensorPropertyPowerState`, `ReportInterval` written to the `AppleSPUHIDDriver` service with `IORegistryEntrySetCFProperty`, as a normal user. Without them the sensor delivers nothing after a restart |
 | Callback rate | **801.6 Hz** measured (the `ReportInterval` value doesn't change it) |
 | HID timestamp → callback | p50 0.43 ms, p99 1.1 ms |
 | Gravity at rest | \|a\| ≈ 1.008 g |
@@ -35,10 +35,13 @@ MacBook Air M5 (`Mac17,3`), macOS 27.0 (26A428), 16 GB:
 | Trackpad click | ≈ 2 mg |
 | Desk bump / laptop moved | up to 880 mg |
 
-The reference project needs `sudo` because it writes those wake properties to the
-`AppleSPUHIDDriver` **service** (`IORegistryEntrySetCFProperty`), which needs root. Writing them
-to the **HID device** through `IOHIDDeviceSetProperty` (the `IOHIDLibUserClient` path) works as a
-normal user on the tested Mac, and the device was streaming either way. One more trap: an
+The reference project runs with `sudo` and writes those wake properties to the
+`AppleSPUHIDDriver` **service** (`IORegistryEntrySetCFProperty`). On macOS 27 that same write
+succeeds as a normal user, and it's required: after a restart the sensor delivers nothing until it
+happens, and it then keeps streaming until the next restart. Writing the properties to the **HID
+device** with `IOHIDDeviceSetProperty` returns success but never reaches the driver. Switchcraft 1.0
+only did the latter and seemed to work because the sensor was already awake; after a restart on
+8 Oct 2026 it delivered 0 reports for 8 hours until the driver write was added. One more trap: an
 `IOHIDDevice` created with `IOHIDDeviceCreate` gets released when it goes out of scope, which
 silently stops all callbacks. The first probe hit exactly this and reported 0 samples.
 

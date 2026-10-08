@@ -53,11 +53,24 @@ let callback: IOHIDReportWithTimeStampCallback = { _, _, _, _, _, report, length
         stats.samples.append((axis(6), axis(10), axis(14)))
     }
 }
+// After a restart the sensor stays silent until the wake properties reach the AppleSPUHIDDriver
+// service. Writing them to the HID device (IOHIDDeviceSetProperty) is accepted but doesn't wake it.
+var driverIterator: io_iterator_t = 0
+IOServiceGetMatchingServices(kIOMainPortDefault, IOServiceMatching("AppleSPUHIDDriver"), &driverIterator)
+var driver = IOIteratorNext(driverIterator)
+while driver != 0 {
+    func prop(_ key: String) -> Int? { IORegistryEntryCreateCFProperty(driver, key as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? Int }
+    if prop("PrimaryUsagePage") == 0xFF00 && prop("PrimaryUsage") == 3 {
+        for (key, value) in [("SensorPropertyReportingState", 1), ("SensorPropertyPowerState", 1), ("ReportInterval", 1000)] {
+            print("  set \(key) on AppleSPUHIDDriver:", hex(IORegistryEntrySetCFProperty(driver, key as CFString, value as CFNumber)))
+        }
+    }
+    IOObjectRelease(driver)
+    driver = IOIteratorNext(driverIterator)
+}
+IOObjectRelease(driverIterator)
 let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: 4096)
 for device in devices {
-    for (key, value) in [("SensorPropertyReportingState", 1), ("SensorPropertyPowerState", 1), ("ReportInterval", 1000)] {
-        print("  set \(key) on HID device:", IOHIDDeviceSetProperty(device, key as CFString, value as CFNumber))
-    }
     IOHIDDeviceRegisterInputReportWithTimeStampCallback(device, buffer, 4096, callback, nil)
     IOHIDDeviceScheduleWithRunLoop(device, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode.rawValue)
 }
