@@ -211,4 +211,4 @@ path runs on its own threads and never waits on the main thread or the disk.
 [MIT](LICENSE). Use it, fork it, ship it. The bundled recordings and the sensor approach keep
 their own licences, listed in [`LICENSES/`](LICENSES): mechvibes and kbsim (MIT), Freesound
 (CC0), [olvvier/apple-silicon-accelerometer](https://github.com/olvvier/apple-silicon-accelerometer)
-(MIT). Inspired by the idea behind Haptyk; none of its code, recordings or branding is used.
+(MIT).
