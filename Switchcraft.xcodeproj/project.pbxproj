@@ -17,6 +17,7 @@
 		2E05E2843E69BC45C28AE21B /* MenuBarIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1500116F22EC106545EA6410 /* MenuBarIcon@2x.png */; };
 		35243AAA455D0560715847C4 /* SwitchcraftCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */; };
 		35E437A7BA51CF2F9D6E21B4 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D45A5B04B4CD4BA5C2FCB77 /* Models.swift */; };
+		386824324F9C0E33E5B1ED9D /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 7724154FA255BF2786513C81 /* Sparkle */; };
 		3A05A9138ECA52147E5B98AB /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 6583A7D79C358D999DB190D1 /* AppIcon.icns */; };
 		3D5F77D160932819D4A252D4 /* SoundEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A6E932E433C668835041E0 /* SoundEngine.swift */; };
 		4019DB402AD05979130835F5 /* MonotonicClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D92BBC38344AC236B49A76 /* MonotonicClock.swift */; };
@@ -51,11 +52,9 @@
 		8E612D34EB0D1D3B88AD1807 /* ExclusionsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB55322CAE9BBDFAA75C2828 /* ExclusionsSettingsView.swift */; };
 		94F3F4CED6EDBF687D5143CC /* PipelineConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F03CE9EB6AA7D66B5710342 /* PipelineConfig.swift */; };
 		954FEEF20A3FCD32BF1236AB /* EarlyReflections.swift in Sources */ = {isa = PBXBuildFile; fileRef = A136129693E7FDA922B96529 /* EarlyReflections.swift */; };
-		96DBB3A853FBEE539AA111B1 /* UpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C78129DE8F9DEF49D90FB6 /* UpdateTests.swift */; };
 		9CF5C8AE0443C3795920A1BF /* PipelineStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D147464C37666D7D9B9FDF6F /* PipelineStats.swift */; };
 		A6001EF8FEBA8F5153056D0A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3992C85F84C031026C01C638 /* OnboardingView.swift */; };
 		AADCBF8479D6A308A7181903 /* SoundPack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E0D18337DF0F0F6A4433D1 /* SoundPack.swift */; };
-		B4C84DFDF25011D17322F5FE /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C821ECDF432E1949B8BB00D7 /* AppVersion.swift */; };
 		B7678BF47EC4EACA3ACD3B5A /* VoiceMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F2684F0EB734506EB699A6 /* VoiceMixer.swift */; };
 		B83C2E49A36B15CABAD0D35D /* SecureInputProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E69B17404D548CAE6D330D /* SecureInputProbe.swift */; };
 		BA6425077196077A165489FC /* SwitchcraftCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BACD6851624BCD6526B0427 /* SwitchcraftCore.framework */; };
@@ -125,7 +124,6 @@
 		05C4A1BC13F9C80657FB9B19 /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateChecker.swift; sourceTree = "<group>"; };
 		0C8529E9853CEF3F1340F98E /* SnapshotRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotRenderer.swift; sourceTree = "<group>"; };
 		11F37127069357BFED148822 /* SyntheticSignals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntheticSignals.swift; sourceTree = "<group>"; };
-		14C78129DE8F9DEF49D90FB6 /* UpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTests.swift; sourceTree = "<group>"; };
 		14E0D18337DF0F0F6A4433D1 /* SoundPack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPack.swift; sourceTree = "<group>"; };
 		1500116F22EC106545EA6410 /* MenuBarIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenuBarIcon@2x.png"; sourceTree = "<group>"; };
 		160394AD871DD52D3A9A1D40 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 		B3834D7B0EE426DEA3E1ADAE /* KeyboardMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
 		B82EC460D571F0DEBC1935CD /* SoundPackLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPackLibrary.swift; sourceTree = "<group>"; };
 		C494047F2012A11B5FD2E8C4 /* MenuBarIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MenuBarIcon.png; sourceTree = "<group>"; };
-		C821ECDF432E1949B8BB00D7 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		D147464C37666D7D9B9FDF6F /* PipelineStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineStats.swift; sourceTree = "<group>"; };
 		D165F48001FE33477892C9FF /* SecureInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureInput.swift; sourceTree = "<group>"; };
 		D2286AF13EA7FF0FD9D9E9D5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -205,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA6425077196077A165489FC /* SwitchcraftCore.framework in Frameworks */,
+				386824324F9C0E33E5B1ED9D /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,7 +236,6 @@
 				F2DB51B781893EDC17A66543 /* RealismTests.swift */,
 				2BF7D91F268CCA38E59F583D /* SettingsStoreTests.swift */,
 				A9DE0332A71C1A6864406F2B /* SoundPackTests.swift */,
-				14C78129DE8F9DEF49D90FB6 /* UpdateTests.swift */,
 				8B6207EC6056CC92A3EE4691 /* VelocityMappingTests.swift */,
 			);
 			path = SwitchcraftTests;
@@ -333,7 +330,6 @@
 		683F68346361665ED4719667 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				C821ECDF432E1949B8BB00D7 /* AppVersion.swift */,
 				D6B290D3564BD83CE6B9AC1F /* Log.swift */,
 				50D92BBC38344AC236B49A76 /* MonotonicClock.swift */,
 				E6C21BDF96C7E69DB341A1E1 /* UnfairLock.swift */,
@@ -513,6 +509,7 @@
 			);
 			name = Switchcraft;
 			packageProductDependencies = (
+				7724154FA255BF2786513C81 /* Sparkle */,
 			);
 			productName = Switchcraft;
 			productReference = 411968536B8984E353C1AC73 /* Switchcraft.app */;
@@ -570,6 +567,9 @@
 			);
 			mainGroup = 3FD9032FC0E7F64B4E8891F3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				32C97E684755250E25AB2D82 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 19034343222B8BCADC1AABBE /* Products */;
 			projectDirPath = "";
@@ -639,7 +639,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4C84DFDF25011D17322F5FE /* AppVersion.swift in Sources */,
 				C8DCA2147466C39F4D1C4086 /* Calibration.swift in Sources */,
 				954FEEF20A3FCD32BF1236AB /* EarlyReflections.swift in Sources */,
 				5AAD227FFF86A44566761EE6 /* ImpactAnalyzer.swift in Sources */,
@@ -674,7 +673,6 @@
 				BDD5AB5A5A68DA0C56F07430 /* RealismTests.swift in Sources */,
 				6005F4033F474DC3CD5900B9 /* SettingsStoreTests.swift in Sources */,
 				42AB0EA3E8B2B84A881FFCA2 /* SoundPackTests.swift in Sources */,
-				96DBB3A853FBEE539AA111B1 /* UpdateTests.swift in Sources */,
 				F22BEE21179B6B43B094AD6E /* VelocityMappingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -755,7 +753,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
@@ -773,11 +771,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SPARKLE_FEED_URL = "https://github.com/mustafa4101996ahmed/switchcraft/releases/latest/download/appcast.xml";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
@@ -873,7 +872,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
@@ -897,12 +896,13 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SPARKLE_FEED_URL = "https://github.com/mustafa4101996ahmed/switchcraft/releases/latest/download/appcast.xml";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
@@ -978,6 +978,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		32C97E684755250E25AB2D82 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7724154FA255BF2786513C81 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 32C97E684755250E25AB2D82 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 88834B6D82910F4AD1B2AEA5 /* Project object */;
 }

@@ -59,10 +59,10 @@ struct MenuBarView: View {
                 row("Settings…", systemImage: "gearshape") { open(.settings) }
                     .keyboardShortcut(",", modifiers: .command)
                 row("Diagnostics…", systemImage: "stethoscope") { open(.diagnostics) }
-                row(model.updates.available.map { "Update to \($0.version)…" } ?? "Check for Updates…",
-                    systemImage: model.updates.available == nil ? "arrow.triangle.2.circlepath" : "arrow.down.circle") {
+                row(model.updates.availableVersion.map { "Update to \($0)…" } ?? "Check for Updates…",
+                    systemImage: model.updates.availableVersion == nil ? "arrow.triangle.2.circlepath" : "arrow.down.circle") {
                     NSApp.keyWindow?.close()
-                    Task { await model.updates.check(userInitiated: true) }
+                    model.updates.checkForUpdates()
                 }
             }
             .padding(.horizontal, -6)

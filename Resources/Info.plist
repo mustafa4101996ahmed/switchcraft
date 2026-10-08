@@ -32,5 +32,11 @@
 	<string>Switchcraft — a personal, local-only utility.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SUFeedURL</key>
+	<string>$(SPARKLE_FEED_URL)</string>
+	<key>SUPublicEDKey</key>
+	<string>5OVAwCuQNldVhJ7RFILqD3ys7R7hRVxHWxd/zVCzWMc=</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
 </dict>
 </plist>

@@ -1,8 +1,10 @@
 #!/bin/zsh
-# Builds a downloadable Switchcraft.dmg and, with --publish, a GitHub release.
-#   Scripts/release.sh 1.0.0             # build/Switchcraft.dmg only
-#   Scripts/release.sh 1.0.0 --publish   # also tag v1.0.0 and upload to GitHub Releases
-# Needs: Xcode, xcodegen, gh (for --publish). dmgbuild is installed into build/.venv on first use.
+# Builds a downloadable Switchcraft.dmg plus its Sparkle appcast and, with --publish, a GitHub release.
+#   Scripts/release.sh 1.0.0             # build/Switchcraft.dmg and build/appcast.xml only
+#   Scripts/release.sh 1.0.0 --publish   # also tag v1.0.0 and upload both to GitHub Releases
+# Needs: Xcode, xcodegen, gh (for --publish), and the Sparkle signing key in the login keychain
+# (made once by Sparkle's generate_keys). dmgbuild is installed into build/.venv on first use.
+# DOWNLOAD_BASE=http://127.0.0.1:8765 points the appcast at a local server for an update test.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 VERSION="${1:?usage: Scripts/release.sh <version> [--publish]}"
@@ -28,9 +30,41 @@ SIZE=$(du -h build/Switchcraft.dmg | cut -f1 | tr -d ' ')
 echo "Built build/Switchcraft.dmg ($SIZE, version $VERSION build $BUILD)"
 echo "SHA-256 $SHA"
 
+# The appcast Sparkle reads: this release only, its DMG signed with the EdDSA key, and the commits
+# since the previous release as notes. Sparkle compares <sparkle:version> with CFBundleVersion.
+REPO=mustafa4101996ahmed/switchcraft
+PREVIOUS=$(git describe --tags --abbrev=0 2>/dev/null || true)
+CHANGES=$(git log --no-merges --format='%s' ${PREVIOUS:+$PREVIOUS..}HEAD | grep -v '^Release ' || true)
+SIGNATURE=$(build/DerivedData/SourcePackages/artifacts/sparkle/Sparkle/bin/sign_update build/Switchcraft.dmg)
+cat > build/appcast.xml <<XML
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>Switchcraft</title>
+    <item>
+      <title>Switchcraft $VERSION</title>
+      <sparkle:version>$BUILD</sparkle:version>
+      <sparkle:shortVersionString>$VERSION</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <pubDate>$(LC_ALL=C date -u '+%a, %d %b %Y %H:%M:%S +0000')</pubDate>
+      <description><![CDATA[<ul>$([[ -n "$CHANGES" ]] && sed 's|.*|<li>&</li>|' <<< "$CHANGES" | tr -d '\n')</ul>]]></description>
+      <enclosure url="${DOWNLOAD_BASE:-https://github.com/$REPO/releases/download/v$VERSION}/Switchcraft.dmg" $SIGNATURE type="application/octet-stream"/>
+    </item>
+  </channel>
+</rss>
+XML
+xmllint --noout build/appcast.xml
+echo "Built build/appcast.xml"
+
 [[ "$PUBLISH" == "--publish" ]] || exit 0
 
 cat > build/release-notes.md <<NOTES
+## What's new
+
+$(sed 's/^/- /' <<< "$CHANGES")
+
+Switchcraft 1.2 and later install updates themselves: when one is out, click **Install Update**.
+
 ## Install
 
 1. Download **Switchcraft.dmg** below and open it.
@@ -48,5 +82,5 @@ git add project.yml
 git commit -q -m "Release $VERSION" || true
 git tag -f "v$VERSION"
 git push -q origin HEAD "v$VERSION"
-gh release create "v$VERSION" build/Switchcraft.dmg --title "Switchcraft $VERSION" --notes-file build/release-notes.md --latest
+gh release create "v$VERSION" build/Switchcraft.dmg build/appcast.xml --title "Switchcraft $VERSION" --notes-file build/release-notes.md --latest
 echo "Published https://github.com/$(gh repo view --json nameWithOwner -q .nameWithOwner)/releases/tag/v$VERSION"

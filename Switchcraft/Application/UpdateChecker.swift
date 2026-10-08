@@ -1,84 +1,55 @@
 import AppKit
 import Observation
-import SwitchcraftCore
+import Sparkle
 
-/// Asks GitHub for the latest release at launch and once a day, and prompts when it's newer than
-/// this build. Switchcraft's only network request: nothing about the Mac or the typing is sent.
+/// Sparkle reads the appcast published with each GitHub release at launch and once a day, and
+/// installs updates in place: download, check the EdDSA signature, replace the app, relaunch.
+/// Switchcraft's only network requests; nothing about the Mac or the typing is sent.
 @MainActor @Observable
-final class UpdateChecker {
-    static let latestReleaseAPI = URL(string: "https://api.github.com/repos/mustafa4101996ahmed/switchcraft/releases/latest")!
+final class UpdateChecker: NSObject {
+    /// A newer version a background check found, until the user has seen it.
+    private(set) var availableVersion: String?
+    @ObservationIgnored private var controller: SPUStandardUpdaterController!
 
-    /// A release newer than this build, once a check has found one.
-    private(set) var available: LatestRelease?
-    private let current = AppVersion(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "") ?? AppVersion("0")!
-    @ObservationIgnored private var isChecking = false
+    override init() {
+        super.init()
+        controller = SPUStandardUpdaterController(startingUpdater: false, updaterDelegate: nil, userDriverDelegate: self)
+    }
 
     func start() {
-        Task {
-            while !Task.isCancelled {
-                let reachedGitHub = await check(userInitiated: false)
-                // Task.sleep counts time asleep too, so a Mac that sleeps overnight still checks daily.
-                try? await Task.sleep(for: .seconds(reachedGitHub ? 24 * 3600 : 3600))
-            }
-        }
+        controller.startUpdater()
     }
 
-    /// Returns false when GitHub couldn't be reached, so the daily schedule retries within the hour.
-    @discardableResult
-    func check(userInitiated: Bool) async -> Bool {
-        guard !isChecking else { return true }
-        isChecking = true
-        defer { isChecking = false }
-        let release: LatestRelease
-        do {
-            var request = URLRequest(url: Self.latestReleaseAPI, timeoutInterval: 30)
-            request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-            let (data, response) = try await URLSession.shared.data(for: request)
-            guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }
-            release = try LatestRelease(gitHubJSON: data)
-        } catch {
-            Log.app.error("Update check failed: \(error.localizedDescription, privacy: .public)")
-            if userInitiated {
-                show("Couldn't check for updates", "GitHub didn't answer. Check your internet connection and try again.")
-            }
-            return false
-        }
-        Log.app.info("Latest release \(release.version, privacy: .public), this build \(self.current, privacy: .public)")
-        available = release.version > current ? release : nil
-        if let available {
-            await prompt(available, waitForTypingPause: !userInitiated)
-        } else if userInitiated {
-            show("Switchcraft is up to date", "Version \(current) is the latest release.")
-        }
-        return true
+    func checkForUpdates() {
+        NSApp.activate()
+        controller.checkForUpdates(nil)
     }
 
-    private func prompt(_ release: LatestRelease, waitForTypingPause: Bool) async {
-        // A dialog that takes focus mid-sentence would swallow keystrokes, so wait for a quiet moment.
-        while waitForTypingPause && CGEventSource.secondsSinceLastEventType(.combinedSessionState, eventType: .keyDown) < 5 {
+    /// A window that takes focus mid-sentence would swallow keystrokes, so wait for a quiet moment.
+    private func showWhenTypingPauses() async {
+        while CGEventSource.secondsSinceLastEventType(.combinedSessionState, eventType: .keyDown) < 5 {
             try? await Task.sleep(for: .seconds(5))
         }
-        let alert = NSAlert()
-        alert.messageText = "Switchcraft \(release.version) is available"
-        // Every downloaded copy gets Gatekeeper's warning until the app is notarized; say so up front.
-        alert.informativeText = """
-            You have version \(current). Download the new version, quit Switchcraft, and drag the new one into Applications.
+        checkForUpdates()
+    }
+}
 
-            macOS will say it can't verify the app, because Switchcraft isn't notarized by Apple yet. Click Done, then Open Anyway in System Settings › Privacy & Security. Your settings and keyboard permission carry over.
-            """
-        alert.addButton(withTitle: "Download")
-        alert.addButton(withTitle: "Later")
-        NSApp.activate()
-        if alert.runModal() == .alertFirstButtonReturn {
-            NSWorkspace.shared.open(release.downloadURL)
-        }
+// Switchcraft has no Dock icon or main window, so it takes over showing updates Sparkle finds in the
+// background ("gentle reminders"); updates found near launch Sparkle shows itself.
+extension UpdateChecker: @preconcurrency SPUStandardUserDriverDelegate {
+    var supportsGentleScheduledUpdateReminders: Bool { true }
+
+    func standardUserDriverShouldHandleShowingScheduledUpdate(_ update: SUAppcastItem, andInImmediateFocus immediateFocus: Bool) -> Bool {
+        immediateFocus
     }
 
-    private func show(_ title: String, _ message: String) {
-        let alert = NSAlert()
-        alert.messageText = title
-        alert.informativeText = message
-        NSApp.activate()
-        alert.runModal()
+    func standardUserDriverWillHandleShowingUpdate(_ handleShowingUpdate: Bool, forUpdate update: SUAppcastItem, state: SPUUserUpdateState) {
+        guard !handleShowingUpdate else { return }
+        availableVersion = update.displayVersionString
+        Task { await showWhenTypingPauses() }
+    }
+
+    func standardUserDriverDidReceiveUserAttention(forUpdate update: SUAppcastItem) {
+        availableVersion = nil
     }
 }

@@ -173,6 +173,7 @@ struct AboutView: View {
             GroupBox {
                 VStack(alignment: .leading, spacing: 8) {
                     credit("Accelerometer access", "olvvier/apple-silicon-accelerometer", "MIT", "https://github.com/olvvier/apple-silicon-accelerometer")
+                    credit("Updates", "sparkle-project/Sparkle", "MIT", "https://github.com/sparkle-project/Sparkle")
                     credit("Cherry MX Red, Black, Brown, Blue", "hainguyents13/mechvibes", "MIT", "https://github.com/hainguyents13/mechvibes")
                     credit("Other switches", "tplai/kbsim", "MIT", "https://github.com/tplai/kbsim")
                     credit("Cherry MX Clear", "humi74 on Freesound", "CC0", "https://freesound.org/s/412926/")

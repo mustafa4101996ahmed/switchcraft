@@ -101,9 +101,10 @@ is on the keyboard, so the click comes from under your finger.
 > [!NOTE]
 > Switchcraft isn't signed with an Apple Developer ID yet, which is why macOS asks once. It has no
 > analytics and sends nothing from your Mac. Its only network request is a daily check of GitHub for
-> a newer release, and it asks before downloading one (menu-bar icon › Check for Updates… any time).
-> Updates keep their Input Monitoring permission, because every release is signed with the same
-> local identity.
+> a newer release. From 1.2 on, updates install from inside the app: click **Install Update** and
+> Switchcraft replaces itself and reopens, with no second Open Anyway (menu-bar icon › Check for
+> Updates… any time). Updates keep their Input Monitoring permission, because every release is
+> signed with the same local identity.
 
 After setup Switchcraft lives in the menu bar. `⌃⌥⌘K` turns the sounds on or off from any app,
 and `⌘,` opens Settings while the panel is open.
@@ -133,7 +134,7 @@ Switchcraft hears the keyboard, so it is built to keep that harmless.
 |---|---|
 | Keystrokes | A listen-only tap reads the key code and timestamp. Characters are never requested, so words can't be rebuilt |
 | History | Each press is processed and discarded in milliseconds. Nothing is stored or logged |
-| Network | One request a day to GitHub's public releases API, to see if a newer version exists. Nothing about you or your typing is sent. No third-party dependencies |
+| Network | Once a day [Sparkle](https://sparkle-project.org) reads the update feed attached to the latest GitHub release. Nothing about you or your typing is sent. Updates are only installed if they carry the release signing key's signature. Sparkle is the one third-party dependency |
 | Microphone | Never opened. "Mute while the microphone is in use" reads CoreAudio's public *is-recording* flag |
 | Password fields | macOS hides them from every app, Switchcraft included |
 | The alert beep | Lowered only while you type and restored a second later, even after a crash |
@@ -158,7 +159,7 @@ Scripts/release.sh 1.1.0     # build/Switchcraft.dmg; add --publish to tag and u
 ## Tests
 
 ```bash
-Scripts/test.sh              # 87 tests in 12 suites, under a second
+Scripts/test.sh              # 81 tests in 11 suites, under a second
 ```
 
 The suites cover key classification, velocity mapping and calibration, sound-pack parsing and
@@ -188,7 +189,7 @@ Switchcraft/           the app: SwiftUI + AppKit
   SoundPacks/          bundled and imported pack library
   Components/          shared views: status label, force meter, stem swatches
 SwitchcraftCore/       pure logic, all unit-tested: DSP, velocity, packs, settings, pipeline
-SwitchcraftTests/      87 tests in 12 suites
+SwitchcraftTests/      81 tests in 11 suites
 SoundPacks/            the 20 switches, built by Scripts/build-sound-packs.swift
 Scripts/               build, test, install, release, signing, pack and image generators
 docs/                  architecture, sensor research, pack format, troubleshooting
@@ -222,4 +223,4 @@ path runs on its own threads and never waits on the main thread or the disk.
 [MIT](LICENSE). Use it, fork it, ship it. The bundled recordings and the sensor approach keep
 their own licences, listed in [`LICENSES/`](LICENSES): mechvibes and kbsim (MIT), Freesound
 (CC0), [olvvier/apple-silicon-accelerometer](https://github.com/olvvier/apple-silicon-accelerometer)
-(MIT).
+(MIT), [Sparkle](https://github.com/sparkle-project/Sparkle) (MIT).
