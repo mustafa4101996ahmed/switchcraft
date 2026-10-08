@@ -206,6 +206,16 @@ path runs on its own threads and never waits on the main thread or the disk.
 | [`docs/SOUNDPACK_FORMAT.md`](docs/SOUNDPACK_FORMAT.md) | Make your own switch pack: layout, manifest, generated layers, fallbacks |
 | [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md) | No sound, every key the same, late sounds, echo, only modifier keys sounding, the alert beep |
 
+## Star History
+
+<a href="https://www.star-history.com/?repos=mustafa4101996ahmed%2Fswitchcraft&type=timeline&logscale=&releases=&legend=bottom-right">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=mustafa4101996ahmed/switchcraft&type=timeline&theme=dark&legend=bottom-right" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=mustafa4101996ahmed/switchcraft&type=timeline&legend=bottom-right" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=mustafa4101996ahmed/switchcraft&type=timeline&legend=bottom-right" />
+ </picture>
+</a>
+
 ## Licence
 
 [MIT](LICENSE). Use it, fork it, ship it. The bundled recordings and the sensor approach keep
